@@ -44,40 +44,47 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
   @override
   Widget build(BuildContext context) {
     final node = FocusScope.of(context);
-    return Scaffold(
-        backgroundColor: const Color(0xFF3B3F65),
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.sizeOf(context).width * 0.1),
-            child: ConstrainedBox(
-              constraints:
-                  BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(100),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Ink(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.white,
-                        ),
-                        child: const Icon(
-                          Icons.arrow_back,
-                          size: 35,
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment(0.00, -1.00),
+          end: Alignment(0, 1),
+          colors: [Color(0xFF2C225B), Color(0xFF2E3B78)],
+        ),
+      ),
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.sizeOf(context).width * 0.1),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.sizeOf(context).height),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(100),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Ink(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.white,
+                          ),
+                          child: const Icon(
+                            Icons.arrow_back,
+                            size: 35,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Column(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Container(
@@ -89,10 +96,10 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                           child: Image.asset('assets/images/lock_icon.png'),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 30,
                         ),
                         const Text(
-                          'Verify Reset Password Token',
+                          'Verify Your Email Address',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
@@ -101,6 +108,9 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                             fontWeight: FontWeight.w700,
                             height: 0,
                           ),
+                        ),
+                        const SizedBox(
+                          height: 35,
                         ),
                         const Text(
                           'An 6-digit code has been sent to',
@@ -112,6 +122,9 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                             fontWeight: FontWeight.w400,
                             height: 0,
                           ),
+                        ),
+                        const SizedBox(
+                          height: 11,
                         ),
                         Text(
                           email,
@@ -125,7 +138,7 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 40,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,7 +189,7 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                                   )),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 30,
                         ),
                         Row(
                           children: [
@@ -202,9 +215,12 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                             ),
                           ],
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Row(children: [
                           const Text(
-                            'Didn’t receive the code? ',
+                            'Didn\'t receive the code? ',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 13,
@@ -248,69 +264,69 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                         ]),
                       ],
                     ),
-                  ),
-                  const Spacer(),
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(15),
-                      splashColor: const Color.fromARGB(255, 123, 90, 255),
-                      onTap: () async {
-                        String OTPcollected = "";
-
-                        for (var element in OTP) {
-                          if (element.text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Fill in all OTP code')));
-                            continue;
-                          }
-                          OTPcollected += element.text;
-                        }
-
-
-
-                        try {
-                          await SupabaseB()
-                              .verifyPasswordOTP(email, OTPcollected);
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  ResetPasswordPage(email: email)));
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(e.toString())));
-
-                          return;
-                        }
-                      },
-                      child: Ink(
-                        width: 300,
-                        height: 50,
-                        decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                                width: 3, color: Color(0xFFFFC600)),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                        child: const Center(
-                            child: Text(
-                          'CONFIRM',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        )),
-                      ),
+                    const SizedBox(
+                      height: 70,
                     ),
-                  )
-                ],
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(15),
+                        splashColor: const Color.fromARGB(255, 123, 90, 255),
+                        onTap: () async {
+                          String OTPcollected = "";
+
+                          for (var element in OTP) {
+                            if (element.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Fill in all OTP code')));
+                              continue;
+                            }
+                            OTPcollected += element.text;
+                          }
+
+                          try {
+                            await SupabaseB()
+                                .verifyPasswordOTP(email, OTPcollected);
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    ResetPasswordPage(email: email)));
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())));
+
+                            return;
+                          }
+                        },
+                        child: Ink(
+                          width: 300,
+                          height: 50,
+                          decoration: ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(
+                                  width: 3, color: Color(0xFFFFC600)),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                          child: const Center(
+                              child: Text(
+                            'CONFIRM',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 
   String formattedTime({required int timeInSecond}) {

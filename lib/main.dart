@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:escout/pages/activity/activitypage%20copy.dart';
+import 'package:escout/pages/forgotpassword/verifyOTP.dart';
 import 'package:escout/pages/homepage/temppage.dart';
 import 'package:escout/pages/signin/signinpage.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,11 @@ class MyApp extends StatelessWidget {
       routes: {
         '/signin': (context) => const SignInPage(),
       },
-      home: isSignedIn ? const TempPage() : const SignInPage(),
+      home: isSignedIn
+          ? const TempPage()
+          : VerifyResetPassword(
+              email: 'kote@gmail.com',
+            ),
     );
   }
 }

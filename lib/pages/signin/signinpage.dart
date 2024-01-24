@@ -1,4 +1,6 @@
 import 'package:escout/backend/backend.dart';
+import 'package:escout/pages/activation/ActivateAccountInitial.dart';
+import 'package:escout/pages/activation/activateaccount.dart';
 import 'package:escout/pages/forgotpassword/forgotpasswordpage.dart';
 import 'package:escout/pages/homepage/temppage.dart';
 import 'package:flutter/material.dart';
@@ -216,7 +218,35 @@ class _SignInPageState extends State<SignInPage> {
                           )),
                         ),
                       ),
-                    )
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ActivateAccountInitial()),
+                          );
+                        },
+                        child: const Text(
+                          'Activate your account',
+                          style: TextStyle(
+                            color: Color(0xFFFFFFFF),
+                            fontSize: 13,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline,
+                            decorationColor: Color(0xFFFFFFFF),
+                            height: 0,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
