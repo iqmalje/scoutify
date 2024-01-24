@@ -547,22 +547,37 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 10,
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Arial',
                   fontWeight: FontWeight.w600,
                   height: 0,
                 ),
               ),
               const SizedBox(
-                height: 3,
+                height: 2,
               ),
               const Text(
                 'Scout Association of Malaysia Johor State',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 8,
+                  fontSize: 9,
                   fontStyle: FontStyle.italic,
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Arial',
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
+              ),
+              const SizedBox(
+                height: 2,
+              ),
+              const Text(
+                'Diperbadankan dibawah Akta Parlimen No.784 Tahun 1968 (Semakan 2016), Enacted under Parliament Act No.784 (Revised 2016)',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 3,
+                  fontStyle: FontStyle.normal,
+                  fontFamily: 'Arial',
                   fontWeight: FontWeight.w400,
                   height: 0,
                 ),
@@ -588,7 +603,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: SizedBox(
-                  height: 30,
+                  height: 45,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -599,12 +614,16 @@ class _ProfilePageState extends State<ProfilePage> {
                           maxLines: 2,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 20,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
+                            fontSize: 34,
+                            fontFamily: 'Arial',
+                            fontWeight: FontWeight.w700,
                             height: 0,
+                            letterSpacing: -1.50,
                           ),
                         ),
+                      ),
+                      const SizedBox(
+                        width: 5,
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
@@ -612,7 +631,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           if (account.is_member) {
                             return const Icon(
                               Icons.verified,
-                              size: 20,
+                              size: 18,
                               color: Colors.white,
                             );
                           } else {
@@ -629,7 +648,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Flexible(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                  padding: const EdgeInsets.only(left: 15, right: 15),
                   child: AutoSizeText(
                     account.position,
                     textAlign: TextAlign.center,
@@ -637,7 +656,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Arial',
                       fontWeight: FontWeight.w500,
                       height: 0,
                     ),
@@ -658,7 +677,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Arial',
                               fontWeight: FontWeight.w500,
                               height: 0,
                             ),
@@ -672,7 +691,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Arial',
                               fontWeight: FontWeight.w500,
                               height: 0,
                             ),
@@ -693,7 +712,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Arial',
                               fontWeight: FontWeight.w500,
                               height: 0,
                             ),
@@ -707,7 +726,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Arial',
                               fontWeight: FontWeight.w500,
                               height: 0,
                             ),
@@ -728,7 +747,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Arial',
                               fontWeight: FontWeight.w500,
                               height: 0,
                             ),
@@ -739,7 +758,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Arial',
                             fontWeight: FontWeight.w500,
                             height: 0,
                           ),
@@ -759,7 +778,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Arial',
                               fontWeight: FontWeight.w500,
                               height: 0,
                             ),
@@ -770,7 +789,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Arial',
                             fontWeight: FontWeight.w500,
                             height: 0,
                           ),
@@ -781,7 +800,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 12,
               ),
               Container(
                 width: 190,
@@ -798,8 +817,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: TextStyle(
                       color: Color(0xFF3B3F65),
                       fontSize: 12,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Arial',
+                      fontWeight: FontWeight.w600,
                       height: 0,
                     ),
                   ),

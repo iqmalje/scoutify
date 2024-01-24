@@ -132,7 +132,7 @@ class _ActivityPageState extends State<ActivityPage> {
                           width: 140,
                           height: 30,
                           decoration: ShapeDecoration(
-                            color: const Color.fromARGB(255, 238, 238, 238),
+                            color: const Color(0xFF2E3B78),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5)),
                           ),
@@ -142,7 +142,7 @@ class _ActivityPageState extends State<ActivityPage> {
                               Text(
                                 "${monthName[selectedDate.month - 1]} ${selectedDate.year.toString().substring(2)}",
                                 style: const TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontSize: 14,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
@@ -151,7 +151,7 @@ class _ActivityPageState extends State<ActivityPage> {
                               const SizedBox(width: 5),
                               const Icon(
                                 Icons.calendar_today,
-                                color: Colors.black,
+                                color: Colors.white,
                                 size: 16,
                               ),
                             ],
@@ -222,7 +222,6 @@ class _ActivityPageState extends State<ActivityPage> {
         child: Container(
           constraints: BoxConstraints(
             maxWidth: MediaQuery.sizeOf(context).width * 0.9,
-            maxHeight: 250,
           ),
           decoration: ShapeDecoration(
             color: Colors.white,
@@ -249,7 +248,7 @@ class _ActivityPageState extends State<ActivityPage> {
                     Text(
                       item.category,
                       style: const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.bold),
+                          fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       width: 5,
@@ -290,17 +289,23 @@ class _ActivityPageState extends State<ActivityPage> {
                   ),
                 ],
               ),
+              const SizedBox(height: 5),
               Padding(
                 padding: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width * 0.6),
                 child: Text(
                   DateFormat('dd/MM/yyyy').format(item.created_at),
                   style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
+                    color: Color.fromARGB(255, 136, 136, 136),
+                    fontSize: 10,
+                    fontStyle: FontStyle.italic,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w400,
+                    height: 0,
                   ),
                 ),
-              )
+              ),
+              const SizedBox(height: 10)
             ],
           ),
         ),
