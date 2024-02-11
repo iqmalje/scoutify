@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:escout/backend/backend.dart';
 import 'package:escout/components/components.dart';
 import 'package:escout/model/account.dart';
+import 'package:escout/model/chat.dart';
+import 'package:escout/pages/account/profileguideline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -120,26 +122,36 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                 const SizedBox(
                   height: 5,
                 ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.info,
-                      color: Colors.red,
-                      size: 15,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      'Guideline upload profile picture',
-                      style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 11,
-                          fontStyle: FontStyle.italic),
-                    )
-                  ],
+                Align(
+                  alignment: Alignment.center,
+                  child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProfilePictureGuideline(
+                                  account: account,
+                                )));
+                      },
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.info,
+                            color: Colors.red,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'Guideline upload profile picture',
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 11,
+                                fontStyle: FontStyle.italic),
+                          ),
+                        ],
+                      )),
                 ),
                 const SizedBox(
                   height: 40,
