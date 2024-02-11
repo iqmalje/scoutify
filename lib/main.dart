@@ -57,11 +57,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/signin': (context) => const SignInPage(),
       },
-      home: isSignedIn
-          ? const TempPage()
-          : VerifyResetPassword(
-              email: 'kote@gmail.com',
-            ),
+      home: isSignedIn ? const TempPage() : const SignInPage(),
     );
   }
 }

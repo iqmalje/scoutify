@@ -16,7 +16,7 @@ class Account {
       position,
       cardid,
       display_name;
-  late bool is_member;
+  late bool is_member, is_activated;
   late DateTime created_at;
 
   //build constructor that accepts map
@@ -34,6 +34,7 @@ class Account {
     position = item['position'];
     cardid = item['cardid'] ??= 'None';
     is_member = item['is_member'];
+    is_activated = item['activated'];
     created_at =
         DateTime.parse(item['created_at']).add(const Duration(hours: 8));
     display_name = item['card_name'];

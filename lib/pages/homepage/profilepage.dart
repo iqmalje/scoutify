@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:escout/backend/backend.dart';
 import 'package:escout/model/account.dart';
+import 'package:escout/pages/account/manageaccount.dart';
+import 'package:escout/pages/account/scoutid.dart';
 import 'package:escout/pages/forgotpassword/verifyOTP.dart';
 import 'package:escout/pages/misc/officers.dart';
 import 'package:flutter/material.dart';
@@ -31,9 +33,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     future: SupabaseB().getProfileInfo(),
                     builder: (context, snapshot) {
                       if (snapshot.data == null) {
+                        print('loading');
                         return const CircularProgressIndicator();
                       }
-
+                      print(snapshot.data!.image_url);
                       if (SupabaseB.isAdminToggled &&
                           snapshot.data!.roles == 'ADMIN') {
                         fullname.text = 'PPM NEGERI JOHOR';
@@ -158,6 +161,106 @@ class _ProfilePageState extends State<ProfilePage> {
                             if (snapshot.data!.roles != 'ADMIN') {
                               return Column(
                                 children: [
+                                  Builder(builder: (context) {
+                                    if (!snapshot.data!.is_activated) {
+                                      return Column(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ScoutIDPage(
+                                                            account:
+                                                                snapshot.data!,
+                                                          )));
+                                              setState(() {});
+                                            },
+                                            child: Container(
+                                              width: MediaQuery.sizeOf(context)
+                                                      .width *
+                                                  0.7,
+                                              constraints: const BoxConstraints(
+                                                  minHeight: 50),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color:
+                                                      const Color(0xFFF5F5F5),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        offset:
+                                                            const Offset(0, 2),
+                                                        blurRadius: 2,
+                                                        color: Colors.black
+                                                            .withOpacity(0.25))
+                                                  ]),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 15.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    const Icon(
+                                                      Icons.privacy_tip,
+                                                      color: Colors.red,
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Flexible(
+                                                      // child: Text(
+                                                      //   'You have not updated your Johor Scout Digital ID. Please update your information below.',
+                                                      //   maxLines: 10,
+                                                      //   style: TextStyle(
+                                                      //       fontFamily: 'Poppins',
+                                                      //       fontSize: 9),
+                                                      // ),
+                                                      child: RichText(
+                                                        text: const TextSpan(
+                                                            text:
+                                                                'You have not updated your Johor Scout Digital ID. Please update your information below. ',
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                fontSize: 9,
+                                                                color: Colors
+                                                                    .black),
+                                                            children: [
+                                                              TextSpan(
+                                                                  text:
+                                                                      'Click here',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontFamily:
+                                                                        'Poppins',
+                                                                    fontSize:
+                                                                        10,
+                                                                    color: Color(
+                                                                        0xFF0066FF),
+                                                                    decoration:
+                                                                        TextDecoration
+                                                                            .underline,
+                                                                  ))
+                                                            ]),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                        ],
+                                      );
+                                    } else {
+                                      return Container();
+                                    }
+                                  }),
                                   const Text(
                                     'JOHOR SCOUT DIGITAL ID',
                                     style: TextStyle(
@@ -382,6 +485,56 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           InkWell(
                             onTap: () {
+                              // Navigator.of(context).push(MaterialPageRoute(
+                              //     builder: (context) =>
+                              //         VerifyResetPassword(email: email.text)));
+
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ManageAccountPage(
+                                        account: snapshot.data!,
+                                      )));
+                              setState(() {});
+                            },
+                            child: Ink(
+                              width: MediaQuery.sizeOf(context).width * 0.8,
+                              height: 40,
+                              decoration: ShapeDecoration(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5)),
+                                shadows: const [
+                                  BoxShadow(
+                                    color: Color(0x3F000000),
+                                    blurRadius: 2,
+                                    offset: Offset(0, 1),
+                                    spreadRadius: 0,
+                                  )
+                                ],
+                              ),
+                              child: Center(
+                                child: SizedBox(
+                                  width:
+                                      MediaQuery.sizeOf(context).width * 0.8 -
+                                          20,
+                                  child: const Text(
+                                    'Manage Account',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w500,
+                                      height: 0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          InkWell(
+                            onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) =>
                                       VerifyResetPassword(email: email.text)));
@@ -456,38 +609,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           const SizedBox(
                             height: 15,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      const OfficersNearbyPage()));
-                            },
-                            child: Ink(
-                              width: MediaQuery.sizeOf(context).width * 0.8,
-                              height: 40,
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFF3B4367),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  'Officers Nearby',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w600,
-                                    height: 0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 25,
                           ),
                           Container(
                             width: MediaQuery.sizeOf(context).width * 0.8,
@@ -595,7 +716,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 child: CircleAvatar(
-                    backgroundImage: NetworkImage(account.image_url)),
+                    backgroundImage: NetworkImage('${account.image_url}?v=${DateTime.now().millisecondsSinceEpoch}')),
               ),
               const SizedBox(
                 height: 14,

@@ -25,6 +25,45 @@ class SupabaseB {
     return activities;
   }
 
+  Future<void> updateDisplayName(String displayName) async {
+    String userid = supabase.auth.currentUser!.id;
+
+    await supabase
+        .from('accounts')
+        .update({'card_name': displayName}).eq('accountid', userid);
+  }
+
+  /// This function may accept any file, but please properly pass it through CroppedFile implementation
+  /// to ensure the picture selected is perfect
+  /// Returns new path of the image
+  Future<String> updateDigitalPicture(File file) async {
+    String userid = supabase.auth.currentUser!.id;
+
+    try {
+      await supabase.storage
+          .from('profile_pic')
+          .upload('$userid/profilepic.png', file);
+    } catch (e) {
+      // file has already existed
+      await supabase.storage
+          .from('profile_pic')
+          .update('$userid/profilepic.png', file);
+    }
+
+    //get url
+    String profileurl = supabase.storage
+        .from('profile_pic')
+        .getPublicUrl('$userid/profilepic.png');
+
+    // update profile to db
+    await supabase
+        .from('accounts')
+        .update({'image_url': profileurl}).eq('accountid', userid);
+
+    print('UPDATED = ');
+    return profileurl;
+  }
+
   Future<List<dynamic>> getChatsAdmin() async {
     // return all chat that involves current user
 
