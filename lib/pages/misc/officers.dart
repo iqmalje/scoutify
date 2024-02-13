@@ -1,5 +1,5 @@
-import 'package:escout/backend/backend.dart';
-import 'package:escout/pages/misc/chatpage.dart';
+import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/pages/misc/chatpage.dart';
 import 'package:flutter/material.dart';
 
 class OfficersNearbyPage extends StatefulWidget {

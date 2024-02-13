@@ -1,5 +1,5 @@
-import 'package:escout/backend/backend.dart';
-import 'package:escout/model/activity.dart';
+import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/model/activity.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

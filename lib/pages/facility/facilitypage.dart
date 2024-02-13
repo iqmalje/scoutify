@@ -1,4 +1,4 @@
-import 'package:escout/pages/facility/addFacility.dart';
+import 'package:scoutify/pages/facility/addFacility.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
@@ -229,8 +229,7 @@ class _FacilityPageState extends State<FacilityPage> {
                     // Navigate to the second page
                     Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => addFacilityPage()),
+                  MaterialPageRoute(builder: (context) => addFacilityPage()),
                 ),
                 child: Container(
                   width: 55,

@@ -1,4 +1,4 @@
-import 'package:escout/backend/backend.dart';
+import 'package:scoutify/backend/backend.dart';
 import 'package:flutter/material.dart';
 
 class AttendanceTest extends StatefulWidget {
@@ -27,7 +27,6 @@ class _AttendanceTestState extends State<AttendanceTest> {
       if (mounted) {
         setState(() {
           attendance = event;
-          
         });
       }
     });
@@ -46,8 +45,6 @@ class _AttendanceTestState extends State<AttendanceTest> {
               focusNode: fn,
               controller: card,
               onSubmitted: (value) async {
-                
-
                 //lets check db
                 SupabaseB().addAttendance(activityid, value);
                 card.clear();

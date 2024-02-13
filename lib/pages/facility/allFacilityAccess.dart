@@ -1,5 +1,5 @@
-import 'package:escout/model/facility.dart';
-import 'package:escout/pages/facility/FacilityAccessedInformation.dart';
+import 'package:scoutify/model/facility.dart';
+import 'package:scoutify/pages/facility/FacilityAccessedInformation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

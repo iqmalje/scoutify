@@ -1,6 +1,6 @@
-import 'package:escout/backend/backend.dart';
-import 'package:escout/model/facility.dart';
-import 'package:escout/pages/facility/allFacilityAccess.dart';
+import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/model/facility.dart';
+import 'package:scoutify/pages/facility/allFacilityAccess.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

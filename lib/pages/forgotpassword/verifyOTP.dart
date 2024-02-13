@@ -2,8 +2,8 @@
 
 import 'dart:async';
 
-import 'package:escout/backend/backend.dart';
-import 'package:escout/pages/forgotpassword/resetpassword.dart';
+import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/pages/forgotpassword/resetpassword.dart';
 import 'package:flutter/material.dart';
 
 class VerifyResetPassword extends StatefulWidget {

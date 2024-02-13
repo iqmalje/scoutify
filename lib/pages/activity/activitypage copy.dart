@@ -1,7 +1,7 @@
-import 'package:escout/backend/backend.dart';
-import 'package:escout/model/activity.dart';
-import 'package:escout/pages/activity/createactivitypage.dart';
-import 'package:escout/pages/activity/detailsactivity.dart';
+import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/model/activity.dart';
+import 'package:scoutify/pages/activity/createactivitypage.dart';
+import 'package:scoutify/pages/activity/detailsactivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_month_picker/flutter_month_picker.dart';
 import 'package:intl/intl.dart';

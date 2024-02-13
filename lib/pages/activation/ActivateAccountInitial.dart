@@ -1,5 +1,5 @@
-import 'package:escout/components/components.dart';
-import 'package:escout/pages/activation/activateaccountform.dart';
+import 'package:scoutify/components/components.dart';
+import 'package:scoutify/pages/activation/activateaccountform.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 

@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:escout/model/account.dart';
-import 'package:escout/model/activity.dart';
-import 'package:escout/model/facility.dart';
+import 'package:scoutify/model/account.dart';
+import 'package:scoutify/model/activity.dart';
+import 'package:scoutify/model/facility.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseB {

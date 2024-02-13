@@ -1,9 +1,9 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:escout/backend/backend.dart';
-import 'package:escout/model/activity.dart';
-import 'package:escout/pages/activity/createactivitypage.dart';
-import 'package:escout/pages/attendance/attendancePage3.dart';
+import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/model/activity.dart';
+import 'package:scoutify/pages/activity/createactivitypage.dart';
+import 'package:scoutify/pages/attendance/attendancePage3.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -35,12 +35,22 @@ class _DetailsActivityState extends State<DetailsActivity> {
     'December',
   ];
 
+  List<String> monthAbbreviations = [];
+
+  @override
+  void initState() {
+    monthAbbreviations =
+        monthName.map((month) => month.substring(0, 3)).toList();
+    super.initState();
+  }
+
   List<DateTime> daysInvolved = [];
   @override
   Widget build(BuildContext context) {
     return Container(
       color: const Color(0xFF2E3B78),
       child: SafeArea(
+        bottom: false,
         child: Scaffold(
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(100),
@@ -107,32 +117,59 @@ class _DetailsActivityState extends State<DetailsActivity> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(3)),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 10,
-                                  height: 10,
-                                  decoration: const ShapeDecoration(
-                                    color: Colors.black,
-                                    shape: OvalBorder(),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 15,
+                              child: Row(
+                                children: [
+                                  const SizedBox(
+                                    width: 5,
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  activity.category,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w400,
-                                    height: 0,
+                                  Text(
+                                    activity.category,
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                )
-                              ],
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  SizedBox(
+                                      height: 15,
+                                      child: activity.category == "MEETING"
+                                          ? Image.asset(
+                                              "assets/icons/meeting_icon.png")
+                                          : Image.asset(
+                                              "assets/icons/camping_icon.png")),
+                                ],
+                              ),
                             ),
+                            // child: Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     Container(
+                            //       width: 10,
+                            //       height: 10,
+                            //       decoration: const ShapeDecoration(
+                            //         color: Colors.black,
+                            //         shape: OvalBorder(),
+                            //       ),
+                            //     ),
+                            //     const SizedBox(
+                            //       width: 5,
+                            //     ),
+                            //     Text(
+                            //       activity.category,
+                            //       style: const TextStyle(
+                            //         color: Colors.black,
+                            //         fontSize: 12,
+                            //         fontFamily: 'Poppins',
+                            //         fontWeight: FontWeight.w400,
+                            //         height: 0,
+                            //       ),
+                            //     )
+                            //   ],
+                            // ),
                           ),
                         ),
                       ),
@@ -206,7 +243,8 @@ class _DetailsActivityState extends State<DetailsActivity> {
                                 width: 10,
                               ),
                               Text(
-                                '${activity.startdate.day} - ${activity.enddate.day} ${monthName[activity.enddate.month - 1]} ${activity.enddate.year}',
+                                dateFormatter(
+                                    activity.startdate, activity.enddate),
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,
@@ -549,6 +587,16 @@ class _DetailsActivityState extends State<DetailsActivity> {
         ),
       ),
     );
+  }
+
+  String dateFormatter(DateTime startdate, DateTime enddate) {
+    if (startdate.day == enddate.day &&
+        startdate.month == enddate.month &&
+        startdate.year == enddate.year) {
+      return '${startdate.day} ${monthAbbreviations[startdate.month - 1]} ${startdate.year}';
+    } else {
+      return '${activity.startdate.day} ${monthAbbreviations[activity.startdate.month - 1]} - ${activity.enddate.day} ${monthAbbreviations[activity.enddate.month - 1]} ${activity.enddate.year}';
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-name: escout
+name: scoutify
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -45,6 +45,8 @@ dependencies:
   flutter_month_picker: ^0.0.2
   mask_text_input_formatter: ^2.8.0
   image_cropper: ^5.0.1
+  flutter_launcher_icons: ^0.13.1
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:

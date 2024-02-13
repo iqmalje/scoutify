@@ -1,9 +1,9 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:escout/pages/activity/activitypage%20copy.dart';
-import 'package:escout/pages/forgotpassword/verifyOTP.dart';
-import 'package:escout/pages/homepage/temppage.dart';
-import 'package:escout/pages/signin/signinpage.dart';
+import 'package:scoutify/pages/activity/activitypage%20copy.dart';
+import 'package:scoutify/pages/forgotpassword/verifyOTP.dart';
+import 'package:scoutify/pages/homepage/temppage.dart';
+import 'package:scoutify/pages/signin/signinpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:nfc_manager/nfc_manager.dart';
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Scoutify App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(

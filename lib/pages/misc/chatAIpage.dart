@@ -1,5 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:escout/model/chat.dart';
+import 'package:scoutify/model/chat.dart';
 import 'package:flutter/material.dart';
 
 class ChatAIPage extends StatefulWidget {

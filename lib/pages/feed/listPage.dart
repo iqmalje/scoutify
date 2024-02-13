@@ -1,7 +1,8 @@
-import 'package:escout/backend/backend.dart';
-import 'package:escout/model/activity.dart';
-import 'package:escout/pages/feed/createFeedPage.dart';
-import 'package:escout/pages/homepage/DetailsProgram.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/model/activity.dart';
+import 'package:scoutify/pages/feed/createFeedPage.dart';
+import 'package:scoutify/pages/homepage/DetailsProgram.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -105,7 +106,10 @@ Widget _appBar(context) {
       height: 90,
       width: MediaQuery.of(context).size.width,
       color: const Color(0xFF2E3B78),
-      child: Image.asset('assets/images/escout_logo_panjang.png'));
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 10),
+        child: Image.asset('assets/images/Scoutify_FULL.png'),
+      ));
 }
 
 Widget buildAPost(BuildContext context, Activity item) {
@@ -195,46 +199,16 @@ Widget buildAPost(BuildContext context, Activity item) {
                   Positioned(
                     top: 8,
                     right: 9,
-                    child: Container(
-                      width: 90,
-                      height: 23,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(6),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 15,
+                      child: Image.asset(
+                        item.category == 'CAMPING'
+                            ? 'assets/icons/camping_icon.png'
+                            : 'assets/icons/meeting_icon.png',
+                        width: 35,
+                        height: 35,
                       ),
-                      child: Row(children: <Widget>[
-                        const SizedBox(width: 7),
-
-                        //event type: name
-                        Text(
-                          item.category,
-                          style: const TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'Poppins',
-                            color: Colors.black,
-                            letterSpacing: .3,
-                          ),
-                        ),
-
-                        //event type: colored-circle label
-                        // Container(
-                        //   width: 10,
-                        //   height: 10,
-                        //   decoration: BoxDecoration(
-                        //     color: const Color.fromRGBO(48, 46, 132, 100),
-                        //     borderRadius: BorderRadius.circular(100),
-                        //   ),
-                        // ),
-                        const SizedBox(width: 7),
-
-                        // icon category
-                        Container(
-                            width: 15,
-                            height: 15,
-                            child:
-                                Image.asset('assets/images/camping_icon.png')),
-                      ]),
                     ),
                   ),
                 ]),

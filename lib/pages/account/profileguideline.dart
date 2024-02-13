@@ -1,6 +1,6 @@
-import 'package:escout/components/components.dart';
-import 'package:escout/model/account.dart';
-import 'package:escout/pages/account/scoutid.dart';
+import 'package:scoutify/components/components.dart';
+import 'package:scoutify/model/account.dart';
+import 'package:scoutify/pages/account/scoutid.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePictureGuideline extends StatefulWidget {
@@ -19,7 +19,8 @@ class _ProfilePictureGuidelineState extends State<ProfilePictureGuideline> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ScoutifyComponents().normalAppBar('Manage Account', context),
+      appBar:
+          ScoutifyComponents().appBarWithBackButton('Manage Account', context),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(

@@ -1,4 +1,4 @@
-import 'package:escout/pages/attendance/AttendanceInformation.dart';
+import 'package:scoutify/pages/attendance/AttendanceInformation.dart';
 import 'package:flutter/material.dart';
 
 import '../../backend/backend.dart';

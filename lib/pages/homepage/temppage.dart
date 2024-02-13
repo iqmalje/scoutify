@@ -1,8 +1,8 @@
-import 'package:escout/pages/activity/activitypage copy.dart';
-import 'package:escout/pages/feed/listPage.dart';
-import 'package:escout/pages/homepage/facilitypage.dart';
-import 'package:escout/pages/homepage/profilepage.dart';
-import 'package:escout/pages/misc/chatAIpage.dart';
+import 'package:scoutify/pages/activity/activitypage copy.dart';
+import 'package:scoutify/pages/feed/listPage.dart';
+import 'package:scoutify/pages/homepage/facilitypage.dart';
+import 'package:scoutify/pages/homepage/profilepage.dart';
+import 'package:scoutify/pages/misc/chatAIpage.dart';
 import 'package:flutter/material.dart';
 
 //This tempage is responsible for hosting multiple pages that user can click through using the navbar

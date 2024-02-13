@@ -1,6 +1,6 @@
 // ignore_for_file: no_logic_in_create_state, must_be_immutable
 
-import 'package:escout/backend/backend.dart';
+import 'package:scoutify/backend/backend.dart';
 import 'package:flutter/material.dart';
 
 class ResetPasswordPage extends StatefulWidget {

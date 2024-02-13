@@ -1,8 +1,8 @@
-import 'package:escout/backend/backend.dart';
-import 'package:escout/model/facility.dart';
-import 'package:escout/pages/facility/addFacility.dart';
-import 'package:escout/pages/facility/detailsFacilityAdmin.dart';
-import 'package:escout/pages/facility/detailsFacilityScout.dart';
+import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/model/facility.dart';
+import 'package:scoutify/pages/facility/addFacility.dart';
+import 'package:scoutify/pages/facility/detailsFacilityAdmin.dart';
+import 'package:scoutify/pages/facility/detailsFacilityScout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

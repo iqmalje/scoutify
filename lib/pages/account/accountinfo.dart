@@ -1,5 +1,5 @@
-import 'package:escout/components/components.dart';
-import 'package:escout/model/account.dart';
+import 'package:scoutify/components/components.dart';
+import 'package:scoutify/model/account.dart';
 import 'package:flutter/material.dart';
 
 class AccountInfoPage extends StatefulWidget {
@@ -16,7 +16,8 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ScoutifyComponents().normalAppBar('Account Information', context),
+      appBar:
+          ScoutifyComponents().appBarWithBackButton('Account Info', context),
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.sizeOf(context).width * 0.05),
@@ -176,7 +177,7 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
             ),
             ScoutifyComponents().filledNormalButton(
               context,
-              'Change Email',
+              'Delete Account',
               onTap: () {},
             )
           ],

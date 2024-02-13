@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:escout/backend/backend.dart';
-import 'package:escout/pages/feed/createFeedPage.dart';
+import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/pages/feed/createFeedPage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -146,39 +146,51 @@ class _DetailsprogramState extends State<Detailsprogram> {
                       Positioned(
                         top: 8,
                         right: 9,
-                        child: Container(
-                          width: 90,
-                          height: 23,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(6),
+
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 15,
+                          child: Image.asset(
+                            activity.category == 'CAMPING'
+                                ? 'assets/icons/camping_icon.png'
+                                : 'assets/icons/meeting_icon.png',
+                            width: 35,
+                            height: 35,
                           ),
-                          child: Row(children: <Widget>[
-                            const SizedBox(width: 7),
-
-                            //event type: colored-circle label
-                            Container(
-                              width: 10,
-                              height: 10,
-                              decoration: BoxDecoration(
-                                color: const Color.fromRGBO(48, 46, 132, 100),
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                            ),
-                            const SizedBox(width: 7),
-
-                            //event type: name
-                            Text(
-                              activity.category,
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                letterSpacing: .3,
-                              ),
-                            )
-                          ]),
                         ),
+                        // child: Container(
+                        //   width: 90,
+                        //   height: 23,
+                        //   decoration: BoxDecoration(
+                        //     color: Colors.white,
+                        //     borderRadius: BorderRadius.circular(6),
+                        //   ),
+                        //   child: Row(children: <Widget>[
+                        //     const SizedBox(width: 7),
+
+                        //     //event type: colored-circle label
+                        //     Container(
+                        //       width: 10,
+                        //       height: 10,
+                        //       decoration: BoxDecoration(
+                        //         color: const Color.fromRGBO(48, 46, 132, 100),
+                        //         borderRadius: BorderRadius.circular(100),
+                        //       ),
+                        //     ),
+                        //     const SizedBox(width: 7),
+
+                        //     //event type: name
+                        //     Text(
+                        //       activity.category,
+                        //       style: const TextStyle(
+                        //         fontSize: 10,
+                        //         fontWeight: FontWeight.bold,
+                        //         color: Colors.black,
+                        //         letterSpacing: .3,
+                        //       ),
+                        //     )
+                        //   ]),
+                        // ),
                       ),
                     ]),
                   ),
@@ -245,8 +257,11 @@ class _DetailsprogramState extends State<Detailsprogram> {
                               ),
                               Text(
                                 //'30 Oct - 2 Nov 2023',
+                                // if same day, just display a single date, how?
 
-                                '${activity.startdate.day} ${monthAbbreviations[activity.startdate.month - 1]} - ${activity.enddate.day} ${monthAbbreviations[activity.enddate.month - 1]} ${activity.enddate.year}',
+                                // '${activity.startdate.day} ${monthAbbreviations[activity.startdate.month - 1]} - ${activity.enddate.day} ${monthAbbreviations[activity.enddate.month - 1]} ${activity.enddate.year}',
+                                dateFormatter(
+                                    activity.startdate, activity.enddate),
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,
@@ -257,75 +272,75 @@ class _DetailsprogramState extends State<Detailsprogram> {
                               )
                             ],
                           ),
-                          Row(
-                            children: [
-                              const Icon(Icons.paid_rounded),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                activity.fee == null
-                                    ? 'Free'
-                                    : activity.fee! != 0
-                                        ? 'RM ${(activity.fee!).toStringAsFixed(2)}'
-                                        : 'Free',
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const Icon(Icons.calendar_today_rounded),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Builder(builder: (context) {
-                                if (activity.registrationenddate == null) {
-                                  return const Text(
-                                    'Open',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 12,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      height: 0,
-                                    ),
-                                  );
-                                } else if (DateTime.now()
-                                        .millisecondsSinceEpoch >
-                                    activity.registrationenddate!
-                                        .millisecondsSinceEpoch) {
-                                  return const Text(
-                                    'Closed',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 12,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      height: 0,
-                                    ),
-                                  );
-                                } else {
-                                  return Text(
-                                    'Open until ${activity.registrationenddate!.day} ${monthName[activity.registrationenddate!.month - 1]} ${activity.registrationenddate!.year}',
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 12,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      height: 0,
-                                    ),
-                                  );
-                                }
-                              })
-                            ],
-                          )
+                          // Row(
+                          //   children: [
+                          //     const Icon(Icons.paid_rounded),
+                          //     const SizedBox(
+                          //       width: 10,
+                          //     ),
+                          //     Text(
+                          //       activity.fee == null
+                          //           ? 'Free'
+                          //           : activity.fee! != 0
+                          //               ? 'RM ${(activity.fee!).toStringAsFixed(2)}'
+                          //               : 'Free',
+                          //       style: const TextStyle(
+                          //         color: Colors.black,
+                          //         fontSize: 12,
+                          //         fontFamily: 'Poppins',
+                          //         fontWeight: FontWeight.w400,
+                          //         height: 0,
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
+                          // Row(
+                          //   children: [
+                          //     const Icon(Icons.calendar_today_rounded),
+                          //     const SizedBox(
+                          //       width: 10,
+                          //     ),
+                          //     Builder(builder: (context) {
+                          //       if (activity.registrationenddate == null) {
+                          //         return const Text(
+                          //           'Open',
+                          //           style: TextStyle(
+                          //             color: Colors.black,
+                          //             fontSize: 12,
+                          //             fontFamily: 'Poppins',
+                          //             fontWeight: FontWeight.w400,
+                          //             height: 0,
+                          //           ),
+                          //         );
+                          //       } else if (DateTime.now()
+                          //               .millisecondsSinceEpoch >
+                          //           activity.registrationenddate!
+                          //               .millisecondsSinceEpoch) {
+                          //         return const Text(
+                          //           'Closed',
+                          //           style: TextStyle(
+                          //             color: Colors.black,
+                          //             fontSize: 12,
+                          //             fontFamily: 'Poppins',
+                          //             fontWeight: FontWeight.w400,
+                          //             height: 0,
+                          //           ),
+                          //         );
+                          //       } else {
+                          //         return Text(
+                          //           'Open until ${activity.registrationenddate!.day} ${monthName[activity.registrationenddate!.month - 1]} ${activity.registrationenddate!.year}',
+                          //           style: const TextStyle(
+                          //             color: Colors.black,
+                          //             fontSize: 12,
+                          //             fontFamily: 'Poppins',
+                          //             fontWeight: FontWeight.w400,
+                          //             height: 0,
+                          //           ),
+                          //         );
+                          //       }
+                          //     })
+                          //   ],
+                          // )
                         ],
                       ),
                     ),
@@ -513,5 +528,15 @@ class _DetailsprogramState extends State<Detailsprogram> {
         builder: (context) => CreateFeedPage(
               activity: activity,
             )));
+  }
+
+  String dateFormatter(DateTime startdate, DateTime enddate) {
+    if (startdate.day == enddate.day &&
+        startdate.month == enddate.month &&
+        startdate.year == enddate.year) {
+      return '${startdate.day} ${monthAbbreviations[startdate.month - 1]} ${startdate.year}';
+    } else {
+      return '${activity.startdate.day} ${monthAbbreviations[activity.startdate.month - 1]} - ${activity.enddate.day} ${monthAbbreviations[activity.enddate.month - 1]} ${activity.enddate.year}';
+    }
   }
 }

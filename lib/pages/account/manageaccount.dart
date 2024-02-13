@@ -1,7 +1,8 @@
-import 'package:escout/model/account.dart';
-import 'package:escout/pages/account/accountinfo.dart';
-import 'package:escout/pages/account/scoutid.dart';
-import 'package:escout/pages/account/scoutinfo.dart';
+import 'package:scoutify/components/components.dart';
+import 'package:scoutify/model/account.dart';
+import 'package:scoutify/pages/account/accountinfo.dart';
+import 'package:scoutify/pages/account/scoutid.dart';
+import 'package:scoutify/pages/account/scoutinfo.dart';
 import 'package:flutter/material.dart';
 
 class ManageAccountPage extends StatefulWidget {
@@ -18,30 +19,8 @@ class _ManageAccountPageState extends State<ManageAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: MediaQuery.sizeOf(context),
-        child: Container(
-          color: const Color(0xFF2E3B78),
-          child: SafeArea(
-            child: Container(
-              width: MediaQuery.sizeOf(context).width,
-              height: 90,
-              decoration: const BoxDecoration(color: Color(0xFF2E3B78)),
-              child: const Center(
-                child: Text(
-                  'Manage Account',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    fontSize: 24,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      appBar:
+          ScoutifyComponents().appBarWithBackButton('Manage Account', context),
       body: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 50),
         child: Column(

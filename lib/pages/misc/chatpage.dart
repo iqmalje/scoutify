@@ -1,4 +1,4 @@
-import 'package:escout/backend/backend.dart';
+import 'package:scoutify/backend/backend.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {

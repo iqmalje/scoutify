@@ -1,5 +1,5 @@
-import 'package:escout/pages/forgotpassword/verifyOTP.dart';
-import 'package:escout/pages/signin/signinpage.dart';
+import 'package:scoutify/pages/forgotpassword/verifyOTP.dart';
+import 'package:scoutify/pages/signin/signinpage.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasswordPage extends StatefulWidget {

@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:escout/backend/backend.dart';
-import 'package:escout/model/account.dart';
-import 'package:escout/pages/account/manageaccount.dart';
-import 'package:escout/pages/account/scoutid.dart';
-import 'package:escout/pages/forgotpassword/verifyOTP.dart';
-import 'package:escout/pages/misc/officers.dart';
+import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/model/account.dart';
+import 'package:scoutify/pages/account/manageaccount.dart';
+import 'package:scoutify/pages/account/scoutid.dart';
+import 'package:scoutify/pages/forgotpassword/verifyOTP.dart';
+import 'package:scoutify/pages/misc/officers.dart';
 import 'package:flutter/material.dart';
+import 'package:scoutify/pages/signin/signinpage.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -581,8 +582,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             onTap: () async {
                               await SupabaseB().signout();
 
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  '/signin', (context) => true);
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) => const SignInPage()),
+                                  (route) => false);
                             },
                             child: Ink(
                               width: MediaQuery.sizeOf(context).width * 0.8,
@@ -603,33 +606,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                     fontWeight: FontWeight.w600,
                                     height: 0,
                                   ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            width: MediaQuery.sizeOf(context).width * 0.8,
-                            height: 40,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                side: const BorderSide(
-                                    width: 1, color: Color(0xFFD9D9D9)),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Delete My Account',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xFF626262),
-                                  fontSize: 14,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w500,
-                                  height: 0,
                                 ),
                               ),
                             ),
@@ -716,7 +692,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 child: CircleAvatar(
-                    backgroundImage: NetworkImage('${account.image_url}?v=${DateTime.now().millisecondsSinceEpoch}')),
+                    backgroundImage: NetworkImage(
+                        '${account.image_url}?v=${DateTime.now().millisecondsSinceEpoch}')),
               ),
               const SizedBox(
                 height: 14,

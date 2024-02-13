@@ -1,8 +1,8 @@
 // ignore_for_file: no_logic_in_create_state, must_be_immutable, camel_case_types
 
-import 'package:escout/model/activity.dart';
-import 'package:escout/pages/attendance/recordAttendance.dart';
-import 'package:escout/pages/attendance/showAllParticipants.dart';
+import 'package:scoutify/model/activity.dart';
+import 'package:scoutify/pages/attendance/recordAttendance.dart';
+import 'package:scoutify/pages/attendance/showAllParticipants.dart';
 import 'package:flutter/material.dart';
 
 class attendancePage3 extends StatefulWidget {

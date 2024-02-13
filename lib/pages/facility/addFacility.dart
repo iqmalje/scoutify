@@ -2,8 +2,8 @@
 
 import 'dart:io';
 
-import 'package:escout/backend/backend.dart';
-import 'package:escout/model/facility.dart';
+import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/model/facility.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 

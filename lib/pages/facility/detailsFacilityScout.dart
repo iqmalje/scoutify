@@ -1,7 +1,7 @@
 //import 'package:facilitypage/facilityAccessed.dart';
-import 'package:escout/backend/backend.dart';
-import 'package:escout/model/facility.dart';
-import 'package:escout/pages/facility/facilityAccessedScout.dart';
+import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/model/facility.dart';
+import 'package:scoutify/pages/facility/facilityAccessedScout.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

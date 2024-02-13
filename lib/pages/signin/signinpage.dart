@@ -1,8 +1,8 @@
-import 'package:escout/backend/backend.dart';
-import 'package:escout/pages/activation/ActivateAccountInitial.dart';
-import 'package:escout/pages/activation/activateaccount.dart';
-import 'package:escout/pages/forgotpassword/forgotpasswordpage.dart';
-import 'package:escout/pages/homepage/temppage.dart';
+import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/pages/activation/ActivateAccountInitial.dart';
+import 'package:scoutify/pages/activation/activateaccount.dart';
+import 'package:scoutify/pages/forgotpassword/forgotpasswordpage.dart';
+import 'package:scoutify/pages/homepage/temppage.dart';
 import 'package:flutter/material.dart';
 
 class SignInPage extends StatefulWidget {
@@ -25,7 +25,11 @@ class _SignInPageState extends State<SignInPage> {
           children: [
             SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.35,
-                child: Image.asset('assets/images/Escout Logo.png')),
+                child: Image.asset(
+                  'assets/images/Scoutify_FULL_MAIN.png',
+                  width: 400,
+                  height: 400,
+                )),
             SingleChildScrollView(
               child: Container(
                 width: MediaQuery.sizeOf(context).width,
@@ -190,11 +194,17 @@ class _SignInPageState extends State<SignInPage> {
                             return;
                           }
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const TempPage()),
-                          );
+                          // //replace
+                          //                       Navigator.push(
+                          //                         context,
+                          //                         MaterialPageRoute(
+                          //                             builder: (context) => const TempPage()),
+                          //                       );
+
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const TempPage()),
+                              (route) => false);
                         },
                         child: Ink(
                           width: MediaQuery.sizeOf(context).width * 0.8,

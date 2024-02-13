@@ -1,4 +1,4 @@
-import 'package:escout/components/components.dart';
+import 'package:scoutify/components/components.dart';
 import 'package:flutter/material.dart';
 
 class SetPasswordActivation extends StatefulWidget {

@@ -198,6 +198,60 @@ class ScoutifyComponents {
     );
   }
 
+  PreferredSize appBarWithBackButton(String title, BuildContext context) {
+    return PreferredSize(
+      preferredSize: MediaQuery.sizeOf(context),
+      child: Container(
+        color: const Color(0xFF2E3B78),
+        child: SafeArea(
+          child: Container(
+            width: MediaQuery.sizeOf(context).width,
+            height: 90,
+            decoration: const BoxDecoration(color: Color(0xFF2E3B78)),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundColor: Colors.white,
+                      child: IconButton(
+                          disabledColor: Colors.white,
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back_ios_new,
+                            color: Color(0xFF3B3F65),
+                          )),
+                    ),
+                    const Spacer(),
+                    Transform.translate(
+                      offset: const Offset(-25, 0),
+                      child: Text(
+                        title,
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontSize: 24,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    Container()
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Container buildInputBoxWithEditButton(
       String title, TextEditingController controller, BuildContext context,
       {Function()? onTap}) {
