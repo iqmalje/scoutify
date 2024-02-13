@@ -45,7 +45,7 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
   Widget build(BuildContext context) {
     final node = FocusScope.of(context);
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment(0.00, -1.00),
           end: Alignment(0, 1),

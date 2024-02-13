@@ -30,29 +30,29 @@ class _SignInPageState extends State<SignInPage> {
                   width: 400,
                   height: 400,
                 )),
-            SingleChildScrollView(
-              child: Container(
-                width: MediaQuery.sizeOf(context).width,
-                height: MediaQuery.sizeOf(context).height * 0.65,
+            Container(
+              width: MediaQuery.sizeOf(context).width,
+              height: MediaQuery.sizeOf(context).height * 0.65,
 
-                decoration: const ShapeDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment(-0.00, -1.00),
-                    end: Alignment(0, 1),
-                    colors: [Color(0xFF2E3B78), Color(0xFF2C225B)],
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(45),
-                      topRight: Radius.circular(45),
-                    ),
+              decoration: const ShapeDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(-0.00, -1.00),
+                  end: Alignment(0, 1),
+                  colors: [Color(0xFF2E3B78), Color(0xFF2C225B)],
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(45),
+                    topRight: Radius.circular(45),
                   ),
                 ),
-                //The space of the widget for the left edge in the container
-                padding: EdgeInsets.only(
-                    left: MediaQuery.sizeOf(context).width * 0.15,
-                    right: MediaQuery.sizeOf(context).width * 0.15),
-                // All widget Column
+              ),
+              //The space of the widget for the left edge in the container
+              padding: EdgeInsets.only(
+                  left: MediaQuery.sizeOf(context).width * 0.15,
+                  right: MediaQuery.sizeOf(context).width * 0.15),
+              // All widget Column
+              child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

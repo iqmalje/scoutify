@@ -1,5 +1,8 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:scoutify/pages/activation/activateaccount.dart';
+import 'package:scoutify/pages/activation/confirmemail.dart';
+import 'package:scoutify/pages/activation/setpasswordpage.dart';
 import 'package:scoutify/pages/activity/activitypage%20copy.dart';
 import 'package:scoutify/pages/forgotpassword/verifyOTP.dart';
 import 'package:scoutify/pages/homepage/temppage.dart';
@@ -47,17 +50,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Scoutify App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 13, 63, 214)),
-        useMaterial3: true,
-      ),
-      routes: {
-        '/signin': (context) => const SignInPage(),
-      },
-      home: isSignedIn ? const TempPage() : const SignInPage(),
-    );
+        title: 'Scoutify App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color.fromARGB(255, 13, 63, 214)),
+          useMaterial3: true,
+        ),
+        routes: {
+          '/signin': (context) => const SignInPage(),
+        },
+        home: isSignedIn ? const TempPage() : const SignInPage());
   }
 }

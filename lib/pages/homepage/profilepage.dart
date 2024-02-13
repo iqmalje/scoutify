@@ -45,8 +45,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         email.text = 'ppmnegerijohor@gmail.com';
                       } else {
                         fullname.text = snapshot.data!.fullname;
-                        email.text = snapshot.data!.email;
-                        mobilenumber.text = snapshot.data!.phoneno;
+                        email.text = snapshot.data!.email == null
+                            ? 'No email yet!'
+                            : snapshot.data!.email!;
+                        mobilenumber.text =
+                            snapshot.data!.phoneno ??= 'No phone number yet!';
                       }
 
                       if (snapshot.data!.position.length > 40) {
@@ -125,8 +128,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                     email.text = 'ppmnegerijohor@gmail.com';
                                   } else {
                                     fullname.text = snapshot.data!.fullname;
-                                    email.text = snapshot.data!.email;
-                                    mobilenumber.text = snapshot.data!.phoneno;
+                                    email.text = snapshot.data!.email ??=
+                                        'No email yet!';
+                                    mobilenumber.text = snapshot.data!
+                                        .phoneno ??= 'No phone number yet!';
                                   }
                                 });
                               },

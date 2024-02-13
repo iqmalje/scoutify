@@ -1,4 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
+import 'package:scoutify/model/account.dart';
 import 'package:scoutify/pages/activation/activateaccountform.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -11,6 +15,7 @@ class ActivateAccountInitial extends StatefulWidget {
 }
 
 class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
+  TextEditingController ic = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,9 +24,9 @@ class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
         height: MediaQuery.sizeOf(context).height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment(0.00, -1.00),
-            end: Alignment(0, 1),
-            colors: [Color(0xFF2C225B), Color(0xFF2E3B78), Color(0xFF2E3B78)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF2C225B), Color(0xFF2E3B78)],
           ),
         ),
         child: SafeArea(
@@ -36,7 +41,9 @@ class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
                   backgroundColor: Colors.white,
                   child: IconButton(
                     padding: EdgeInsets.zero,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                     icon: const Icon(Icons.arrow_back_ios_new),
                     color: const Color(0xFF3B3F65),
                   ),
@@ -88,7 +95,7 @@ class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
                   height: 20,
                 ),
                 ScoutifyComponents().buildTextBox(
-                    controller: TextEditingController(),
+                    controller: ic,
                     formatters: [
                       MaskTextInputFormatter(
                           mask: '######-##-####',
@@ -105,9 +112,19 @@ class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
                     height: 60,
                     width: MediaQuery.sizeOf(context).width,
                     text: 'CONFIRM',
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ActivateAccountForm()));
+                    onTap: () async {
+                      // check db for existing IC
+                      try {
+                        Account account =
+                            await SupabaseB().selectAccountFromIC(ic.text);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ActivateAccountForm(
+                                  account: account,
+                                )));
+                      } on Exception catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(e.toString())));
+                      }
                     },
                     style: const TextStyle(
                         fontFamily: 'Poppins',

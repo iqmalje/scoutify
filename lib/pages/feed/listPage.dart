@@ -108,7 +108,7 @@ Widget _appBar(context) {
       color: const Color(0xFF2E3B78),
       child: Padding(
         padding: EdgeInsets.only(bottom: 10),
-        child: Image.asset('assets/images/Scoutify_FULL.png'),
+        child: Image.asset('assets/images/Scoutify_LOGO_NEW.png'),
       ));
 }
 

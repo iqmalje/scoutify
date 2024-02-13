@@ -1,14 +1,25 @@
+import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:flutter/material.dart';
+import 'package:scoutify/model/account.dart';
+import 'package:scoutify/pages/activation/confirmemail.dart';
 
 class ActivateAccountForm extends StatefulWidget {
-  const ActivateAccountForm({super.key});
+  Account account;
+  ActivateAccountForm({super.key, required this.account});
 
   @override
-  State<ActivateAccountForm> createState() => _ActivateAccountFormState();
+  State<ActivateAccountForm> createState() =>
+      _ActivateAccountFormState(account);
 }
 
 class _ActivateAccountFormState extends State<ActivateAccountForm> {
+  Account account;
+  _ActivateAccountFormState(this.account);
+
+  TextEditingController phone = TextEditingController(),
+      email = TextEditingController(),
+      confirmEmail = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,9 +42,9 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                     height: 10,
                   ),
                   ScoutifyComponents().buildTextBox(
-                      controller: TextEditingController(text: '123456-78-9012'),
+                      controller: TextEditingController(text: account.IC_no),
                       hint: '',
-                      prefixIcon: Icon(Icons.person_outline),
+                      prefixIcon: const Icon(Icons.person_outline),
                       border: Border.all(color: Colors.black),
                       readOnly: true),
                   const SizedBox(
@@ -44,10 +55,9 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                     height: 10,
                   ),
                   ScoutifyComponents().buildTextBox(
-                      controller:
-                          TextEditingController(text: 'BARDIENNNNNNNNNN'),
+                      controller: TextEditingController(text: account.fullname),
                       hint: '',
-                      prefixIcon: Icon(Icons.person_outline),
+                      prefixIcon: const Icon(Icons.person_outline),
                       border: Border.all(color: Colors.black),
                       readOnly: true),
                   const SizedBox(
@@ -58,9 +68,9 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                     height: 10,
                   ),
                   ScoutifyComponents().buildTextBox(
-                      controller: TextEditingController(),
+                      controller: phone,
                       hint: 'Phone number',
-                      prefixIcon: Icon(Icons.phone),
+                      prefixIcon: const Icon(Icons.phone),
                       border: Border.all(color: Colors.black),
                       readOnly: false),
                   const SizedBox(
@@ -71,9 +81,9 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                     height: 10,
                   ),
                   ScoutifyComponents().buildTextBox(
-                      controller: TextEditingController(),
+                      controller: email,
                       hint: 'Email',
-                      prefixIcon: Icon(Icons.person_outline),
+                      prefixIcon: const Icon(Icons.person_outline),
                       border: Border.all(color: Colors.black),
                       readOnly: false),
                   const SizedBox(
@@ -84,9 +94,9 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                     height: 10,
                   ),
                   ScoutifyComponents().buildTextBox(
-                      controller: TextEditingController(),
+                      controller: confirmEmail,
                       hint: 'Confirm email',
-                      prefixIcon: Icon(Icons.person_outline),
+                      prefixIcon: const Icon(Icons.person_outline),
                       border: Border.all(color: Colors.black),
                       readOnly: false),
                   const SizedBox(
@@ -96,8 +106,31 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                     height: 55,
                     width: MediaQuery.sizeOf(context).width,
                     text: 'CONFIRM',
-                    onTap: () {},
-                    color: Color(0xFF2E3B78),
+                    onTap: () async {
+                      if (email.text.isEmpty ||
+                          confirmEmail.text.isEmpty ||
+                          phone.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('All forms must be filled!')));
+                        return;
+                      }
+                      if (email.text != confirmEmail.text) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Email is not the same!')));
+                        return;
+                      }
+
+                      account.email = email.text;
+                      account.phoneno = phone.text;
+
+                      await SupabaseB().updateAccount(account);
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => ConfirmEmailActivationPage(
+                              email: account.email!)));
+                    },
+                    color: const Color(0xFF2E3B78),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,

@@ -3,10 +3,11 @@
 class Account {
   //class for account
 
+  late String? phoneno, email;
+
   late String accountid,
       fullname,
-      email,
-      phoneno,
+      IC_no,
       no_ahli,
       no_tauliah,
       unit,
@@ -26,6 +27,7 @@ class Account {
     email = item['email'];
     phoneno = item['phoneno'];
     no_ahli = item['no_ahli'];
+    IC_no = item['ic_no'];
     no_tauliah = item['no_tauliah'];
     unit = item['unit'];
     daerah = item['daerah'];

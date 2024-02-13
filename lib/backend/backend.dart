@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:scoutify/model/account.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:scoutify/model/facility.dart';
@@ -155,6 +156,23 @@ class SupabaseB {
   /// when opening the app again later.
   Future<void> signout() async {
     await supabase.auth.signOut();
+  }
+
+  Future<void> updateAccount(Account account) async {
+    await supabase.from('accounts').update({
+      'email': account.email,
+      'phoneno': account.phoneno,
+    }).eq('accountid', account.accountid);
+  }
+
+  Future<Account> selectAccountFromIC(String ICno) async {
+    var data =
+        await supabase.from('accounts').select('*').eq('ic_no', ICno).single();
+
+    // parse into acc
+    Account account = Account(data);
+    if (account.is_activated) throw Exception('Account is already activated!');
+    return account;
   }
 
   Future<void> deleteFacility(String facilityid) async {
