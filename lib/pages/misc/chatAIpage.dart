@@ -497,7 +497,7 @@ Widget _appBar(context) {
           width: 30,
         ),
         const Text(
-          "Let's Ask AI",
+          "Scoutify Chatbot",
           style: TextStyle(
             color: Colors.white,
             fontSize: 25,

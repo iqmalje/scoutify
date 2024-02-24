@@ -2,6 +2,7 @@ import 'package:scoutify/pages/activity/activitypage copy.dart';
 import 'package:scoutify/pages/feed/listPage.dart';
 import 'package:scoutify/pages/homepage/facilitypage.dart';
 import 'package:scoutify/pages/homepage/profilepage.dart';
+import 'package:scoutify/pages/inbox/inbox.dart';
 import 'package:scoutify/pages/misc/chatAIpage.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,8 @@ class TempPage extends StatefulWidget {
 class _TempPageState extends State<TempPage> {
   int index = 0; //chosen page
 
+  final pageController = PageController();
+
   final List<Widget> _pages = [
     const listPage(),
     const ActivityPage(),
@@ -26,7 +29,15 @@ class _TempPageState extends State<TempPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[index],
+      body: PageView(
+        onPageChanged: (value) {
+          setState(() {
+            index = value;
+          });
+        },
+        controller: pageController,
+        children: _pages,
+      ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(left: 30),
         child: Align(
@@ -68,9 +79,7 @@ class _TempPageState extends State<TempPage> {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(100),
                       onTap: () {
-                        setState(() {
-                          index = 0;
-                        });
+                        _changePage(0);
                       },
                       child: SizedBox(
                         width: 50,
@@ -107,9 +116,7 @@ class _TempPageState extends State<TempPage> {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(100),
                       onTap: () {
-                        setState(() {
-                          index = 1;
-                        });
+                        _changePage(1);
                       },
                       child: SizedBox(
                         width: 50,
@@ -145,9 +152,7 @@ class _TempPageState extends State<TempPage> {
                   Material(
                     child: InkWell(
                       onTap: () {
-                        setState(() {
-                          index = 2;
-                        });
+                        _changePage(2);
                       },
                       borderRadius: BorderRadius.circular(100),
                       child: SizedBox(
@@ -184,9 +189,7 @@ class _TempPageState extends State<TempPage> {
                   Material(
                     child: InkWell(
                       onTap: () {
-                        setState(() {
-                          index = 3;
-                        });
+                        _changePage(3);
                       },
                       borderRadius: BorderRadius.circular(100),
                       child: SizedBox(
@@ -222,5 +225,10 @@ class _TempPageState extends State<TempPage> {
         ),
       ),
     );
+  }
+
+  void _changePage(int index) {
+    pageController.animateToPage(index,
+        duration: const Duration(milliseconds: 500), curve: Curves.easeOutCirc);
   }
 }

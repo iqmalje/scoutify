@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
 import 'package:scoutify/pages/account/scoutid.dart';
@@ -218,9 +223,41 @@ class _ProfilePictureGuidelineState extends State<ProfilePictureGuideline> {
                   height: 50,
                   width: MediaQuery.sizeOf(context).width,
                   text: 'UPLOAD PROFILE',
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ScoutIDPage(account: account)));
+                  onTap: () async {
+                    XFile? imagePicked;
+                    imagePicked = await ImagePicker()
+                        .pickImage(source: ImageSource.gallery);
+
+                    // push to editing page
+                    if (imagePicked == null) return;
+                    CroppedFile? croppedFile = await ImageCropper().cropImage(
+                      sourcePath: imagePicked.path,
+                      cropStyle: CropStyle.circle,
+                      uiSettings: [
+                        AndroidUiSettings(
+                            toolbarTitle: 'Crop image',
+                            toolbarColor: Colors.deepOrange,
+                            toolbarWidgetColor: Colors.white,
+                            initAspectRatio: CropAspectRatioPreset.original,
+                            lockAspectRatio: false),
+                        IOSUiSettings(
+                          title: 'Crop image',
+                        ),
+                        WebUiSettings(
+                          context: context,
+                        ),
+                      ],
+                    );
+                    // if user has successfully cropped picture
+                    if (croppedFile == null) return;
+
+                    String newURL = await SupabaseB()
+                        .updateDigitalPicture(File(croppedFile.path));
+
+                    // if successful, pop page
+                    setState(() {
+                      Navigator.of(context).pop();
+                    });
                   },
                   style: const TextStyle(
                       color: Colors.white,

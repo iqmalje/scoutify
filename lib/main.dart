@@ -4,6 +4,7 @@ import 'package:scoutify/pages/activation/activateaccount.dart';
 import 'package:scoutify/pages/activation/confirmemail.dart';
 import 'package:scoutify/pages/activation/setpasswordpage.dart';
 import 'package:scoutify/pages/activity/activitypage%20copy.dart';
+import 'package:scoutify/pages/attendance/new_attendance.dart';
 import 'package:scoutify/pages/forgotpassword/verifyOTP.dart';
 import 'package:scoutify/pages/homepage/temppage.dart';
 import 'package:scoutify/pages/signin/signinpage.dart';
@@ -63,3 +64,4 @@ class MyApp extends StatelessWidget {
         home: isSignedIn ? const TempPage() : const SignInPage());
   }
 }
+ 

@@ -26,7 +26,8 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: ScoutifyComponents().appBarWithBackButton('Manage Account', context),
+        appBar: ScoutifyComponents()
+            .appBarWithBackButton('Manage Account', context),
         body: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(
@@ -67,43 +68,11 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(100),
                             onTap: () async {
-                              XFile? imagePicked;
-                              imagePicked = await ImagePicker()
-                                  .pickImage(source: ImageSource.gallery);
-
-                              // push to editing page
-                              if (imagePicked == null) return;
-                              CroppedFile? croppedFile =
-                                  await ImageCropper().cropImage(
-                                sourcePath: imagePicked.path,
-                                cropStyle: CropStyle.circle,
-                                uiSettings: [
-                                  AndroidUiSettings(
-                                      toolbarTitle: 'Crop image',
-                                      toolbarColor: Colors.deepOrange,
-                                      toolbarWidgetColor: Colors.white,
-                                      initAspectRatio:
-                                          CropAspectRatioPreset.original,
-                                      lockAspectRatio: false),
-                                  IOSUiSettings(
-                                    title: 'Crop image',
-                                  ),
-                                  WebUiSettings(
-                                    context: context,
-                                  ),
-                                ],
-                              );
-                              // if user has successfully cropped picture
-                              if (croppedFile == null) return;
-
-                              String newURL = await SupabaseB()
-                                  .updateDigitalPicture(File(croppedFile.path));
-
-                              // if successful, update
-                              setState(() {
-                                account.image_url =
-                                    "$newURL?v=${DateTime.now().millisecondsSinceEpoch}";
-                              });
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ProfilePictureGuideline(
+                                        account: account,
+                                      )));
+                              setState(() {});
                             },
                           ),
                         ),

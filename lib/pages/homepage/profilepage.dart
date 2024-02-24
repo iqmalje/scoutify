@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
 import 'package:scoutify/pages/account/manageaccount.dart';
 import 'package:scoutify/pages/account/scoutid.dart';
@@ -37,7 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         print('loading');
                         return const CircularProgressIndicator();
                       }
-                      print(snapshot.data!.image_url);
+
                       if (SupabaseB.isAdminToggled &&
                           snapshot.data!.roles == 'ADMIN') {
                         fullname.text = 'PPM NEGERI JOHOR';
@@ -76,6 +77,94 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                           ),
+                          const SizedBox(
+                            height: 18,
+                          ),
+                          Builder(builder: (context) {
+                            if (snapshot.data!.image_url
+                                    .contains('wikimedia') ||
+                                (snapshot.data!.display_name == null ||
+                                    snapshot.data!.display_name!.isEmpty)) {
+                              return Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) => ScoutIDPage(
+                                                    account: snapshot.data!,
+                                                  )));
+                                      setState(() {});
+                                    },
+                                    child: Container(
+                                      width: MediaQuery.sizeOf(context).width *
+                                          0.7,
+                                      constraints:
+                                          const BoxConstraints(minHeight: 50),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: const Color(0xFFF5F5F5),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                offset: const Offset(0, 2),
+                                                blurRadius: 2,
+                                                color: Colors.black
+                                                    .withOpacity(0.25))
+                                          ]),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(
+                                              Icons.privacy_tip,
+                                              color: Colors.red,
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Flexible(
+                                              child: RichText(
+                                                text: const TextSpan(
+                                                    text:
+                                                        'You have not updated your Johor Scout Digital ID. Please update your information below. ',
+                                                    style: TextStyle(
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: 9,
+                                                        color: Colors.black),
+                                                    children: [
+                                                      TextSpan(
+                                                          text: 'Click here',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                'Poppins',
+                                                            fontSize: 10,
+                                                            color: Color(
+                                                                0xFF0066FF),
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .underline,
+                                                          ))
+                                                    ]),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              );
+                            } else {
+                              return Container();
+                            }
+                          }),
                           const SizedBox(
                             height: 18,
                           ),
@@ -167,106 +256,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             if (snapshot.data!.roles != 'ADMIN') {
                               return Column(
                                 children: [
-                                  Builder(builder: (context) {
-                                    if (!snapshot.data!.is_activated) {
-                                      return Column(
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ScoutIDPage(
-                                                            account:
-                                                                snapshot.data!,
-                                                          )));
-                                              setState(() {});
-                                            },
-                                            child: Container(
-                                              width: MediaQuery.sizeOf(context)
-                                                      .width *
-                                                  0.7,
-                                              constraints: const BoxConstraints(
-                                                  minHeight: 50),
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color:
-                                                      const Color(0xFFF5F5F5),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                        offset:
-                                                            const Offset(0, 2),
-                                                        blurRadius: 2,
-                                                        color: Colors.black
-                                                            .withOpacity(0.25))
-                                                  ]),
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 15.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    const Icon(
-                                                      Icons.privacy_tip,
-                                                      color: Colors.red,
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Flexible(
-                                                      // child: Text(
-                                                      //   'You have not updated your Johor Scout Digital ID. Please update your information below.',
-                                                      //   maxLines: 10,
-                                                      //   style: TextStyle(
-                                                      //       fontFamily: 'Poppins',
-                                                      //       fontSize: 9),
-                                                      // ),
-                                                      child: RichText(
-                                                        text: const TextSpan(
-                                                            text:
-                                                                'You have not updated your Johor Scout Digital ID. Please update your information below. ',
-                                                            style: TextStyle(
-                                                                fontFamily:
-                                                                    'Poppins',
-                                                                fontSize: 9,
-                                                                color: Colors
-                                                                    .black),
-                                                            children: [
-                                                              TextSpan(
-                                                                  text:
-                                                                      'Click here',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontFamily:
-                                                                        'Poppins',
-                                                                    fontSize:
-                                                                        10,
-                                                                    color: Color(
-                                                                        0xFF0066FF),
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .underline,
-                                                                  ))
-                                                            ]),
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                        ],
-                                      );
-                                    } else {
-                                      return Container();
-                                    }
-                                  }),
                                   const Text(
                                     'JOHOR SCOUT DIGITAL ID',
                                     style: TextStyle(
@@ -279,7 +268,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  buildCard(snapshot.data!),
+                                  Builder(builder: (context) {
+                                    if (snapshot.data!.accountid ==
+                                        '2f8ac5d8-d306-4690-8bd0-c075806f4b3a') {
+                                      return ScoutifyComponents()
+                                          .buildSpecialCard(snapshot.data!);
+                                    }
+                                    return ScoutifyComponents()
+                                        .buildCard(snapshot.data!);
+                                  }),
                                 ],
                               );
                             }
@@ -298,7 +295,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  buildCard(snapshot.data!),
+                                  ScoutifyComponents()
+                                      .buildCard(snapshot.data!),
                                 ],
                               );
                             } else {
@@ -626,311 +624,6 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ),
-    );
-  }
-
-  Stack buildCard(Account account) {
-    return Stack(
-      children: [
-        Image.asset('assets/images/card_profile.png'),
-        Positioned.fill(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 29,
-              ),
-              Image.asset('assets/images/icon_pengakap.png'),
-              const SizedBox(
-                height: 12,
-              ),
-              const Text(
-                'PERSEKUTUAN PENGAKAP MALAYSIA NEGERI JOHOR',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 10,
-                  fontFamily: 'Arial',
-                  fontWeight: FontWeight.w600,
-                  height: 0,
-                ),
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              const Text(
-                'Scout Association of Malaysia Johor State',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 9,
-                  fontStyle: FontStyle.italic,
-                  fontFamily: 'Arial',
-                  fontWeight: FontWeight.w400,
-                  height: 0,
-                ),
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              const Text(
-                'Diperbadankan dibawah Akta Parlimen No.784 Tahun 1968 (Semakan 2016), Enacted under Parliament Act No.784 (Revised 2016)',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 3,
-                  fontStyle: FontStyle.normal,
-                  fontFamily: 'Arial',
-                  fontWeight: FontWeight.w400,
-                  height: 0,
-                ),
-              ),
-              const SizedBox(
-                height: 11,
-              ),
-              Container(
-                width: 140,
-                height: 140,
-                decoration: const ShapeDecoration(
-                  color: Colors.white,
-                  shape: OvalBorder(
-                    side: BorderSide(width: 4, color: Color(0xFF00579E)),
-                  ),
-                ),
-                child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        '${account.image_url}?v=${DateTime.now().millisecondsSinceEpoch}')),
-              ),
-              const SizedBox(
-                height: 14,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: SizedBox(
-                  height: 45,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                        child: AutoSizeText(
-                          account.display_name,
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 34,
-                            fontFamily: 'Arial',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
-                            letterSpacing: -1.50,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Builder(builder: (context) {
-                          if (account.is_member) {
-                            return const Icon(
-                              Icons.verified,
-                              size: 18,
-                              color: Colors.white,
-                            );
-                          } else {
-                            return Container();
-                          }
-                        }),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15),
-                  child: AutoSizeText(
-                    account.position,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontFamily: 'Arial',
-                      fontWeight: FontWeight.w500,
-                      height: 0,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 34.0, top: shorten ? 10 : 20),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 76,
-                          height: 18,
-                          child: Text(
-                            'NO AHLI',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontFamily: 'Arial',
-                              fontWeight: FontWeight.w500,
-                              height: 0,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 76,
-                          height: 18,
-                          child: Text(
-                            ': ${account.no_ahli}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontFamily: 'Arial',
-                              fontWeight: FontWeight.w500,
-                              height: 0,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 76,
-                          height: 18,
-                          child: Text(
-                            'NO TAULIAH',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontFamily: 'Arial',
-                              fontWeight: FontWeight.w500,
-                              height: 0,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 76,
-                          height: 18,
-                          child: Text(
-                            ': ${account.no_tauliah}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontFamily: 'Arial',
-                              fontWeight: FontWeight.w500,
-                              height: 0,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 76,
-                          height: 18,
-                          child: Text(
-                            'UNIT',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontFamily: 'Arial',
-                              fontWeight: FontWeight.w500,
-                              height: 0,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          ': ${account.unit}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontFamily: 'Arial',
-                            fontWeight: FontWeight.w500,
-                            height: 0,
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 76,
-                          height: 18,
-                          child: Text(
-                            'DAERAH',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontFamily: 'Arial',
-                              fontWeight: FontWeight.w500,
-                              height: 0,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          ': ${account.daerah}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontFamily: 'Arial',
-                            fontWeight: FontWeight.w500,
-                            height: 0,
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              Container(
-                width: 190,
-                height: 30,
-                decoration: ShapeDecoration(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    'TAULIAH PENGAKAP JOHOR',
-                    style: TextStyle(
-                      color: Color(0xFF3B3F65),
-                      fontSize: 12,
-                      fontFamily: 'Arial',
-                      fontWeight: FontWeight.w600,
-                      height: 0,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

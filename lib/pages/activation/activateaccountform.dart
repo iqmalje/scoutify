@@ -15,6 +15,7 @@ class ActivateAccountForm extends StatefulWidget {
 
 class _ActivateAccountFormState extends State<ActivateAccountForm> {
   Account account;
+  bool agreed = false;
   _ActivateAccountFormState(this.account);
 
   TextEditingController phone = TextEditingController(),
@@ -68,11 +69,11 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                     height: 10,
                   ),
                   ScoutifyComponents().buildTextBox(
-                      controller: phone,
+                      controller: TextEditingController(text: account.phoneno),
                       hint: 'Phone number',
                       prefixIcon: const Icon(Icons.phone),
                       border: Border.all(color: Colors.black),
-                      readOnly: false),
+                      readOnly: true),
                   const SizedBox(
                     height: 20,
                   ),
@@ -81,24 +82,32 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                     height: 10,
                   ),
                   ScoutifyComponents().buildTextBox(
-                      controller: email,
+                      controller: TextEditingController(text: account.email),
                       hint: 'Email',
-                      prefixIcon: const Icon(Icons.person_outline),
+                      prefixIcon: const Icon(Icons.mail),
                       border: Border.all(color: Colors.black),
-                      readOnly: false),
+                      readOnly: true),
                   const SizedBox(
                     height: 20,
                   ),
-                  buildText('Confirm email'),
-                  const SizedBox(
-                    height: 10,
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: agreed,
+                        onChanged: (value) {
+                          setState(() {
+                            agreed = !agreed;
+                          });
+                        },
+                        activeColor: const Color(0xFF2E3B78),
+                      ),
+                      const Text(
+                        'I agree with terms & conditions',
+                        style: TextStyle(
+                            fontFamily: 'Poppins', fontWeight: FontWeight.w500),
+                      )
+                    ],
                   ),
-                  ScoutifyComponents().buildTextBox(
-                      controller: confirmEmail,
-                      hint: 'Confirm email',
-                      prefixIcon: const Icon(Icons.person_outline),
-                      border: Border.all(color: Colors.black),
-                      readOnly: false),
                   const SizedBox(
                     height: 40,
                   ),
@@ -107,25 +116,15 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                     width: MediaQuery.sizeOf(context).width,
                     text: 'CONFIRM',
                     onTap: () async {
-                      if (email.text.isEmpty ||
-                          confirmEmail.text.isEmpty ||
-                          phone.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('All forms must be filled!')));
-                        return;
-                      }
-                      if (email.text != confirmEmail.text) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('Email is not the same!')));
+                      if (!agreed) {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text(
+                                'Please agree to the terms and conditions!')));
                         return;
                       }
 
-                      account.email = email.text;
-                      account.phoneno = phone.text;
+                      print(account.email);
 
-                      await SupabaseB().updateAccount(account);
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => ConfirmEmailActivationPage(
                               email: account.email!)));

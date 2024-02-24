@@ -1,3 +1,4 @@
+import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,8 @@ class _ScoutInfoState extends State<ScoutInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ScoutifyComponents().appBarWithBackButton('Manage Account', context),
+      appBar:
+          ScoutifyComponents().appBarWithBackButton('Manage Account', context),
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.sizeOf(context).width * 0.05),
@@ -42,53 +44,59 @@ class _ScoutInfoState extends State<ScoutInfo> {
                 const SizedBox(
                   height: 30,
                 ),
-                buildInputBox('Identification ID',
-                    TextEditingController(text: 'nanti letak')),
+                buildInputBox(
+                    'Identification ID',
+                    TextEditingController(
+                        text: SupabaseB().supabase.auth.currentUser!.id)),
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox(
-                    'Full Name', TextEditingController(text: account.fullname)),
+                buildInputBox('Full Name',
+                    TextEditingController(text: account.fullname ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox(
-                    'Position', TextEditingController(text: account.position)),
+                buildInputBox('Position',
+                    TextEditingController(text: account.position ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox(
-                    'Scout ID', TextEditingController(text: account.no_ahli)),
+                buildInputBox('Scout ID',
+                    TextEditingController(text: account.no_ahli ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox('Credentials Number',
-                    TextEditingController(text: account.no_tauliah)),
+                    TextEditingController(text: account.no_tauliah ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox(
-                    'Unit Number', TextEditingController(text: account.unit)),
+                buildInputBox('Unit Number',
+                    TextEditingController(text: account.unit ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox('Team Number / Crew',
-                    TextEditingController(text: 'takde data yg ni')),
-                const SizedBox(
-                  height: 15,
-                ),
-                buildInputBox('School Code / Crew',
-                    TextEditingController(text: 'takde data yg ni')),
-                const SizedBox(
-                  height: 15,
-                ),
-                buildInputBox('School Name / Crew Name',
-                    TextEditingController(text: 'takde data')),
+                    TextEditingController(text: account.crew_no ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
-                    'District', TextEditingController(text: account.daerah)),
+                    'School Code / Crew',
+                    TextEditingController(
+                        text: account.school_code ??= 'None')),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildInputBox(
+                    'School Name / Crew Name',
+                    TextEditingController(
+                        text: account.school_name ??= 'None')),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildInputBox('District',
+                    TextEditingController(text: account.daerah ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),

@@ -168,7 +168,7 @@ class SupabaseB {
   Future<Account> selectAccountFromIC(String ICno) async {
     var data =
         await supabase.from('accounts').select('*').eq('ic_no', ICno).single();
-
+    print(data);
     // parse into acc
     Account account = Account(data);
     if (account.is_activated) throw Exception('Account is already activated!');
@@ -185,6 +185,13 @@ class SupabaseB {
     var userid = supabase.auth.currentUser!.id;
     var data =
         await supabase.from('accounts').select('*').eq('accountid', userid);
+
+    return Account(data[0]);
+  }
+
+  Future<Account> getOtherProfile(String accountid) async {
+    var data =
+        await supabase.from('accounts').select('*').eq('accountid', accountid);
 
     return Account(data[0]);
   }
@@ -217,10 +224,11 @@ class SupabaseB {
     //get accountid from cardid
 
     try {
-      if (cardid[0] == 'J') {
+      if (cardid[0] == 'J' || cardid[0] == 'K') {
         await addAttendanceByScoutID(activityid, cardid);
         return;
       }
+
       var accid = await supabase
           .from('accounts')
           .select('accountid, fullname')

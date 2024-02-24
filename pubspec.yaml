@@ -16,7 +16,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.1+7
+version: 1.0.1+12
 
 environment:
   sdk: ">=3.0.1 <4.0.0"
@@ -102,6 +102,10 @@ flutter:
           weight: 500
         - asset: assets/fonts/Poppins-SemiBold.ttf
           weight: 600
+    - family: Hafontia
+      fonts:
+        - asset: assets/fonts/Hafontia - Cooperative Regular.otf
+          weight: 500
 
   #
   # For details regarding fonts from package dependencies,

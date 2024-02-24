@@ -1,5 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:scoutify/model/account.dart';
 
 class ScoutifyComponents {
   Widget filledNormalButton(BuildContext context, String text,
@@ -366,6 +368,632 @@ class ScoutifyComponents {
               labelText: title),
         ),
       ),
+    );
+  }
+
+  Stack buildCard(Account account) {
+    double size = 20;
+
+    double width = 76;
+    if (account.unit == null || account.unit!.isEmpty) {
+      size = 23;
+      width = 100;
+    }
+    return Stack(
+      children: [
+        Image.asset(
+          'assets/images/card_profile_NEW.png',
+          width: 328,
+        ),
+        Positioned.fill(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 29,
+              ),
+              Image.asset('assets/images/icon_pengakap.png'),
+              const SizedBox(
+                height: 12,
+              ),
+              const Text(
+                'PERSEKUTUAN PENGAKAP MALAYSIA NEGERI JOHOR',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 10,
+                  fontFamily: 'Arial',
+                  fontWeight: FontWeight.w600,
+                  height: 0,
+                ),
+              ),
+              const SizedBox(
+                height: 2,
+              ),
+              const Text(
+                'Scout Association of Malaysia Johor State',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 9,
+                  fontStyle: FontStyle.italic,
+                  fontFamily: 'Arial',
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
+              ),
+              const SizedBox(
+                height: 2,
+              ),
+              const Text(
+                'Diperbadankan dibawah Akta Parlimen No.784 Tahun 1968 (Semakan 2016), Enacted under Parliament Act No.784 (Revised 2016)',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 3,
+                  fontStyle: FontStyle.normal,
+                  fontFamily: 'Arial',
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
+              ),
+              const SizedBox(
+                height: 11,
+              ),
+              Container(
+                width: 140,
+                height: 140,
+                decoration: const ShapeDecoration(
+                  color: Colors.white,
+                  shape: OvalBorder(
+                    side: BorderSide(width: 4, color: Color(0xFF00579E)),
+                  ),
+                ),
+                child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        '${account.image_url}?v=${DateTime.now().millisecondsSinceEpoch}')),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 10),
+                child: SizedBox(
+                  height: 50,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          account.display_name ??= '-',
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 40,
+                            fontFamily: 'Hafontia',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Builder(builder: (context) {
+                          if (account.is_member) {
+                            return const Icon(
+                              Icons.verified,
+                              size: 18,
+                              color: Colors.white,
+                            );
+                          } else {
+                            return Container();
+                          }
+                        }),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 45,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  child: AutoSizeText(
+                    account.position,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: size - 1,
+                      fontFamily: 'Hafontia',
+                      fontWeight: FontWeight.w500,
+                      height: 0,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 34.0, top: 0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: width,
+                          child: Text(
+                            'NO AHLI',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size,
+                              fontFamily: 'Hafontia',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: width,
+                          child: Text(
+                            ': ${account.no_ahli}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size,
+                              fontFamily: 'Hafontia',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: width,
+                          child: Text(
+                            account.no_tauliah != null
+                                ? 'NO TAULIAH'
+                                : 'MANIKAYU',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size,
+                              fontFamily: 'Hafontia',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: width,
+                          child: Text(
+                            ': ${account.no_tauliah ?? account.manikayu}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size,
+                              fontFamily: 'Hafontia',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    Builder(builder: (context) {
+                      if (account.unit != null) {
+                        return Row(
+                          children: [
+                            SizedBox(
+                              width: width,
+                              child: Text(
+                                'UNIT',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: size,
+                                  fontFamily: 'Hafontia',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              ': ${account.unit}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: size,
+                                fontFamily: 'Hafontia',
+                                fontWeight: FontWeight.w500,
+                                height: 0,
+                              ),
+                            )
+                          ],
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: width,
+                          child: Text(
+                            account.negara == null ? 'DAERAH' : 'NEGARA',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size,
+                              fontFamily: 'Hafontia',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          ': ${account.negara ??= account.daerah}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: size,
+                            fontFamily: 'Hafontia',
+                            fontWeight: FontWeight.w500,
+                            height: 0,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const Spacer(),
+              Container(
+                height: 30,
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset('assets/icons/Scoutify_logo.png'),
+                      const Text(
+                        ' JOHOR SCOUT DIGITAL ID',
+                        style: TextStyle(
+                          color: Color(0xFF3B3F65),
+                          fontSize: 12,
+                          fontFamily: 'Arial',
+                          fontWeight: FontWeight.w600,
+                          height: 0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildSpecialCard(Account account) {
+    double size = 27;
+    double width = 100;
+    return Stack(
+      children: [
+        Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(color: const Color(0xFFF7CF42), width: 5),
+                boxShadow: const [
+                  BoxShadow(
+                      offset: Offset(0, 0),
+                      color: Color(0xFFF7CF42),
+                      spreadRadius: 2,
+                      blurRadius: 20),
+                ]),
+            child: Image.asset(
+              'assets/images/card_profile_NEW.png',
+              width: 328,
+            )),
+        Positioned.fill(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 29,
+              ),
+              Image.asset('assets/images/icon_pengakap.png'),
+              const SizedBox(
+                height: 12,
+              ),
+              const Text(
+                'PERSEKUTUAN PENGAKAP MALAYSIA NEGERI JOHOR',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 10,
+                  fontFamily: 'Arial',
+                  fontWeight: FontWeight.w600,
+                  height: 0,
+                ),
+              ),
+              const SizedBox(
+                height: 2,
+              ),
+              const Text(
+                'Scout Association of Malaysia Johor State',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 9,
+                  fontStyle: FontStyle.italic,
+                  fontFamily: 'Arial',
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
+              ),
+              const SizedBox(
+                height: 2,
+              ),
+              const Text(
+                'Diperbadankan dibawah Akta Parlimen No.784 Tahun 1968 (Semakan 2016), Enacted under Parliament Act No.784 (Revised 2016)',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 3,
+                  fontStyle: FontStyle.normal,
+                  fontFamily: 'Arial',
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                ),
+              ),
+              const SizedBox(
+                height: 11,
+              ),
+              Container(
+                width: 140,
+                height: 140,
+                decoration: const ShapeDecoration(
+                  color: Colors.white,
+                  shape: OvalBorder(
+                    side: BorderSide(width: 4, color: Color(0xFF00579E)),
+                  ),
+                ),
+                child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        '${account.image_url}?v=${DateTime.now().millisecondsSinceEpoch}')),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 10),
+                child: SizedBox(
+                  height: 45,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          account.display_name ??= '-',
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 40,
+                            fontFamily: 'Hafontia',
+                            fontWeight: FontWeight.w700,
+                            height: 0,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Builder(builder: (context) {
+                          if (account.is_member) {
+                            return const Icon(
+                              Icons.verified,
+                              size: 18,
+                              color: Colors.white,
+                            );
+                          } else {
+                            return Container();
+                          }
+                        }),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 45,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  child: AutoSizeText(
+                    account.position,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: size,
+                      fontFamily: 'Hafontia',
+                      fontWeight: FontWeight.w500,
+                      height: 0,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 34.0, top: 0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: width,
+                          child: Text(
+                            'NO AHLI',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size,
+                              fontFamily: 'Hafontia',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: width,
+                          child: Text(
+                            ': ${account.no_ahli}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size,
+                              fontFamily: 'Hafontia',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: width,
+                          child: Text(
+                            account.no_tauliah != null
+                                ? 'NO TAULIAH'
+                                : 'MANIKAYU',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size,
+                              fontFamily: 'Hafontia',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: width,
+                          child: Text(
+                            ': ${account.no_tauliah ?? account.manikayu}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size,
+                              fontFamily: 'Hafontia',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    Builder(builder: (context) {
+                      if (account.unit != null) {
+                        return Row(
+                          children: [
+                            SizedBox(
+                              width: width,
+                              child: Text(
+                                'UNIT',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: size,
+                                  fontFamily: 'Hafontia',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              ': ${account.unit}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: size,
+                                fontFamily: 'Hafontia',
+                                fontWeight: FontWeight.w500,
+                                height: 0,
+                              ),
+                            )
+                          ],
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: width,
+                          child: Text(
+                            account.negara == null ? 'DAERAH' : 'NEGARA',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size,
+                              fontFamily: 'Hafontia',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          ': ${account.negara ??= account.daerah}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: size,
+                            fontFamily: 'Hafontia',
+                            fontWeight: FontWeight.w500,
+                            height: 0,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const Spacer(),
+              Container(
+                height: 30,
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset('assets/icons/Scoutify_logo.png'),
+                      const Text(
+                        ' JOHOR SCOUT DIGITAL ID',
+                        style: TextStyle(
+                          color: Color(0xFF3B3F65),
+                          fontSize: 12,
+                          fontFamily: 'Arial',
+                          fontWeight: FontWeight.w600,
+                          height: 0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

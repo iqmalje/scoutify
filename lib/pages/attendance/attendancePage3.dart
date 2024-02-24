@@ -1,6 +1,7 @@
 // ignore_for_file: no_logic_in_create_state, must_be_immutable, camel_case_types
 
 import 'package:scoutify/model/activity.dart';
+import 'package:scoutify/pages/attendance/new_attendance.dart';
 import 'package:scoutify/pages/attendance/recordAttendance.dart';
 import 'package:scoutify/pages/attendance/showAllParticipants.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +43,8 @@ class _attendancePage3State extends State<attendancePage3> {
               _appBar(context),
               displayActivity(activity, timePicked),
               const SizedBox(height: 30),
-              openAttendanceButton(
-                  context, activity.activityid, attendancekey, activity),
+              openAttendanceButton(context, activity.activityid, attendancekey,
+                  activity, timePicked),
               const SizedBox(height: 15),
               showParticipantButton(context, activity, timePicked),
             ]),
@@ -318,14 +319,16 @@ Widget icon_activity(String detail, Icon icon) {
   );
 }
 
-Widget openAttendanceButton(context, activityid, secondkey, activity) {
+Widget openAttendanceButton(
+    context, activityid, secondkey, activity, DateTime dateSelected) {
   return ElevatedButton(
     onPressed: () {
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => RecordAttendance(
+          builder: (context) => NewAttendanceRecordPage(
                 activityid: activityid,
                 secondkey: secondkey,
                 activity: activity,
+                dateSelected: dateSelected,
               )));
     },
     style: ElevatedButton.styleFrom(
