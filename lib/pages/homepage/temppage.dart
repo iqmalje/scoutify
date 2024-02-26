@@ -2,7 +2,7 @@ import 'package:scoutify/pages/activity/activitypage copy.dart';
 import 'package:scoutify/pages/feed/listPage.dart';
 import 'package:scoutify/pages/homepage/facilitypage.dart';
 import 'package:scoutify/pages/homepage/profilepage.dart';
-import 'package:scoutify/pages/inbox/inbox.dart';
+import 'package:scoutify/pages/inbox/inboxPage.dart';
 import 'package:scoutify/pages/misc/chatAIpage.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,8 @@ class _TempPageState extends State<TempPage> {
   final List<Widget> _pages = [
     const listPage(),
     const ActivityPage(),
-    const FacilityPage(),
+    //const FacilityPage(),
+    const InboxMainPage(),
     const ProfilePage(),
   ];
 
@@ -161,14 +162,14 @@ class _TempPageState extends State<TempPage> {
                         child: Column(
                           children: [
                             Icon(
-                              Icons.apartment,
+                              Icons.inbox,
                               size: 25,
                               color: index == 2
                                   ? const Color(0xFF2E3B78)
                                   : const Color(0xFFD9D9D9),
                             ),
                             Text(
-                              'Facility',
+                              'Inbox',
                               style: TextStyle(
                                 fontSize: 13,
                                 color: index == 2
@@ -183,6 +184,44 @@ class _TempPageState extends State<TempPage> {
                   ),
                 ],
               ),
+              //Comment out facilities, if needed for later
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   children: [
+              //     Material(
+              //       child: InkWell(
+              //         onTap: () {
+              //           _changePage(2);
+              //         },
+              //         borderRadius: BorderRadius.circular(100),
+              //         child: SizedBox(
+              //           width: 50,
+              //           height: 50,
+              //           child: Column(
+              //             children: [
+              //               Icon(
+              //                 Icons.apartment,
+              //                 size: 25,
+              //                 color: index == 2
+              //                     ? const Color(0xFF2E3B78)
+              //                     : const Color(0xFFD9D9D9),
+              //               ),
+              //               Text(
+              //                 'Facility',
+              //                 style: TextStyle(
+              //                   fontSize: 13,
+              //                   color: index == 2
+              //                       ? const Color(0xFF2E3B78)
+              //                       : const Color(0xFFD9D9D9),
+              //                 ),
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
