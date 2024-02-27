@@ -2,18 +2,18 @@ import 'package:flutter_svg/svg.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:scoutify/pages/feed/createFeedPage.dart';
-import 'package:scoutify/pages/homepage/DetailsProgram.dart';
+import 'package:scoutify/pages/feed/detailsProgram.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class listPage extends StatefulWidget {
-  const listPage({super.key});
+class HomeFeed extends StatefulWidget {
+  const HomeFeed({super.key});
 
   @override
-  State<listPage> createState() => _listPageState();
+  State<HomeFeed> createState() => _HomeFeedState();
 }
 
-class _listPageState extends State<listPage> {
+class _HomeFeedState extends State<HomeFeed> {
   List<Activity> feeds = [];
 
   @override

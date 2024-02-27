@@ -1,6 +1,6 @@
-import 'package:scoutify/pages/activity/activitypage copy.dart';
-import 'package:scoutify/pages/feed/listPage.dart';
-import 'package:scoutify/pages/homepage/facilitypage.dart';
+import 'package:scoutify/pages/homepage/activitypage.dart';
+import 'package:scoutify/pages/homepage/homepageFeed.dart';
+import 'package:scoutify/pages/homepage/old_facilitypage.dart';
 import 'package:scoutify/pages/homepage/profilepage.dart';
 import 'package:scoutify/pages/inbox/inboxPage.dart';
 import 'package:scoutify/pages/misc/chatAIpage.dart';
@@ -20,7 +20,7 @@ class _TempPageState extends State<TempPage> {
   final pageController = PageController();
 
   final List<Widget> _pages = [
-    const listPage(),
+    const HomeFeed(),
     const ActivityPage(),
     //const FacilityPage(),
     const InboxMainPage(),

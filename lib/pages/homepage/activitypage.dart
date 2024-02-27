@@ -186,8 +186,23 @@ class _ActivityPageState extends State<ActivityPage> {
                           // ),
                           child: Builder(builder: (context) {
                             if (activities.isEmpty) {
-                              return const Center(
-                                  child: Text('No activities yet!'));
+                              return Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                        "assets/images/activity_empty.png",
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.75),
+                                    const SizedBox(height: 5),
+                                    const Text(
+                                        'Seeking new adventures this month!'),
+                                    const SizedBox(height: 48),
+                                  ],
+                                ),
+                              );
                             }
                             return ListView.builder(
                               itemCount: activities.length,
