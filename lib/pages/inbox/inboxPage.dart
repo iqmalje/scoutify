@@ -15,28 +15,35 @@ class _InboxMainPageState extends State<InboxMainPage> {
   List<Inbox> dummyInboxes = [
     Inbox(
       inboxId: '1',
-      name: 'Welcome to Scoutify',
-      category: 'Welcome',
-      details: 'Hey there, Scout!',
-      imageurl: 'welcome_image_url',
+      title: 'Welcome to Scoutify',
+      type: 'Welcome',
+      description: 'Hey there, Scout!',
+      image_url: '',
       isRead: false,
+      target_group: "",
+      target_id: "",
     ),
     Inbox(
       inboxId: '2',
-      name: 'New Activity Has Recorded',
-      category: 'Activity',
-      details: 'Congratulations',
-      imageurl: 'activity_image_url',
+      title: 'New Activity Has Recorded',
+      type: 'Welcome',
+      description: 'Congratulations',
+      image_url: '',
       isRead: false,
+      target_group: "",
+      target_id: "",
     ),
     Inbox(
       inboxId: '3',
-      name: 'Update Your Johor Scout Digital ID',
-      category: 'Update',
-      details: 'Hey there, it\'s time to update your Johor Scout Digital ID',
-      imageurl: 'update_image_url',
+      title: 'Update Your Johor Scout Digital ID',
+      type: 'Welcome',
+      description: 'Hey there, it\'s time to update your Johor Scout Digital ID',
+      image_url: '',
       isRead: false,
+      target_group: "",
+      target_id: "",
     ),
+
   ];
 
   @override
@@ -209,7 +216,7 @@ class _InboxMainPageState extends State<InboxMainPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    inbox.name,
+                                    inbox.title,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     style: const TextStyle(
@@ -219,7 +226,7 @@ class _InboxMainPageState extends State<InboxMainPage> {
                                     ),
                                   ),
                                   Text(
-                                    inbox.details,
+                                    inbox.description,
                                     textAlign: TextAlign.start,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
