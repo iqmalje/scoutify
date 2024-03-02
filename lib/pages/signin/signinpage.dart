@@ -24,15 +24,19 @@ class _SignInPageState extends State<SignInPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.35,
+              height: MediaQuery.sizeOf(context).height * 0.08,
+            ),
+            SizedBox(
+                height: MediaQuery.sizeOf(context).height * 0.22,
                 child: Image.asset(
+                  alignment: Alignment.center,
                   'assets/images/Scoutify_FULL_MAIN.png',
                   width: 400,
                   height: 400,
                 )),
             Container(
               width: MediaQuery.sizeOf(context).width,
-              height: MediaQuery.sizeOf(context).height * 0.65,
+              height: MediaQuery.sizeOf(context).height * 0.7,
 
               decoration: const ShapeDecoration(
                 gradient: LinearGradient(
@@ -49,8 +53,8 @@ class _SignInPageState extends State<SignInPage> {
               ),
               //The space of the widget for the left edge in the container
               padding: EdgeInsets.only(
-                  left: MediaQuery.sizeOf(context).width * 0.15,
-                  right: MediaQuery.sizeOf(context).width * 0.15),
+                  left: MediaQuery.sizeOf(context).width * 0.1,
+                  right: MediaQuery.sizeOf(context).width * 0.1),
               // All widget Column
               child: SingleChildScrollView(
                 child: Column(
@@ -61,10 +65,10 @@ class _SignInPageState extends State<SignInPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 50,
+                          height: 40,
                         ),
                         Text(
-                          'Welcome to eScout',
+                          'Welcome to Scoutify',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
@@ -74,7 +78,7 @@ class _SignInPageState extends State<SignInPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 25,
+                          height: 10,
                         ),
                         Text(
                           'Log In',
@@ -90,52 +94,62 @@ class _SignInPageState extends State<SignInPage> {
                     ),
 
                     const SizedBox(
-                      height: 40,
+                      height: 20,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextField(
-                          controller: email,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                            hintText: 'Email',
-                            filled: true, // Fill the background with color
+                        SizedBox(
+                          height: 57,
+                          child: TextField(
+                            controller: email,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.person_outline),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                              ),
+                              hintText: 'IC Number',
+                              filled: true, // Fill the background with color
 
-                            fillColor: Colors
-                                .white, // Set the background color to white
+                              fillColor: Colors
+                                  .white, // Set the background color to white
+                            ),
                           ),
                         ),
                         const SizedBox(
-                          height: 18,
+                          height: 15,
                         ),
-                        TextField(
-                          controller: password,
-                          obscureText: !isShown,
-                          decoration: InputDecoration(
-                            suffixIcon: GestureDetector(
-                              onTap: () => setState(() {
-                                isShown = !isShown;
-                              }),
-                              child: Builder(builder: (context) {
-                                if (isShown) {
-                                  return const Icon(Icons.visibility_off);
-                                } else {
-                                  return const Icon(Icons.remove_red_eye);
-                                }
-                              }),
+                        SizedBox(
+                          height: 57,
+                          child: TextField(
+                            controller: password,
+                            obscureText: !isShown,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.lock),
+                              suffixIcon: GestureDetector(
+                                onTap: () => setState(() {
+                                  isShown = !isShown;
+                                }),
+                                child: Builder(builder: (context) {
+                                  if (isShown) {
+                                    return const Icon(Icons.visibility_off);
+                                  } else {
+                                    return const Icon(Icons.remove_red_eye);
+                                  }
+                                }),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
+                              ),
+                              hintText: 'Password',
+                              filled: true, // Fill the background with color
+                              fillColor: Colors
+                                  .white, // Set the background color to white
                             ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                            hintText: 'Password',
-                            filled: true, // Fill the background with color
-                            fillColor: Colors
-                                .white, // Set the background color to white
                           ),
                         ),
                         const SizedBox(
@@ -170,7 +184,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
 
                     const SizedBox(
-                      height: 40,
+                      height: 30,
                     ),
                     Material(
                       color: Colors.transparent,
@@ -230,7 +244,7 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 18,
                     ),
                     Align(
                       alignment: Alignment.center,
@@ -255,6 +269,22 @@ class _SignInPageState extends State<SignInPage> {
                             height: 0,
                           ),
                         ),
+                      ),
+                    ),
+                    SizedBox(height: 60),
+                    Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text("Powered By",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontStyle: FontStyle.italic,
+                                  fontSize: 12),
+                                  ),
+                          Image.asset("assets/images/Larabit_Logo_WHITE.png",
+                              height: 60)
+                        ],
                       ),
                     ),
                   ],
