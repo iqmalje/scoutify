@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -30,7 +31,7 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                     height: 18,
                   ),
                   FutureBuilder(
-                      future: SupabaseB()
+                      future: AccountDAO()
                           .getScoutDetails(attendeeItem['accountid']),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
@@ -328,7 +329,7 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                     height: 10,
                   ),
                   FutureBuilder(
-                      future: SupabaseB()
+                      future: AccountDAO()
                           .getAttendance(this.attendeeItem['activityid']),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {

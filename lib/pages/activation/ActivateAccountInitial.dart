@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
@@ -116,7 +117,7 @@ class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
                       // check db for existing IC
                       try {
                         Account account =
-                            await SupabaseB().selectAccountFromIC(ic.text);
+                            await AccountDAO().selectAccountFromIC(ic.text);
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ActivateAccountForm(
                                   account: account,

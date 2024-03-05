@@ -1,3 +1,5 @@
+import 'package:scoutify/backend/accountDAO.dart';
+import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:scoutify/pages/activity/createactivitypage.dart';
@@ -93,8 +95,8 @@ class _ActivityPageState extends State<ActivityPage> {
             ),
           ),
           floatingActionButton: Builder(builder: (context) {
-            if (SupabaseB.isAdminToggled) {
-              // Assuming SupabaseB.isAdminToggled is defined in your backend logic
+            if (AccountDAO.isAdminToggled) {
+              // Assuming AccountDAO.isAdminToggled is defined in your backend logic
               return CircleAvatar(
                 maxRadius: 30,
                 backgroundColor: const Color(0xFF2E3B78),
@@ -160,12 +162,12 @@ class _ActivityPageState extends State<ActivityPage> {
                       ),
                     ),
                     FutureBuilder<List<Activity>>(
-                      future: SupabaseB.isAdminToggled
-                          ? SupabaseB().getActivities(filters: {
+                      future: AccountDAO.isAdminToggled
+                          ? ActivityDAO().getActivities(filters: {
                               'year': selectedYear,
                               'month': selectedMonth
                             })
-                          : SupabaseB().getAttendedActivities(
+                          : ActivityDAO().getAttendedActivities(
                               '$selectedYear-${selectedMonth.toString().padLeft(2, '0')}-%'),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {

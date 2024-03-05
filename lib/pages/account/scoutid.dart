@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
@@ -133,7 +134,7 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                     // display popup
                     String? displayName = await showDisplayNameDialog(context);
                     if (displayName == null || displayName.isEmpty) return;
-                    await SupabaseB().updateDisplayName(displayName);
+                    await AccountDAO().updateDisplayName(displayName);
                     setState(() {
                       account.display_name = displayName;
                     });

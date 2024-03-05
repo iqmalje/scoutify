@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:scoutify/backend/accountDAO.dart';
+import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:scoutify/pages/activity/createactivitypage.dart';
@@ -286,7 +288,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Builder(builder: (context) {
-                          if (SupabaseB.isAdminToggled) {
+                          if (AccountDAO.isAdminToggled) {
                             return EditButton();
                           } else {
                             return Container();
@@ -299,7 +301,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
                     height: 15,
                   ),
                   Builder(builder: (context) {
-                    if (SupabaseB.isAdminToggled) {
+                    if (AccountDAO.isAdminToggled) {
                       return buildDateSelector(context);
                     } else {
                       return buildAttendedList(context, activity.activityid);
@@ -309,7 +311,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
                     height: 10,
                   ),
                   Builder(builder: (context) {
-                    if (SupabaseB.isAdminToggled) {
+                    if (AccountDAO.isAdminToggled) {
                       return InkWell(
                         onTap: () async {
                           //warning
@@ -343,7 +345,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
                               });
 
                           if (isDelete != null && isDelete) {
-                            await SupabaseB().deleteActivity(activity);
+                            await ActivityDAO().deleteActivity(activity);
                             Navigator.of(context).pop();
                           }
                         },
@@ -392,7 +394,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
     List<dynamic> attendance = [];
     List<DateTime> timeAttended = [];
     return FutureBuilder(
-        future: SupabaseB().getAttendance(activityid),
+        future: ActivityDAO().getAttendance(activityid),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(

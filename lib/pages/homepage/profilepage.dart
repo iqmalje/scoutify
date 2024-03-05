@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
@@ -32,14 +33,14 @@ class _ProfilePageState extends State<ProfilePage> {
             body: SingleChildScrollView(
               child: Center(
                 child: FutureBuilder<Account>(
-                    future: SupabaseB().getProfileInfo(),
+                    future: AccountDAO().getProfileInfo(),
                     builder: (context, snapshot) {
                       if (snapshot.data == null) {
                         print('loading');
                         return const CircularProgressIndicator();
                       }
 
-                      if (SupabaseB.isAdminToggled &&
+                      if (AccountDAO.isAdminToggled &&
                           snapshot.data!.roles == 'ADMIN') {
                         fullname.text = 'PPM NEGERI JOHOR';
                         mobilenumber.text = '07-111 5566';
@@ -181,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     builder: (context) {
                                       return AlertDialog(
                                         title: Text(
-                                          SupabaseB.isAdminToggled
+                                          AccountDAO.isAdminToggled
                                               ? 'Are you sure to toggle off admin view?'
                                               : 'Are you sure to toggle on admin view?',
                                           style: const TextStyle(
@@ -209,9 +210,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
                                 if (isToggle == null || !isToggle) return;
                                 setState(() {
-                                  SupabaseB.isAdminToggled =
-                                      !SupabaseB.isAdminToggled;
-                                  if (!SupabaseB.isAdminToggled) {
+                                  AccountDAO.isAdminToggled =
+                                      !AccountDAO.isAdminToggled;
+                                  if (!AccountDAO.isAdminToggled) {
                                     fullname.text = 'PPM NEGERI JOHOR';
                                     mobilenumber.text = '07-111 5566';
                                     email.text = 'ppmnegerijohor@gmail.com';
@@ -234,7 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    SupabaseB.isAdminToggled
+                                    AccountDAO.isAdminToggled
                                         ? 'Admin View'
                                         : "Scout View",
                                     style: const TextStyle(
@@ -280,7 +281,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ],
                               );
                             }
-                            if (!SupabaseB.isAdminToggled) {
+                            if (!AccountDAO.isAdminToggled) {
                               return Column(
                                 children: [
                                   const Text(
@@ -583,7 +584,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await SupabaseB().signout();
+                              await AccountDAO().signout();
 
                               Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(

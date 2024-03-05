@@ -32,15 +32,15 @@ class Account {
     fullname = item['fullname'];
     email = item['email'];
     phoneno = item['phoneno'];
-    no_ahli = item['no_ahli'];
+    no_ahli = item['no_ahli'] ??= 'None';
     IC_no = item['ic_no'] ??= 'takde lagi';
     no_tauliah =
         item['no_tauliah'].toString().isNotEmpty ? item['no_tauliah'] : null;
     unit = item['unit'];
     daerah = item['daerah'];
-    roles = item['roles'];
-    image_url = item['image_url'];
-    position = item['position'];
+    roles = item['roles'] ??= 'None';
+    image_url = item['image_url'] ??= 'None';
+    position = item['position'] ??= 'None';
     cardid = item['cardid'] ??= 'None';
     is_member = item['is_member'];
     is_activated = item['activated'];

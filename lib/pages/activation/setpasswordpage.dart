@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 
 class SetPasswordPage extends StatefulWidget {
@@ -175,7 +176,7 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
                         }
 
                         try {
-                          await SupabaseB()
+                          await AccountDAO()
                               .updatePassword(email, password.text);
                           Navigator.of(context)
                               .pushNamedAndRemoveUntil('/signin', (_) => false);

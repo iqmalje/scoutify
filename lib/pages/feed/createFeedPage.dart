@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:scoutify/pages/homepage/temppage.dart';
@@ -662,7 +663,7 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
           .showSnackBar(const SnackBar(content: Text('Please pick an image')));
     }
 
-    await SupabaseB().createFeed({
+    await ActivityDAO().createFeed({
       'name': name.text,
       'category': dropdownValue,
       'location': location.text,
@@ -682,7 +683,7 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
   }
 
   Future<void> updateFeed() async {
-    await SupabaseB().updateFeed({
+    await ActivityDAO().updateFeed({
       'name': name.text,
       'category': dropdownValue,
       'location': location.text,

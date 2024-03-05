@@ -1,3 +1,4 @@
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class _showAllParticipantsState extends State<showAllParticipants> {
   void initState() {
     super.initState();
 
-    SupabaseB().getAllAttendees(activity.activityid, timePicked).then(
+    AccountDAO().getAllAttendees(activity.activityid, timePicked).then(
         (value) => WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
               setState(() {
                 isLoaded = true;

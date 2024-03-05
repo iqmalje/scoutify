@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
@@ -60,7 +61,7 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                 height: 20,
               ),
               StreamBuilder(
-                  stream: SupabaseB()
+                  stream: AccountDAO()
                       .supabase
                       .from('attendance')
                       .stream(primaryKey: ['attendanceid'])
@@ -98,7 +99,7 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   FutureBuilder<Account>(
-                                      future: SupabaseB().getOtherProfile(
+                                      future: AccountDAO().getOtherProfile(
                                           attendees.first['accountid']),
                                       builder: (context, snapshot) {
                                         if (!snapshot.hasData) {
@@ -166,8 +167,9 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                                     Builder(builder: (context) {
                                       if (attendees.isNotEmpty) {
                                         return FutureBuilder<Account>(
-                                            future: SupabaseB().getOtherProfile(
-                                                attendees.first['accountid']),
+                                            future: AccountDAO()
+                                                .getOtherProfile(attendees
+                                                    .first['accountid']),
                                             builder: (context, snapshot) {
                                               if (!snapshot.hasData) {
                                                 return const CircularProgressIndicator();
@@ -253,13 +255,13 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                     if (isDecimal(value)) {
                       String converted = decimalToHex(int.parse(value));
                       print(converted);
-                      SupabaseB().addAttendance(activityid, converted);
+                      AccountDAO().addAttendance(activityid, converted);
                     } else {
-                      SupabaseB().addAttendance(activityid, value);
+                      AccountDAO().addAttendance(activityid, value);
                     }
 // convert first
                   } else {
-                    SupabaseB().addAttendance(activityid, value);
+                    AccountDAO().addAttendance(activityid, value);
                   }
 
                   attendance.clear();

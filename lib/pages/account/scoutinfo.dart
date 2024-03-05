@@ -1,3 +1,4 @@
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
@@ -47,7 +48,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
                 buildInputBox(
                     'Identification ID',
                     TextEditingController(
-                        text: SupabaseB().supabase.auth.currentUser!.id)),
+                        text: AccountDAO().supabase.auth.currentUser!.id)),
                 const SizedBox(
                   height: 15,
                 ),

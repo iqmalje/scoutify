@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:scoutify/backend/accountDAO.dart';
+import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/pages/feed/createFeedPage.dart';
 import 'package:flutter/material.dart';
@@ -393,7 +395,7 @@ class _DetailsprogramState extends State<Detailsprogram> {
                     ),
                   ),
                   Builder(builder: (context) {
-                    if (SupabaseB.isAdminToggled) {
+                    if (AccountDAO.isAdminToggled) {
                       return Row(
                         children: [
                           Expanded(
@@ -518,7 +520,7 @@ class _DetailsprogramState extends State<Detailsprogram> {
 
     if (confirmDelete == null || confirmDelete == false) return;
 
-    await SupabaseB().deleteActivity(activity);
+    await ActivityDAO().deleteActivity(activity);
 
     Navigator.of(context).pop();
   }

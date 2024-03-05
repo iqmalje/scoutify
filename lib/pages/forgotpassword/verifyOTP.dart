@@ -2,7 +2,9 @@
 
 import 'dart:async';
 
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/model/account.dart';
 import 'package:scoutify/pages/forgotpassword/resetpassword.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +29,7 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
   int _start = 330;
   @override
   void initState() {
-    SupabaseB().sendPasswordOTP(email);
+    AccountDAO().sendPasswordOTP(email);
     //initiate timer
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_start == 0) {
@@ -231,7 +233,7 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                           ),
                           GestureDetector(
                             onTap: () async {
-                              await SupabaseB().sendPasswordOTP(email);
+                              await AccountDAO().sendPasswordOTP(email);
 
                               //reset timer
                               if (_timer!.isActive) _timer!.cancel();
@@ -286,7 +288,7 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                           }
 
                           try {
-                            await SupabaseB()
+                            await AccountDAO()
                                 .verifyPasswordOTP(email, OTPcollected);
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>

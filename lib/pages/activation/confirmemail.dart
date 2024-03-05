@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/pages/forgotpassword/resetpassword.dart';
 
@@ -29,7 +30,7 @@ class _ConfirmEmailActivationPageState
 
   @override
   void initState() {
-    SupabaseB().sendPasswordOTP(email);
+    AccountDAO().sendPasswordOTP(email);
     //initiate timer
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_start == 0) {
@@ -233,7 +234,7 @@ class _ConfirmEmailActivationPageState
                           ),
                           GestureDetector(
                             onTap: () async {
-                              await SupabaseB().sendPasswordOTP(email);
+                              await AccountDAO().sendPasswordOTP(email);
 
                               //reset timer
                               if (_timer!.isActive) _timer!.cancel();
@@ -288,7 +289,7 @@ class _ConfirmEmailActivationPageState
                           }
 
                           try {
-                            await SupabaseB()
+                            await AccountDAO()
                                 .verifyPasswordOTP(email, OTPcollected);
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>

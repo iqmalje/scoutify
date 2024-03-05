@@ -1,4 +1,6 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:scoutify/backend/accountDAO.dart';
+import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:scoutify/pages/feed/createFeedPage.dart';
@@ -25,7 +27,7 @@ class _HomeFeedState extends State<HomeFeed> {
         bottom: false,
         child: Scaffold(
           floatingActionButton: Builder(builder: (context) {
-            if (SupabaseB.isAdminToggled) {
+            if (AccountDAO.isAdminToggled) {
               return CircleAvatar(
                 maxRadius: 30,
                 backgroundColor: const Color(0xFF2E3B78),
@@ -75,7 +77,7 @@ class _HomeFeedState extends State<HomeFeed> {
 
                   Expanded(
                       child: FutureBuilder<List<Activity>>(
-                          future: SupabaseB().getFeed(),
+                          future: ActivityDAO().getFeed(),
                           builder: (context, snapshot) {
                             if (!snapshot.hasData) {
                               return const Center(

@@ -1,5 +1,6 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/pages/activation/activateaccount.dart';
 import 'package:scoutify/pages/activation/confirmemail.dart';
 import 'package:scoutify/pages/activation/setpasswordpage.dart';
@@ -32,16 +33,15 @@ void main() async {
 
   //listen for auth
   final authSubscription =
-      SupabaseB().supabase.auth.onAuthStateChange.listen((data) {
+      Supabase.instance.client.auth.onAuthStateChange.listen((data) {
     final AuthChangeEvent event = data.event;
 
     if (event == AuthChangeEvent.signedOut) {
       //set admin to false
-      SupabaseB.isAdminToggled = false;
+      AccountDAO.isAdminToggled = false;
       print('since logged out, admin toggled to false');
     }
   });
-
   runApp(const MyApp());
 }
 
@@ -64,4 +64,3 @@ class MyApp extends StatelessWidget {
         home: isSignedIn ? const TempPage() : const SignInPage());
   }
 }
- 

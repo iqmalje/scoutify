@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
@@ -251,7 +252,7 @@ class _ProfilePictureGuidelineState extends State<ProfilePictureGuideline> {
                     // if user has successfully cropped picture
                     if (croppedFile == null) return;
 
-                    String newURL = await SupabaseB()
+                    String newURL = await AccountDAO()
                         .updateDigitalPicture(File(croppedFile.path));
 
                     // if successful, pop page

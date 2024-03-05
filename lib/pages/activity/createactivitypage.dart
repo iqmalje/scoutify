@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:flutter/material.dart';
@@ -506,7 +507,7 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                                   return;
                                 }
                                 if (isEditMode) {
-                                  await SupabaseB().updateEvent({
+                                  await ActivityDAO().updateEvent({
                                     'name': name.text,
                                     'category': dropdownValue,
                                     'location': location.text,
@@ -519,7 +520,7 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                                         : File(imagePicked!.path)
                                   }, activity!.activityid);
                                 } else {
-                                  await SupabaseB().addEvent({
+                                  await ActivityDAO().addEvent({
                                     'name': name.text,
                                     'category': dropdownValue,
                                     'location': location.text,

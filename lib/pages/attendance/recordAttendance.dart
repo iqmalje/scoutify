@@ -1,3 +1,4 @@
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/pages/attendance/AttendanceInformation.dart';
 import 'package:flutter/material.dart';
 
@@ -153,7 +154,7 @@ class _RecordAttendanceState extends State<RecordAttendance> {
                       autofocus: true,
                       onSubmitted: (value) {
                         //do logic
-                        SupabaseB().addAttendance(activityid, value);
+                        AccountDAO().addAttendance(activityid, value);
                         attendance.clear();
                         fn.requestFocus();
                       },
@@ -226,7 +227,7 @@ class _RecordAttendanceState extends State<RecordAttendance> {
                             color: Colors.black,
                           ),
                           StreamBuilder(
-                              stream: SupabaseB()
+                              stream: AccountDAO()
                                   .supabase
                                   .from('attendance')
                                   .stream(primaryKey: ['attendanceid']).eq(

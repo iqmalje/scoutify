@@ -1,3 +1,4 @@
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/pages/activation/ActivateAccountInitial.dart';
 import 'package:scoutify/pages/activation/activateaccount.dart';
@@ -110,7 +111,7 @@ class _SignInPageState extends State<SignInPage> {
                                 borderSide:
                                     const BorderSide(color: Colors.white),
                               ),
-                              hintText: 'IC Number',
+                              hintText: 'Email',
                               filled: true, // Fill the background with color
 
                               fillColor: Colors
@@ -201,7 +202,8 @@ class _SignInPageState extends State<SignInPage> {
                           }
 
                           try {
-                            await SupabaseB().signIn(email.text, password.text);
+                            await AccountDAO()
+                                .signIn(email.text, password.text);
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(e.toString())));
@@ -276,12 +278,13 @@ class _SignInPageState extends State<SignInPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text("Powered By",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontStyle: FontStyle.italic,
-                                  fontSize: 12),
-                                  ),
+                          const Text(
+                            "Powered By",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontStyle: FontStyle.italic,
+                                fontSize: 12),
+                          ),
                           Image.asset("assets/images/Larabit_Logo_WHITE.png",
                               height: 60)
                         ],
