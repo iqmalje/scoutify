@@ -103,7 +103,7 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 5.0),
                 child: TextField(
-                  controller: TextEditingController(text: account.phoneno),
+                  controller: TextEditingController(text: account.phoneNo),
                   readOnly: true,
                   style: const TextStyle(
                     color: Colors.black,

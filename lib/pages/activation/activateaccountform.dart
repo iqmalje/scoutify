@@ -43,7 +43,7 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                     height: 10,
                   ),
                   ScoutifyComponents().buildTextBox(
-                      controller: TextEditingController(text: account.IC_no),
+                      controller: TextEditingController(text: account.icNo),
                       hint: '',
                       prefixIcon: const Icon(Icons.person_outline),
                       border: Border.all(color: Colors.black),
@@ -69,7 +69,7 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                     height: 10,
                   ),
                   ScoutifyComponents().buildTextBox(
-                      controller: TextEditingController(text: account.phoneno),
+                      controller: TextEditingController(text: account.phoneNo),
                       hint: 'Phone number',
                       prefixIcon: const Icon(Icons.phone),
                       border: Border.all(color: Colors.black),

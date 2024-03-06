@@ -60,7 +60,7 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                         child: CircleAvatar(
                           radius: 85,
                           backgroundImage: NetworkImage(
-                              "${account.image_url}?v=${DateTime.now().microsecondsSinceEpoch}"),
+                              "${account.imageURL}?v=${DateTime.now().microsecondsSinceEpoch}"),
                         ),
                       ),
                       Positioned.fill(
@@ -129,41 +129,42 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                   ),
                   ScoutifyComponents().buildInputBoxWithEditButton(
                       'Name Display',
-                      TextEditingController(text: account.display_name),
+                      TextEditingController(
+                          text: account.scoutInfo.cardName ??= '-'),
                       context, onTap: () async {
                     // display popup
                     String? displayName = await showDisplayNameDialog(context);
                     if (displayName == null || displayName.isEmpty) return;
                     await AccountDAO().updateDisplayName(displayName);
                     setState(() {
-                      account.display_name = displayName;
+                      account.scoutInfo.cardName = displayName;
                     });
                   }),
                   const SizedBox(
                     height: 15,
                   ),
                   ScoutifyComponents().buildInputBox('Position',
-                      TextEditingController(text: account.position)),
+                      TextEditingController(text: account.scoutInfo.position)),
                   const SizedBox(
                     height: 15,
                   ),
-                  ScoutifyComponents().buildInputBox(
-                      'Scout ID', TextEditingController(text: account.no_ahli)),
+                  ScoutifyComponents().buildInputBox('Scout ID',
+                      TextEditingController(text: account.scoutInfo.noAhli)),
                   const SizedBox(
                     height: 15,
                   ),
                   ScoutifyComponents().buildInputBox('Credentials Number',
-                      TextEditingController(text: account.no_tauliah)),
+                      TextEditingController(text: account.scoutInfo.noTauliah)),
                   const SizedBox(
                     height: 15,
                   ),
-                  ScoutifyComponents().buildInputBox(
-                      'Unit Number', TextEditingController(text: account.unit)),
+                  ScoutifyComponents().buildInputBox('Unit Number',
+                      TextEditingController(text: account.scoutInfo.unit)),
                   const SizedBox(
                     height: 15,
                   ),
-                  ScoutifyComponents().buildInputBox(
-                      'District', TextEditingController(text: account.daerah)),
+                  ScoutifyComponents().buildInputBox('District',
+                      TextEditingController(text: account.scoutInfo.daerah)),
                   const SizedBox(
                     height: 15,
                   ),

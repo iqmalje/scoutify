@@ -375,7 +375,7 @@ class ScoutifyComponents {
     double size = 20;
 
     double width = 76;
-    if (account.unit == null || account.unit!.isEmpty) {
+    if (account.scoutInfo.unit == 'None') {
       size = 23;
       width = 100;
     }
@@ -450,18 +450,18 @@ class ScoutifyComponents {
                 ),
                 child: CircleAvatar(
                     backgroundImage: NetworkImage(
-                        '${account.image_url}?v=${DateTime.now().millisecondsSinceEpoch}')),
+                        '${account.imageURL}?v=${DateTime.now().millisecondsSinceEpoch}')),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 10),
                 child: SizedBox(
-                  height: 50,
+                  height: 43,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Flexible(
                         child: Text(
-                          account.display_name ??= '-',
+                          account.scoutInfo.cardName ??= '-',
                           textAlign: TextAlign.center,
                           maxLines: 2,
                           style: const TextStyle(
@@ -480,7 +480,7 @@ class ScoutifyComponents {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Builder(builder: (context) {
-                          if (account.is_member) {
+                          if (account.isMember) {
                             return const Icon(
                               Icons.verified,
                               size: 18,
@@ -495,17 +495,20 @@ class ScoutifyComponents {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 45,
+              ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minHeight: 44,
+                  maxHeight: 57,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15),
-                  child: AutoSizeText(
-                    account.position,
+                  child: Text(
+                    account.scoutInfo.position,
                     textAlign: TextAlign.center,
                     maxLines: 2,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
-                      fontSize: size - 1,
+                      fontSize: 22,
                       fontFamily: 'Hafontia',
                       fontWeight: FontWeight.w500,
                       height: 0,
@@ -533,9 +536,9 @@ class ScoutifyComponents {
                           ),
                         ),
                         SizedBox(
-                          width: width,
+                          width: width * 2,
                           child: Text(
-                            ': ${account.no_ahli}',
+                            ': ${account.scoutInfo.noAhli}',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -552,7 +555,7 @@ class ScoutifyComponents {
                         SizedBox(
                           width: width,
                           child: Text(
-                            account.no_tauliah != null
+                            account.scoutInfo.noTauliah != null
                                 ? 'NO TAULIAH'
                                 : 'MANIKAYU',
                             style: TextStyle(
@@ -565,9 +568,9 @@ class ScoutifyComponents {
                           ),
                         ),
                         SizedBox(
-                          width: width,
+                          width: width * 2,
                           child: Text(
-                            ': ${account.no_tauliah ?? account.manikayu}',
+                            ': ${account.scoutInfo.noTauliah ?? account.scoutInfo.manikayu}',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -580,7 +583,7 @@ class ScoutifyComponents {
                       ],
                     ),
                     Builder(builder: (context) {
-                      if (account.unit != null) {
+                      if (account.scoutInfo.unit != null) {
                         return Row(
                           children: [
                             SizedBox(
@@ -597,7 +600,7 @@ class ScoutifyComponents {
                               ),
                             ),
                             Text(
-                              ': ${account.unit}',
+                              ': ${account.scoutInfo.unit}',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: size,
@@ -617,7 +620,9 @@ class ScoutifyComponents {
                         SizedBox(
                           width: width,
                           child: Text(
-                            account.negara == null ? 'DAERAH' : 'NEGARA',
+                            account.scoutInfo.negara == null
+                                ? 'DAERAH'
+                                : 'NEGARA',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -628,7 +633,7 @@ class ScoutifyComponents {
                           ),
                         ),
                         Text(
-                          ': ${account.negara ??= account.daerah}',
+                          ': ${account.scoutInfo.negara ??= account.scoutInfo.daerah}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: size,
@@ -766,7 +771,7 @@ class ScoutifyComponents {
                 ),
                 child: CircleAvatar(
                     backgroundImage: NetworkImage(
-                        '${account.image_url}?v=${DateTime.now().millisecondsSinceEpoch}')),
+                        '${account.imageURL}?v=${DateTime.now().millisecondsSinceEpoch}')),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 10),
@@ -777,7 +782,7 @@ class ScoutifyComponents {
                     children: [
                       Flexible(
                         child: Text(
-                          account.display_name ??= '-',
+                          account.scoutInfo.cardName ??= '-',
                           textAlign: TextAlign.center,
                           maxLines: 2,
                           style: const TextStyle(
@@ -796,7 +801,7 @@ class ScoutifyComponents {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Builder(builder: (context) {
-                          if (account.is_member) {
+                          if (account.isMember) {
                             return const Icon(
                               Icons.verified,
                               size: 18,
@@ -816,7 +821,7 @@ class ScoutifyComponents {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15),
                   child: AutoSizeText(
-                    account.position,
+                    account.scoutInfo.position,
                     textAlign: TextAlign.center,
                     maxLines: 2,
                     style: TextStyle(
@@ -851,7 +856,7 @@ class ScoutifyComponents {
                         SizedBox(
                           width: width,
                           child: Text(
-                            ': ${account.no_ahli}',
+                            ': ${account.scoutInfo.noAhli}',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -868,7 +873,7 @@ class ScoutifyComponents {
                         SizedBox(
                           width: width,
                           child: Text(
-                            account.no_tauliah != null
+                            account.scoutInfo.noTauliah != null
                                 ? 'NO TAULIAH'
                                 : 'MANIKAYU',
                             style: TextStyle(
@@ -883,7 +888,7 @@ class ScoutifyComponents {
                         SizedBox(
                           width: width,
                           child: Text(
-                            ': ${account.no_tauliah ?? account.manikayu}',
+                            ': ${account.scoutInfo.noTauliah ?? account.scoutInfo.manikayu}',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -896,7 +901,7 @@ class ScoutifyComponents {
                       ],
                     ),
                     Builder(builder: (context) {
-                      if (account.unit != null) {
+                      if (account.scoutInfo.unit != null) {
                         return Row(
                           children: [
                             SizedBox(
@@ -913,7 +918,7 @@ class ScoutifyComponents {
                               ),
                             ),
                             Text(
-                              ': ${account.unit}',
+                              ': ${account.scoutInfo.unit}',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: size,
@@ -933,7 +938,9 @@ class ScoutifyComponents {
                         SizedBox(
                           width: width,
                           child: Text(
-                            account.negara == null ? 'DAERAH' : 'NEGARA',
+                            account.scoutInfo.negara == null
+                                ? 'DAERAH'
+                                : 'NEGARA',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -944,7 +951,7 @@ class ScoutifyComponents {
                           ),
                         ),
                         Text(
-                          ': ${account.negara ??= account.daerah}',
+                          ': ${account.scoutInfo.negara ??= account.scoutInfo.daerah}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: size,

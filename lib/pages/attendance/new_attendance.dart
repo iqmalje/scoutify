@@ -541,7 +541,7 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                   ),
                   child: CircleAvatar(
                       backgroundImage: NetworkImage(
-                          '${account.image_url}?v=${DateTime.now().millisecondsSinceEpoch}')),
+                          '${account.imageURL}?v=${DateTime.now().millisecondsSinceEpoch}')),
                 ),
                 const SizedBox(
                   height: 14,
@@ -555,7 +555,7 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                       children: [
                         Flexible(
                           child: AutoSizeText(
-                            account.display_name ??= '-',
+                            account.scoutInfo.cardName ??= '-',
                             textAlign: TextAlign.center,
                             maxLines: 2,
                             style: const TextStyle(
@@ -574,7 +574,7 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Builder(builder: (context) {
-                            if (account.is_member) {
+                            if (account.isMember) {
                               return const Icon(
                                 Icons.verified,
                                 size: 18,
@@ -596,7 +596,7 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15, right: 15),
                     child: AutoSizeText(
-                      account.position,
+                      account.scoutInfo.position,
                       textAlign: TextAlign.center,
                       maxLines: 2,
                       style: const TextStyle(
@@ -633,7 +633,7 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                             width: 76,
                             height: 18,
                             child: Text(
-                              ': ${account.no_ahli}',
+                              ': ${account.scoutInfo.noAhli}',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
@@ -668,7 +668,7 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                             width: 76,
                             height: 18,
                             child: Text(
-                              ': ${account.no_tauliah}',
+                              ': ${account.scoutInfo.noTauliah}',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
@@ -700,7 +700,7 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                             ),
                           ),
                           Text(
-                            ': ${account.unit}',
+                            ': ${account.scoutInfo.unit}',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
@@ -731,7 +731,7 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                             ),
                           ),
                           Text(
-                            ': ${account.daerah}',
+                            ': ${account.scoutInfo.daerah}',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,

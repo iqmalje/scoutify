@@ -41,7 +41,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       }
 
                       if (AccountDAO.isAdminToggled &&
-                          snapshot.data!.roles == 'ADMIN') {
+                          AccountDAO()
+                                  .supabase
+                                  .auth
+                                  .currentUser!
+                                  .role!
+                                  .toLowerCase() ==
+                              'admin') {
                         fullname.text = 'PPM NEGERI JOHOR';
                         mobilenumber.text = '07-111 5566';
                         email.text = 'ppmnegerijohor@gmail.com';
@@ -51,10 +57,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             ? 'No email yet!'
                             : snapshot.data!.email!;
                         mobilenumber.text =
-                            snapshot.data!.phoneno ??= 'No phone number yet!';
+                            snapshot.data!.phoneNo ??= 'No phone number yet!';
                       }
 
-                      if (snapshot.data!.position.length > 40) {
+                      if (snapshot.data!.scoutInfo.position.length > 40) {
                         shorten = true;
                       } else {
                         shorten = false;
@@ -82,10 +88,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             height: 18,
                           ),
                           Builder(builder: (context) {
-                            if (snapshot.data!.image_url
+                            // TODO: fix this shit
+                            if (snapshot.data!.imageURL!
                                     .contains('wikimedia') ||
-                                (snapshot.data!.display_name == null ||
-                                    snapshot.data!.display_name!.isEmpty)) {
+                                (snapshot.data!.scoutInfo.cardName == null ||
+                                    snapshot
+                                        .data!.scoutInfo.cardName!.isEmpty)) {
                               return Column(
                                 children: [
                                   GestureDetector(
@@ -170,12 +178,24 @@ class _ProfilePageState extends State<ProfilePage> {
                             height: 18,
                           ),
                           Builder(builder: (context) {
-                            if (snapshot.data!.roles != 'ADMIN') {
+                            if (AccountDAO()
+                                    .supabase
+                                    .auth
+                                    .currentUser!
+                                    .role!
+                                    .toLowerCase() !=
+                                'admin') {
                               return Container();
                             }
                             return InkWell(
                               onTap: () async {
-                                if (snapshot.data!.roles != 'ADMIN') return;
+                                if (AccountDAO()
+                                        .supabase
+                                        .auth
+                                        .currentUser!
+                                        .role!
+                                        .toLowerCase() !=
+                                    'admin') return;
 
                                 bool? isToggle = await showDialog(
                                     context: context,
@@ -221,7 +241,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     email.text = snapshot.data!.email ??=
                                         'No email yet!';
                                     mobilenumber.text = snapshot.data!
-                                        .phoneno ??= 'No phone number yet!';
+                                        .phoneNo ??= 'No phone number yet!';
                                   }
                                 });
                               },
@@ -254,7 +274,13 @@ class _ProfilePageState extends State<ProfilePage> {
                             height: 18,
                           ),
                           Builder(builder: (context) {
-                            if (snapshot.data!.roles != 'ADMIN') {
+                            if (AccountDAO()
+                                    .supabase
+                                    .auth
+                                    .currentUser!
+                                    .role!
+                                    .toLowerCase() !=
+                                'admin') {
                               return Column(
                                 children: [
                                   const Text(

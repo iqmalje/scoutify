@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:scoutify/model/account.dart';
+import 'package:scoutify/model/scoutinfo.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AccountDAO {
@@ -8,28 +9,61 @@ class AccountDAO {
   static bool isAdminToggled = false;
 
   Future<Account> selectAccountFromIC(String ICno) async {
-    var data =
-        await supabase.from('accounts').select('*').eq('ic_no', ICno).single();
-    print(data);
+    var data = await supabase
+        .from('accounts')
+        .select('ic_no, email, fullname, accountid, activated')
+        .eq('ic_no', ICno)
+        .single();
+
     // parse into acc
-    Account account = Account(data);
-    if (account.is_activated) throw Exception('Account is already activated!');
+    Account account = Account();
+    account.accountid = data['accountid'];
+    account.icNo = data['ic_no'];
+    account.email = data['email'];
+    account.fullname = data['fullname'];
+    account.activated = data['activated'];
+    if (account.activated) throw Exception('Account is already activated!');
     return account;
   }
 
   Future<Account> getProfileInfo() async {
+    // return current user profile
     var userid = supabase.auth.currentUser!.id;
     var data =
         await supabase.from('accounts').select('*').eq('accountid', userid);
 
-    return Account(data[0]);
+    Account account = Account.parse(data[0]);
+
+    // fetch scout info
+
+    var scoutInfo = await supabase
+        .from('scouts')
+        .select('*')
+        .eq('accountid', account.accountid)
+        .single();
+
+    account.scoutInfo = ScoutInfoModel.parse(scoutInfo);
+
+    return account;
   }
 
   Future<Account> getOtherProfile(String accountid) async {
     var data =
         await supabase.from('accounts').select('*').eq('accountid', accountid);
 
-    return Account(data[0]);
+    Account account = Account.parse(data[0]);
+
+    // fetch scout info
+
+    var scoutdata = await supabase
+        .from('scouts')
+        .select('*')
+        .eq('accountid', accountid)
+        .single();
+
+    account.scoutInfo = ScoutInfoModel.parse(scoutdata);
+
+    return account;
   }
 
   /// Sign in the user to the application, will auto login
@@ -63,7 +97,7 @@ class AccountDAO {
   Future<void> updateAccount(Account account) async {
     await supabase.from('accounts').update({
       'email': account.email,
-      'phoneno': account.phoneno,
+      'phoneno': account.phoneNo,
     }).eq('accountid', account.accountid);
   }
 

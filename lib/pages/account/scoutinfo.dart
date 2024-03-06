@@ -57,47 +57,60 @@ class _ScoutInfoState extends State<ScoutInfo> {
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox('Position',
-                    TextEditingController(text: account.position ??= 'None')),
+                buildInputBox(
+                    'Position',
+                    TextEditingController(
+                        text: account.scoutInfo.position ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox('Scout ID',
-                    TextEditingController(text: account.no_ahli ??= 'None')),
+                buildInputBox(
+                    'Scout ID',
+                    TextEditingController(
+                        text: account.scoutInfo.noAhli ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox('Credentials Number',
-                    TextEditingController(text: account.no_tauliah ??= 'None')),
+                buildInputBox(
+                    'Credentials Number',
+                    TextEditingController(
+                        text: account.scoutInfo.noTauliah ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox('Unit Number',
-                    TextEditingController(text: account.unit ??= 'None')),
+                buildInputBox(
+                    'Unit Number',
+                    TextEditingController(
+                        text: account.scoutInfo.unit ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox('Team Number / Crew',
-                    TextEditingController(text: account.crew_no ??= 'None')),
+                buildInputBox(
+                    'Team Number / Crew',
+                    TextEditingController(
+                        text: account.scoutInfo.crewNo ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
                     'School Code / Crew',
                     TextEditingController(
-                        text: account.school_code ??= 'None')),
+                        text: account.scoutInfo.schoolCode ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
                     'School Name / Crew Name',
                     TextEditingController(
-                        text: account.school_name ??= 'None')),
+                      // todo implement school name
+                        text: account.scoutInfo.schoolCode ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox('District',
-                    TextEditingController(text: account.daerah ??= 'None')),
+                buildInputBox(
+                    'District',
+                    TextEditingController(
+                        text: account.scoutInfo.daerah ??= 'None')),
                 const SizedBox(
                   height: 15,
                 ),
