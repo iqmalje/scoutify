@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:scoutify/backend/accountDAO.dart';
+import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/activation/activateaccount.dart';
 import 'package:scoutify/pages/activation/confirmemail.dart';
 import 'package:scoutify/pages/activation/setpasswordpage.dart';
@@ -27,7 +28,8 @@ void main() async {
   if (Supabase.instance.client.auth.currentUser == null) {
     isSignedIn = false;
   } else {
-    isSignedIn = true;
+    await Supabase.instance.client.auth.signOut();
+    isSignedIn = false;
   }
   bool isAvailable = await NfcManager.instance.isAvailable();
 
@@ -38,7 +40,7 @@ void main() async {
 
     if (event == AuthChangeEvent.signedOut) {
       //set admin to false
-      AccountDAO.isAdminToggled = false;
+      CurrentAccount.getInstance().isAdminToggled = false;
       print('since logged out, admin toggled to false');
     }
   });

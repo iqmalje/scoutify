@@ -3,6 +3,7 @@
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/feed/createFeedPage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -395,7 +396,7 @@ class _DetailsprogramState extends State<Detailsprogram> {
                     ),
                   ),
                   Builder(builder: (context) {
-                    if (AccountDAO.isAdminToggled) {
+                    if (CurrentAccount.getInstance().isAdminToggled) {
                       return Row(
                         children: [
                           Expanded(

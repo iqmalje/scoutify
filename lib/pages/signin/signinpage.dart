@@ -200,15 +200,7 @@ class _SignInPageState extends State<SignInPage> {
                                         Text('Please fill in all fields!')));
                             return;
                           }
-
-                          try {
-                            await AccountDAO()
-                                .signIn(email.text, password.text);
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(e.toString())));
-                            return;
-                          }
+                          await AccountDAO().signIn(email.text, password.text);
 
                           // //replace
                           //                       Navigator.push(

@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:scoutify/model/account.dart';
+import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/model/scoutinfo.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AccountDAO {
   var supabase = Supabase.instance.client;
-  static bool isAdminToggled = false;
 
   Future<Account> selectAccountFromIC(String ICno) async {
     var data = await supabase
@@ -69,12 +69,47 @@ class AccountDAO {
   /// Sign in the user to the application, will auto login
   /// So the user wont have to login everytime.
   Future<bool> signIn(String email, String password) async {
-    try {
-      await supabase.auth.signInWithPassword(password: password, email: email);
-      //on sign in, just set the var to false
-      isAdminToggled = false;
-      return true;
-    } catch (e) {
+    AuthResponse auth = await supabase.auth
+        .signInWithPassword(password: password, email: email);
+    //on sign in, just set the var to false
+
+    print(auth.user!.role);
+
+    // fill in CurrentAccount
+    var data = await supabase
+        .from('accounts')
+        .select('*')
+        .eq('accountid', auth.user!.id)
+        .single();
+    print('KAT SINI DAPAT DO WEHH');
+    var scoutdata = await supabase
+        .from('scouts')
+        .select('*')
+        .eq('accountid', auth.user!.id)
+        .single();
+
+    print('KAT SCOUT DAPAT DO WEHH');
+
+    ScoutInfoModel scoutInfoModel = ScoutInfoModel.parse(scoutdata);
+
+    CurrentAccount ca = CurrentAccount.getInstance();
+
+    ca.accountid = data['accountid'];
+    ca.fullname = data['fullname'];
+    ca.email = data['email'];
+    ca.phoneNo = data['phone_no'];
+    ca.imageURL = data['image_url'];
+    ca.activated = data['activated'];
+    ca.isMember = data['is_member'];
+    ca.icNo = data['ic_no'];
+
+    ca.role = auth.user!.role!;
+    ca.isAdminToggled = false;
+
+    ca.scoutInfo = scoutInfoModel;
+
+    return true;
+    try {} catch (e) {
       if (e.toString().contains('login credentials')) {
         throw Exception("Invalid login credentials");
       }
@@ -162,6 +197,7 @@ class AccountDAO {
       await supabase
           .from('accounts')
           .update({'activated': true}).eq('accountid', userResponse.user!.id);
+      await supabase.auth.signOut();
     } catch (e) {
       throw Exception(e.toString());
     }

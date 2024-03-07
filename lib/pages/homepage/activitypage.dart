@@ -2,6 +2,7 @@ import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/model/activity.dart';
+import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/activity/createactivitypage.dart';
 import 'package:scoutify/pages/activity/detailsactivity.dart';
 import 'package:flutter/material.dart';
@@ -95,8 +96,8 @@ class _ActivityPageState extends State<ActivityPage> {
             ),
           ),
           floatingActionButton: Builder(builder: (context) {
-            if (AccountDAO.isAdminToggled) {
-              // Assuming AccountDAO.isAdminToggled is defined in your backend logic
+            if (CurrentAccount.getInstance().isAdminToggled) {
+              // Assuming CurrentAccount.getInstance().isAdminToggled is defined in your backend logic
               return CircleAvatar(
                 maxRadius: 30,
                 backgroundColor: const Color(0xFF2E3B78),
@@ -162,7 +163,7 @@ class _ActivityPageState extends State<ActivityPage> {
                       ),
                     ),
                     FutureBuilder<List<Activity>>(
-                      future: AccountDAO.isAdminToggled
+                      future: CurrentAccount.getInstance().isAdminToggled
                           ? ActivityDAO().getActivities(filters: {
                               'year': selectedYear,
                               'month': selectedMonth

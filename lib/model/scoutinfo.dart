@@ -1,5 +1,5 @@
 class ScoutInfoModel {
-  late String noAhli, position, unit, crewNo, jantina, kaum, agama;
+  late String noAhli, position, unit, jantina, kaum, agama;
 
   late String? noTauliah,
       daerah,
@@ -7,6 +7,7 @@ class ScoutInfoModel {
       cardID,
       cardName,
       schoolCode,
+      crewNo,
       manikayu;
 
   ScoutInfoModel() {

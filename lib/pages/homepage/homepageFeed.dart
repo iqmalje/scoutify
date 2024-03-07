@@ -3,6 +3,7 @@ import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/model/activity.dart';
+import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/feed/createFeedPage.dart';
 import 'package:scoutify/pages/feed/detailsProgram.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _HomeFeedState extends State<HomeFeed> {
         bottom: false,
         child: Scaffold(
           floatingActionButton: Builder(builder: (context) {
-            if (AccountDAO.isAdminToggled) {
+            if (CurrentAccount.getInstance().isAdminToggled) {
               return CircleAvatar(
                 maxRadius: 30,
                 backgroundColor: const Color(0xFF2E3B78),

@@ -4,6 +4,7 @@ import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/model/activity.dart';
+import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/activity/createactivitypage.dart';
 import 'package:scoutify/pages/attendance/attendancePage3.dart';
 import 'package:flutter/material.dart';
@@ -288,7 +289,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Builder(builder: (context) {
-                          if (AccountDAO.isAdminToggled) {
+                          if (CurrentAccount.getInstance().isAdminToggled) {
                             return EditButton();
                           } else {
                             return Container();
@@ -301,7 +302,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
                     height: 15,
                   ),
                   Builder(builder: (context) {
-                    if (AccountDAO.isAdminToggled) {
+                    if (CurrentAccount.getInstance().isAdminToggled) {
                       return buildDateSelector(context);
                     } else {
                       return buildAttendedList(context, activity.activityid);
@@ -311,7 +312,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
                     height: 10,
                   ),
                   Builder(builder: (context) {
-                    if (AccountDAO.isAdminToggled) {
+                    if (CurrentAccount.getInstance().isAdminToggled) {
                       return InkWell(
                         onTap: () async {
                           //warning
