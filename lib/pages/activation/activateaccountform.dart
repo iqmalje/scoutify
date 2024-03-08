@@ -191,7 +191,7 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
               width: 30,
             ),
             const Text(
-              'Create Activity',
+              'Activate Account',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 25,

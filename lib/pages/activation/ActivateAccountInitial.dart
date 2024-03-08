@@ -7,6 +7,7 @@ import 'package:scoutify/model/account.dart';
 import 'package:scoutify/pages/activation/activateaccountform.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ActivateAccountInitial extends StatefulWidget {
   const ActivateAccountInitial({super.key});
@@ -122,9 +123,17 @@ class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
                             builder: (context) => ActivateAccountForm(
                                   account: account,
                                 )));
+                      } on PostgrestException catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content:
+                                  Text("Please ensure your order is completed and enter the correct IC number. If issues persist, kindly reach out to our support team.")),
+                        );
+                        print("PostgrestException: ${e.message}");
                       } on Exception catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(e.toString())));
+                        print(e.toString());
                       }
                     },
                     style: const TextStyle(
