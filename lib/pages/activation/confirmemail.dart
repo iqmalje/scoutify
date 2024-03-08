@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/pages/activation/setpasswordpage.dart';
 import 'package:scoutify/pages/forgotpassword/resetpassword.dart';
 
 class ConfirmEmailActivationPage extends StatefulWidget {
@@ -64,140 +65,167 @@ class _ConfirmEmailActivationPageState
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                     maxHeight: MediaQuery.sizeOf(context).height),
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(100),
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Ink(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            color: Colors.white,
-                          ),
-                          child: const Icon(
-                            Icons.arrow_back,
-                            size: 35,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(100),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Ink(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Colors.white,
+                            ),
+                            child: const Icon(
+                              Icons.arrow_back,
+                              size: 35,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Colors.white),
-                          child: Image.asset('assets/images/lock_icon.png'),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        const Text(
-                          'Verify Your Email Address',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: Colors.white),
+                            child: Image.asset('assets/images/lock_icon.png'),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 35,
-                        ),
-                        const Text(
-                          'An 6-digit code has been sent to',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
+                          const SizedBox(
+                            height: 30,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 11,
-                        ),
-                        Text(
-                          email,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
+                          const Text(
+                            'Verify Your Email Address',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: List.generate(
-                              6,
-                              (index) => Container(
-                                    width: 43,
-                                    height: 60,
-                                    decoration: ShapeDecoration(
-                                      color: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5)),
-                                      shadows: const [
-                                        BoxShadow(
-                                          color: Color(0x143D6886),
-                                          blurRadius: 2,
-                                          offset: Offset(0, 3),
-                                          spreadRadius: 0,
-                                        ),
-                                        BoxShadow(
-                                          color: Color(0x193D6886),
-                                          blurRadius: 9,
-                                          offset: Offset(0, 6),
-                                          spreadRadius: 0,
-                                        )
-                                      ],
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10.0),
-                                      child: TextField(
-                                        controller: OTP[index],
-                                        textAlign: TextAlign.center,
-                                        onChanged: (value) {
-                                          if (value.length == 1) {
-                                            node.nextFocus();
-                                          }
-                                        },
-                                        textInputAction: TextInputAction.next,
-                                        maxLength: 1,
-                                        style: const TextStyle(fontSize: 25),
-                                        decoration: const InputDecoration(
-                                            counterText: "",
-                                            border: InputBorder.none),
+                          const SizedBox(
+                            height: 35,
+                          ),
+                          const Text(
+                            'An 6-digit code has been sent to',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w400,
+                              height: 0,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 11,
+                          ),
+                          Text(
+                            email,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w700,
+                              height: 0,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: List.generate(
+                                6,
+                                (index) => Container(
+                                      width: 43,
+                                      height: 60,
+                                      decoration: ShapeDecoration(
+                                        color: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
+                                        shadows: const [
+                                          BoxShadow(
+                                            color: Color(0x143D6886),
+                                            blurRadius: 2,
+                                            offset: Offset(0, 3),
+                                            spreadRadius: 0,
+                                          ),
+                                          BoxShadow(
+                                            color: Color(0x193D6886),
+                                            blurRadius: 9,
+                                            offset: Offset(0, 6),
+                                            spreadRadius: 0,
+                                          )
+                                        ],
                                       ),
-                                    ),
-                                  )),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          children: [
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 10.0),
+                                        child: TextField(
+                                          controller: OTP[index],
+                                          textAlign: TextAlign.center,
+                                          onChanged: (value) {
+                                            if (value.length == 1) {
+                                              node.nextFocus();
+                                            }
+                                          },
+                                          textInputAction: TextInputAction.next,
+                                          maxLength: 1,
+                                          style: const TextStyle(fontSize: 25),
+                                          decoration: const InputDecoration(
+                                              counterText: "",
+                                              border: InputBorder.none),
+                                        ),
+                                      ),
+                                    )),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                'The OTP will be expired in ',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                ),
+                              ),
+                              Text(
+                                formattedTime(timeInSecond: _start),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600,
+                                  height: 0,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(children: [
                             const Text(
-                              'The OTP will be expired in ',
+                              'Didn\'t receive the code? ',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 13,
@@ -206,125 +234,100 @@ class _ConfirmEmailActivationPageState
                                 height: 0,
                               ),
                             ),
-                            Text(
-                              formattedTime(timeInSecond: _start),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 13,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w600,
-                                height: 0,
+                            GestureDetector(
+                              onTap: () async {
+                                await AccountDAO().sendPasswordOTP(email);
+                
+                                //reset timer
+                                if (_timer!.isActive) _timer!.cancel();
+                
+                                _start = 330;
+                                _timer = Timer.periodic(
+                                    const Duration(seconds: 1), (timer) {
+                                  if (_start == 0) {
+                                    _timer!.cancel();
+                                  } else {
+                                    setState(() {
+                                      _start--;
+                                    });
+                                  }
+                                });
+                              },
+                              child: const Text(
+                                'Resend',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w500,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.white,
+                                  height: 0,
+                                ),
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(children: [
-                          const Text(
-                            'Didn\'t receive the code? ',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w400,
-                              height: 0,
+                          ]),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 70,
+                      ),
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(15),
+                          splashColor: const Color.fromARGB(255, 123, 90, 255),
+                          onTap: () async {
+                            String OTPcollected = "";
+                
+                            for (var element in OTP) {
+                              if (element.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Fill in all OTP code')));
+                                continue;
+                              }
+                              OTPcollected += element.text;
+                            }
+                
+                            try {
+                              await AccountDAO()
+                                  .verifyPasswordOTP(email, OTPcollected);
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      SetPasswordPage(email: email)));
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(e.toString())));
+                
+                              return;
+                            }
+                          },
+                          child: Ink(
+                            width: 300,
+                            height: 50,
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                    width: 3, color: Color(0xFFFFC600)),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              await AccountDAO().sendPasswordOTP(email);
-
-                              //reset timer
-                              if (_timer!.isActive) _timer!.cancel();
-
-                              _start = 330;
-                              _timer = Timer.periodic(
-                                  const Duration(seconds: 1), (timer) {
-                                if (_start == 0) {
-                                  _timer!.cancel();
-                                } else {
-                                  setState(() {
-                                    _start--;
-                                  });
-                                }
-                              });
-                            },
-                            child: const Text(
-                              'Resend',
+                            child: const Center(
+                                child: Text(
+                              'CONFIRM',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 13,
+                                fontSize: 15,
                                 fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w500,
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.white,
-                                height: 0,
                               ),
-                            ),
+                            )),
                           ),
-                        ]),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 70,
-                    ),
-                    Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(15),
-                        splashColor: const Color.fromARGB(255, 123, 90, 255),
-                        onTap: () async {
-                          String OTPcollected = "";
-
-                          for (var element in OTP) {
-                            if (element.text.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Fill in all OTP code')));
-                              continue;
-                            }
-                            OTPcollected += element.text;
-                          }
-
-                          try {
-                            await AccountDAO()
-                                .verifyPasswordOTP(email, OTPcollected);
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    ResetPasswordPage(email: email)));
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(e.toString())));
-
-                            return;
-                          }
-                        },
-                        child: Ink(
-                          width: 300,
-                          height: 50,
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(
-                                  width: 3, color: Color(0xFFFFC600)),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          child: const Center(
-                              child: Text(
-                            'CONFIRM',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          )),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
