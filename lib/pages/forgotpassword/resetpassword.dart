@@ -3,9 +3,11 @@
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:flutter/material.dart';
+import 'package:scoutify/components/components.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   String email;
+  
   ResetPasswordPage({super.key, required this.email});
 
   @override
@@ -14,9 +16,11 @@ class ResetPasswordPage extends StatefulWidget {
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
   String email;
+  bool isShown = false, isConfirmShown = false;
   TextEditingController password = TextEditingController(),
       confirmpassword = TextEditingController();
   _ResetPasswordPageState(this.email);
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -73,7 +77,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       ),
                       TextField(
                         controller: password,
-                        obscureText: true,
+                        obscureText: !isShown,
                         onChanged: (value) {
                           setState(() {});
                         },
@@ -82,7 +86,23 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                             borderRadius: BorderRadius.circular(12.0),
                             borderSide: const BorderSide(color: Colors.white),
                           ),
-
+                          prefixIcon: const Icon(Icons.lock),
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isShown = !isShown;
+                                  });
+                                },
+                                icon: !isShown
+                                    ? const Icon(Icons.remove_red_eye)
+                                    : const Icon(Icons.visibility_off),
+                              ),
+                            ),
+                          ),
                           hintText: 'Password',
                           filled: true, // Fill the background with color
 
@@ -98,7 +118,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                         onChanged: (value) {
                           setState(() {});
                         },
-                        obscureText: true,
+                        obscureText: !isConfirmShown,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
@@ -106,7 +126,23 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           ),
                           hintText: 'Confirm Password',
                           filled: true, // Fill the background with color
-
+                          prefixIcon: const Icon(Icons.lock),
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isConfirmShown = !isConfirmShown;
+                                  });
+                                },
+                                icon: !isConfirmShown
+                                    ? const Icon(Icons.remove_red_eye)
+                                    : const Icon(Icons.visibility_off),
+                              ),
+                            ),
+                          ),
                           fillColor:
                               Colors.white, // Set the background color to white
                         ),
@@ -130,7 +166,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       })
                     ],
                   ),
-                  const Spacer(),
+                  const SizedBox(
+                    height: 50,
+                  ),
                   Material(
                     color: Colors.transparent,
                     child: InkWell(

@@ -22,7 +22,6 @@ class _TempPageState extends State<TempPage> {
   final List<Widget> _pages = [
     const HomeFeed(),
     const ActivityPage(),
-    //const FacilityPage(),
     const InboxMainPage(),
     const ProfilePage(),
   ];
@@ -82,7 +81,8 @@ class _TempPageState extends State<TempPage> {
                       onTap: () {
                         _changePage(0);
                       },
-                      child: SizedBox(
+                      child: Container(
+                        color: Colors.white,
                         width: 50,
                         height: 50,
                         child: Column(
@@ -96,6 +96,7 @@ class _TempPageState extends State<TempPage> {
                             ),
                             Text(
                               'Home',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 13,
                                 color: index == 0
@@ -119,7 +120,8 @@ class _TempPageState extends State<TempPage> {
                       onTap: () {
                         _changePage(1);
                       },
-                      child: SizedBox(
+                      child: Container(
+                        color: Colors.white,
                         width: 50,
                         height: 50,
                         child: Column(
@@ -133,6 +135,7 @@ class _TempPageState extends State<TempPage> {
                             ),
                             Text(
                               'Activity',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 13,
                                 color: index == 1
@@ -156,7 +159,8 @@ class _TempPageState extends State<TempPage> {
                         _changePage(2);
                       },
                       borderRadius: BorderRadius.circular(100),
-                      child: SizedBox(
+                      child: Container(
+                        color: Colors.white,
                         width: 50,
                         height: 50,
                         child: Column(
@@ -170,6 +174,7 @@ class _TempPageState extends State<TempPage> {
                             ),
                             Text(
                               'Inbox',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 13,
                                 color: index == 2
@@ -231,7 +236,8 @@ class _TempPageState extends State<TempPage> {
                         _changePage(3);
                       },
                       borderRadius: BorderRadius.circular(100),
-                      child: SizedBox(
+                      child: Container(
+                        color: Colors.white,
                         width: 50,
                         height: 50,
                         child: Column(
@@ -245,6 +251,7 @@ class _TempPageState extends State<TempPage> {
                             ),
                             Text(
                               'Profile',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 fontSize: 13,
                                 color: index == 3

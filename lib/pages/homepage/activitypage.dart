@@ -1,6 +1,7 @@
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/activity/createactivitypage.dart';
@@ -76,25 +77,7 @@ class _ActivityPageState extends State<ActivityPage> {
       child: SafeArea(
         bottom: false,
         child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(100),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 90,
-              decoration: const BoxDecoration(color: Color(0xFF2E3B78)),
-              child: const Center(
-                child: Text(
-                  'Activity',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    fontSize: 24,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          appBar: ScoutifyComponents().normalAppBar('Activity', context),
           floatingActionButton: Builder(builder: (context) {
             if (CurrentAccount.getInstance().isAdminToggled) {
               // Assuming CurrentAccount.getInstance().isAdminToggled is defined in your backend logic

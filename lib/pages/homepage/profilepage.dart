@@ -31,6 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: SafeArea(
           child: Scaffold(
+            appBar: ScoutifyComponents().normalAppBar('Profile', context),
             body: SingleChildScrollView(
               child: Center(
                 child: Builder(builder: (context) {
@@ -60,23 +61,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   }
                   return Column(
                     children: [
-                      Container(
-                        width: MediaQuery.sizeOf(context).width,
-                        height: 90,
-                        decoration:
-                            const BoxDecoration(color: Color(0xFF2E3B78)),
-                        child: const Center(
-                          child: Text(
-                            'Profile',
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              fontSize: 24,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
                       const SizedBox(
                         height: 18,
                       ),

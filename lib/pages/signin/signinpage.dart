@@ -105,6 +105,7 @@ class _SignInPageState extends State<SignInPage> {
                           child: TextField(
                             controller: email,
                             decoration: InputDecoration(
+                              isDense: true,
                               prefixIcon: Icon(Icons.person_outline),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -128,6 +129,7 @@ class _SignInPageState extends State<SignInPage> {
                             controller: password,
                             obscureText: !isShown,
                             decoration: InputDecoration(
+                              isDense: true,
                               prefixIcon: Icon(Icons.lock),
                               suffixIcon: GestureDetector(
                                 onTap: () => setState(() {

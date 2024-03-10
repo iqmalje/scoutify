@@ -21,6 +21,7 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
   bool isEditMode = false;
   _CreateFeedPageState(this.activity) {
     if (activity != null) {
+      
       isEditMode = true;
     }
   }

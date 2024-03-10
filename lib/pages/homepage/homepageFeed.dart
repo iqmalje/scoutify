@@ -106,12 +106,12 @@ class _HomeFeedState extends State<HomeFeed> {
 
 Widget _appBar(context) {
   return Container(
-      height: 90,
+      height: 75,
       width: MediaQuery.of(context).size.width,
       color: const Color(0xFF2E3B78),
       child: Padding(
-        padding: EdgeInsets.only(bottom: 10),
-        child: Image.asset('assets/images/Scoutify_LOGO_NEW.png'),
+        padding: EdgeInsets.only(bottom: 10, top: 10),
+        child: Image.asset('assets/images/Scoutify_LOGO_NEW.png',),
       ));
 }
 
