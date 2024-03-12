@@ -1,4 +1,5 @@
 import 'package:scoutify/backend/accountDAO.dart';
+import 'package:scoutify/backend/attendanceDAO.dart';
 import 'package:scoutify/pages/attendance/AttendanceInformation.dart';
 import 'package:flutter/material.dart';
 
@@ -154,7 +155,7 @@ class _RecordAttendanceState extends State<RecordAttendance> {
                       autofocus: true,
                       onSubmitted: (value) {
                         //do logic
-                        AccountDAO().addAttendance(activityid, value);
+                        AttendanceDAO().addAttendance(activityid, value);
                         attendance.clear();
                         fn.requestFocus();
                       },

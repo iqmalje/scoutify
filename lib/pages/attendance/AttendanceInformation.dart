@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:scoutify/backend/accountDAO.dart';
+import 'package:scoutify/backend/attendanceDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -329,7 +330,7 @@ class _AttendanceInformationState extends State<AttendanceInformation> {
                     height: 10,
                   ),
                   FutureBuilder(
-                      future: AccountDAO()
+                      future: AttendanceDAO()
                           .getAttendance(this.attendeeItem['activityid']),
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {

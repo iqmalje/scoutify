@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:scoutify/backend/accountDAO.dart';
+import 'package:scoutify/backend/attendanceDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
@@ -255,13 +256,13 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                     if (isDecimal(value)) {
                       String converted = decimalToHex(int.parse(value));
                       print(converted);
-                      AccountDAO().addAttendance(activityid, converted);
+                      AttendanceDAO().addAttendance(activityid, converted);
                     } else {
-                      AccountDAO().addAttendance(activityid, value);
+                      AttendanceDAO().addAttendance(activityid, value);
                     }
 // convert first
                   } else {
-                    AccountDAO().addAttendance(activityid, value);
+                    AttendanceDAO().addAttendance(activityid, value);
                   }
 
                   attendance.clear();

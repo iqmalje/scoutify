@@ -1,6 +1,7 @@
 // ignore_for_file: no_logic_in_create_state, must_be_immutable
 
 import 'package:scoutify/backend/accountDAO.dart';
+import 'package:scoutify/backend/attendanceDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:flutter/material.dart';
@@ -384,7 +385,7 @@ Widget _addButton(TextEditingController scoutid, Activity activity, context) {
               ),
               onPressed: () async {
                 if (scoutid.text.isEmpty) return;
-                await AccountDAO()
+                await AttendanceDAO()
                     .addAttendanceByScoutID(activity.activityid, scoutid.text);
 
                 Navigator.of(context).pop();
