@@ -6,6 +6,7 @@ import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
+import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/account/scoutid.dart';
 import 'package:flutter/material.dart';
 
@@ -254,6 +255,8 @@ class _ProfilePictureGuidelineState extends State<ProfilePictureGuideline> {
 
                     String newURL = await AccountDAO()
                         .updateDigitalPicture(File(croppedFile.path));
+
+                    CurrentAccount.getInstance().imageURL = newURL;
 
                     // if successful, pop page
                     setState(() {

@@ -74,9 +74,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => ScoutIDPage(
-                                            account: ca.getAccount(),
-                                          )));
+                                      builder: (context) =>
+                                          const ScoutIDPage()));
                                   setState(() {});
                                 },
                                 child: Container(

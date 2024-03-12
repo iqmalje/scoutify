@@ -5,6 +5,7 @@ import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
 import 'package:scoutify/model/chat.dart';
+import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/account/profileguideline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,18 +13,16 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ScoutIDPage extends StatefulWidget {
-  Account account;
-  ScoutIDPage({super.key, required this.account});
+  const ScoutIDPage({super.key});
 
   @override
-  State<ScoutIDPage> createState() => _ScoutIDPageState(account);
+  State<ScoutIDPage> createState() => _ScoutIDPageState();
 }
 
 class _ScoutIDPageState extends State<ScoutIDPage> {
-  Account account;
-  _ScoutIDPageState(this.account);
   @override
   Widget build(BuildContext context) {
+    Account account = CurrentAccount.getInstance().getAccount();
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -137,7 +136,8 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                     if (displayName == null || displayName.isEmpty) return;
                     await AccountDAO().updateDisplayName(displayName);
                     setState(() {
-                      account.scoutInfo.cardName = displayName;
+                      CurrentAccount.getInstance().scoutInfo!.cardName =
+                          displayName;
                     });
                   }),
                   const SizedBox(

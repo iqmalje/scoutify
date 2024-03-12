@@ -30,9 +30,7 @@ class _ManageAccountPageState extends State<ManageAccountPage> {
                 'JOHOR SCOUT DIGITAL ID',
                 () => {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ScoutIDPage(
-                                account: account,
-                              )))
+                          builder: (context) => const ScoutIDPage()))
                     }),
             const SizedBox(
               height: 20,
@@ -52,9 +50,7 @@ class _ManageAccountPageState extends State<ManageAccountPage> {
                 'SCOUT INFORMATION',
                 () => {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ScoutInfo(
-                                account: account,
-                              )))
+                          builder: (context) => const ScoutInfo()))
                     }),
           ],
         ),

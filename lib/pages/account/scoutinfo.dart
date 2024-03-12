@@ -3,18 +3,19 @@ import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
 import 'package:flutter/material.dart';
+import 'package:scoutify/model/currentaccount.dart';
 
 class ScoutInfo extends StatefulWidget {
-  final Account account;
-  const ScoutInfo({super.key, required this.account});
+  const ScoutInfo({
+    super.key,
+  });
 
   @override
-  State<ScoutInfo> createState() => _ScoutInfoState(account);
+  State<ScoutInfo> createState() => _ScoutInfoState();
 }
 
 class _ScoutInfoState extends State<ScoutInfo> {
-  final Account account;
-  _ScoutInfoState(this.account);
+  Account account = CurrentAccount.getInstance().getAccount();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +103,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
                 buildInputBox(
                     'School Name / Crew Name',
                     TextEditingController(
-                      // todo implement school name
+                        // todo implement school name
                         text: account.scoutInfo.schoolCode ??= 'None')),
                 const SizedBox(
                   height: 15,

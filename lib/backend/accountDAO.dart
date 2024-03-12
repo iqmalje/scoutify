@@ -26,26 +26,27 @@ class AccountDAO {
     return account;
   }
 
-  Future<Account> getProfileInfo() async {
-    // return current user profile
-    var userid = supabase.auth.currentUser!.id;
-    var data =
-        await supabase.from('accounts').select('*').eq('accountid', userid);
+  // no longer in use since usage of Singleton
+  // Future<Account> getProfileInfo() async {
+  //   // return current user profile
+  //   var userid = supabase.auth.currentUser!.id;
+  //   var data =
+  //       await supabase.from('accounts').select('*').eq('accountid', userid);
 
-    Account account = Account.parse(data[0]);
+  //   Account account = Account.parse(data[0]);
 
-    // fetch scout info
+  //   // fetch scout info
 
-    var scoutInfo = await supabase
-        .from('scouts')
-        .select('*')
-        .eq('accountid', account.accountid)
-        .single();
+  //   var scoutInfo = await supabase
+  //       .from('scouts')
+  //       .select('*')
+  //       .eq('accountid', account.accountid)
+  //       .single();
 
-    account.scoutInfo = ScoutInfoModel.parse(scoutInfo);
+  //   account.scoutInfo = ScoutInfoModel.parse(scoutInfo);
 
-    return account;
-  }
+  //   return account;
+  // }
 
   Future<Account> getOtherProfile(String accountid) async {
     var data =
@@ -171,7 +172,7 @@ class AccountDAO {
     String userid = supabase.auth.currentUser!.id;
 
     await supabase
-        .from('accounts')
+        .from('scouts')
         .update({'card_name': displayName}).eq('accountid', userid);
   }
 
@@ -205,9 +206,9 @@ class AccountDAO {
 
   Future<dynamic> getScoutDetails(String scoutid) async {
     var data = await supabase
-        .from('accounts')
+        .from('scouts')
         .select(
-            'no_ahli, no_tauliah, unit, daerah,  is_member,position, image_url')
+            'no_ahli, no_tauliah, unit, daerah, accounts ( is_member ), position, accounts ( image_url)')
         .eq('accountid', scoutid)
         .single();
 

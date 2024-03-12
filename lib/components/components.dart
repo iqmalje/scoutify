@@ -451,9 +451,16 @@ class ScoutifyComponents {
                     side: BorderSide(width: 4, color: Color(0xFF00579E)),
                   ),
                 ),
-                child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        '${account.imageURL}?v=${DateTime.now().millisecondsSinceEpoch}')),
+                child: Builder(builder: (context) {
+                  if (account.imageURL == null) {
+                    return const CircleAvatar(
+                        backgroundImage:
+                            AssetImage('assets/images/profileDefault.png'));
+                  }
+                  return CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          '${account.imageURL}?v=${DateTime.now().millisecondsSinceEpoch}'));
+                }),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 10),
