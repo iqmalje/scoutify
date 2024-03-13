@@ -201,6 +201,7 @@ class _ActivityPageState extends State<ActivityPage> {
                         );
                       },
                     ),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),
@@ -268,10 +269,14 @@ class _ActivityPageState extends State<ActivityPage> {
                   height: MediaQuery.of(context).size.height * 0.15,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(item.imageurl),
-                          /* const AssetImage("assets/images/myImage.jpg"), */ fit:
-                              BoxFit.cover)),
+                    image: DecorationImage(
+                      image: item.imageurl != null
+                          ? NetworkImage(item.imageurl) 
+                          : AssetImage("assets/images/Scoutify_Logo_NEW.png")
+                              as ImageProvider<Object>,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
               Row(

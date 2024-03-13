@@ -120,8 +120,8 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                                   ],
                                 );
                               } else {
-                                return FittedBox(
-                                    fit: BoxFit.fill,
+                                return Container(
+                                  height: 200, //uncomment this to create a const height
                                     child: Image.file(File(imagePicked!.path)));
                               }
                             }),
@@ -528,6 +528,8 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                                         .format(startdate!),
                                     'enddate': DateFormat('yyyy-MM-dd')
                                         .format(enddate!),
+                                    'status' : 'ONGOING',
+                                    //TODO: figure out how to do ongoing, done
                                     'file': File(imagePicked!.path)
                                   });
                                 }

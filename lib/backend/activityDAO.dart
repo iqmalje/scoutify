@@ -175,20 +175,25 @@ class ActivityDAO {
           'is_show_activity': true,
           'created_by': accid,
           'is_show_feed': false,
+          'status': items['status'],
         })
         .select('activityid')
         .single();
 
     //upload to db
     //{activityid: blabla}
-    await supabase.storage
-        .from('activities')
-        .upload('${activity['activityid']}/cover.png', items['file']);
-
+    try {
+      await supabase.storage
+          .from('activities')
+          .upload('${activity['activityid']}/cover.png', items['file']);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  
     //update activity db
 
     await supabase.from('activities').update({
-      'imageurl': supabase.storage
+      'image_url': supabase.storage
           .from('activities')
           .getPublicUrl('${activity['activityid']}/cover.png')
     }).eq('activityid', activity['activityid']);
