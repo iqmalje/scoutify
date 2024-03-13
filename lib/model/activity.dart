@@ -19,7 +19,7 @@ class Activity {
     activityid = item['activityid'];
     name = item['name'];
     category = item['category'];
-    imageurl = item['imageurl'];
+    imageurl = item['image_url'];
     location = item['location'];
     created_by = item['created_by'];
     description = item['description'];

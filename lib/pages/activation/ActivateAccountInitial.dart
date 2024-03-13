@@ -37,6 +37,8 @@ class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 30),
+                
                 //back button
                 CircleAvatar(
                   radius: 30,

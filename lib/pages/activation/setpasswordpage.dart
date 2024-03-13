@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/pages/activation/successful_activation.dart';
 
 class SetPasswordPage extends StatefulWidget {
   final String email;
@@ -59,7 +60,7 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
                         height: 20,
                       ),
                       const Text(
-                        'Please enter your new password! ',
+                        'Please enter your password! ',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -178,8 +179,8 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
                         try {
                           await AccountDAO()
                               .updatePassword(email, password.text);
-                          Navigator.of(context)
-                              .pushNamedAndRemoveUntil('/signin', (_) => false);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ActivationSuccessful()));
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text(e.toString())));

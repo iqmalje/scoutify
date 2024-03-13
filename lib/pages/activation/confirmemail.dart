@@ -68,6 +68,7 @@ class _ConfirmEmailActivationPageState
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      SizedBox(height: 30),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: InkWell(

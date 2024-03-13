@@ -740,6 +740,7 @@ class ScoutifyComponents {
               const Text(
                 'PERSEKUTUAN PENGAKAP MALAYSIA NEGERI JOHOR',
                 textAlign: TextAlign.center,
+                textScaleFactor: 1.0,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 10,
@@ -754,6 +755,7 @@ class ScoutifyComponents {
               const Text(
                 'Scout Association of Malaysia Johor State',
                 textAlign: TextAlign.center,
+                textScaleFactor: 1.0,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 9,
@@ -769,6 +771,7 @@ class ScoutifyComponents {
               const Text(
                 'Diperbadankan dibawah Akta Parlimen No.784 Tahun 1968 (Semakan 2016), Enacted under Parliament Act No.784 (Revised 2016)',
                 textAlign: TextAlign.center,
+                textScaleFactor: 1.0,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 3,
@@ -805,6 +808,7 @@ class ScoutifyComponents {
                         child: Text(
                           account.scoutInfo.cardName ??= '-',
                           textAlign: TextAlign.center,
+                          textScaleFactor: 1.0,
                           maxLines: 2,
                           style: const TextStyle(
                             color: Colors.white,
@@ -844,6 +848,7 @@ class ScoutifyComponents {
                   child: AutoSizeText(
                     account.scoutInfo.position,
                     textAlign: TextAlign.center,
+                    textScaleFactor: 1.0,
                     maxLines: 2,
                     style: TextStyle(
                       color: Colors.white,
@@ -865,6 +870,7 @@ class ScoutifyComponents {
                           width: width,
                           child: Text(
                             'NO AHLI',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -878,6 +884,7 @@ class ScoutifyComponents {
                           width: width,
                           child: Text(
                             ': ${account.scoutInfo.noAhli}',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -897,6 +904,7 @@ class ScoutifyComponents {
                             account.scoutInfo.noTauliah != null
                                 ? 'NO TAULIAH'
                                 : 'MANIKAYU',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -910,6 +918,7 @@ class ScoutifyComponents {
                           width: width,
                           child: Text(
                             ': ${account.scoutInfo.noTauliah ?? account.scoutInfo.manikayu}',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -929,6 +938,7 @@ class ScoutifyComponents {
                               width: width,
                               child: Text(
                                 'UNIT',
+                                textScaleFactor: 1.0,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: size,
@@ -940,6 +950,7 @@ class ScoutifyComponents {
                             ),
                             Text(
                               ': ${account.scoutInfo.unit}',
+                              textScaleFactor: 1.0,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: size,
@@ -962,6 +973,7 @@ class ScoutifyComponents {
                             account.scoutInfo.negara == null
                                 ? 'DAERAH'
                                 : 'NEGARA',
+                            textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -973,6 +985,7 @@ class ScoutifyComponents {
                         ),
                         Text(
                           ': ${account.scoutInfo.negara ??= account.scoutInfo.daerah}',
+                          textScaleFactor: 1.0,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: size,
@@ -1003,6 +1016,7 @@ class ScoutifyComponents {
                       Image.asset('assets/icons/Scoutify_logo.png'),
                       const Text(
                         ' JOHOR SCOUT DIGITAL ID',
+                        textScaleFactor: 1.0,
                         style: TextStyle(
                           color: Color(0xFF3B3F65),
                           fontSize: 12,
