@@ -64,7 +64,7 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
               StreamBuilder(
                   stream: AccountDAO()
                       .supabase
-                      .from('attendance')
+                      .from('attendances')
                       .stream(primaryKey: ['attendanceid'])
                       .eq('activityid', activityid)
                       .order('time_attended', ascending: false),
@@ -99,34 +99,39 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500),
                                   ),
-                                  FutureBuilder<Account>(
-                                      future: AccountDAO().getOtherProfile(
-                                          attendees.first['accountid']),
-                                      builder: (context, snapshot) {
-                                        if (!snapshot.hasData) {
-                                          return const CircularProgressIndicator();
-                                        }
+                                  Builder(builder: (context) {
+                                    if (attendees.isEmpty) {
+                                      return Container();
+                                    }
+                                    return FutureBuilder<Account>(
+                                        future: AccountDAO().getOtherProfile(
+                                            attendees.first['accountid']),
+                                        builder: (context, snapshot) {
+                                          if (!snapshot.hasData) {
+                                            return const CircularProgressIndicator();
+                                          }
 
-                                        if (attendees.first['accountid'] ==
-                                            '2f8ac5d8-d306-4690-8bd0-c075806f4b3a') {
+                                          if (attendees.first['accountid'] ==
+                                              '2f8ac5d8-d306-4690-8bd0-c075806f4b3a') {
+                                            return Container(
+                                                width: 250,
+                                                child: FittedBox(
+                                                    child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: ScoutifyComponents()
+                                                      .buildSpecialCard(
+                                                          snapshot.data!),
+                                                )));
+                                          }
                                           return Container(
                                               width: 250,
                                               child: FittedBox(
-                                                  child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10.0),
-                                                child: ScoutifyComponents()
-                                                    .buildSpecialCard(
-                                                        snapshot.data!),
-                                              )));
-                                        }
-                                        return Container(
-                                            width: 250,
-                                            child: FittedBox(
-                                                child: ScoutifyComponents()
-                                                    .buildCard(
-                                                        snapshot.data!)));
-                                      })
+                                                  child: ScoutifyComponents()
+                                                      .buildCard(
+                                                          snapshot.data!)));
+                                        });
+                                  })
                                 ],
                               ),
                             ),
@@ -330,9 +335,11 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                                 padding: const EdgeInsets.only(top: 5.0),
                                 child: Row(
                                   children: [
-                                    Text(
-                                      name,
-                                      overflow: TextOverflow.ellipsis,
+                                    Expanded(
+                                      child: Text(
+                                        name,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
                                     const Spacer(),
                                     Text(DateFormat('hh:mm a').format(time))
