@@ -38,13 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   CurrentAccount ca = CurrentAccount.getInstance();
 
                   if (CurrentAccount.getInstance().isAdminToggled &&
-                      AccountDAO()
-                              .supabase
-                              .auth
-                              .currentUser!
-                              .role!
-                              .toLowerCase() ==
-                          'admin') {
+                      CurrentAccount.getInstance().role == 'admin') {
                     fullname.text = 'PPM NEGERI JOHOR';
                     mobilenumber.text = '07-111 5566';
                     email.text = 'ppmnegerijohor@gmail.com';
@@ -148,24 +142,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 18,
                       ),
                       Builder(builder: (context) {
-                        if (AccountDAO()
-                                .supabase
-                                .auth
-                                .currentUser!
-                                .role!
-                                .toLowerCase() !=
-                            'admin') {
+                        if (CurrentAccount.getInstance().role != 'admin') {
                           return Container();
                         }
                         return InkWell(
                           onTap: () async {
-                            if (AccountDAO()
-                                    .supabase
-                                    .auth
-                                    .currentUser!
-                                    .role!
-                                    .toLowerCase() !=
-                                'admin') return;
+                            if (CurrentAccount.getInstance().role != 'admin')
+                              return;
 
                             bool? isToggle = await showDialog(
                                 context: context,
@@ -245,13 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 18,
                       ),
                       Builder(builder: (context) {
-                        if (AccountDAO()
-                                .supabase
-                                .auth
-                                .currentUser!
-                                .role!
-                                .toLowerCase() !=
-                            'admin') {
+                        if (CurrentAccount.getInstance().role != 'admin') {
                           return Column(
                             children: [
                               const Text(
