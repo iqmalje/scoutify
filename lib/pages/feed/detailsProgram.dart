@@ -239,15 +239,16 @@ class _DetailsprogramState extends State<Detailsprogram> {
                               const SizedBox(
                                 width: 10,
                               ),
-                              Text(
-                                activity.location,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
+                              Flexible(
+                                child: Text(
+                                  activity.location,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
+                                  ),
                                 ),
                               )
                             ],

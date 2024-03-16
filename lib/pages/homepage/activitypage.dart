@@ -127,6 +127,7 @@ class _ActivityPageState extends State<ActivityPage> {
                             children: [
                               Text(
                                 "${monthName[selectedDate.month - 1]} ${selectedDate.year.toString().substring(2)}",
+                                textScaleFactor: 1.0,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
@@ -249,6 +250,7 @@ class _ActivityPageState extends State<ActivityPage> {
                   children: [
                     Text(
                       item.category,
+                      textScaleFactor: 1.0,
                       style: const TextStyle(
                           fontSize: 12, fontWeight: FontWeight.bold),
                     ),

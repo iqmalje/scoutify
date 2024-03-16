@@ -397,6 +397,8 @@ class _DetailsActivityState extends State<DetailsActivity> {
     return FutureBuilder(
         future: ActivityDAO().getAttendance(activityid),
         builder: (context, snapshot) {
+          if (!CurrentAccount.getInstance().isAdminToggled) return Container();
+          
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
