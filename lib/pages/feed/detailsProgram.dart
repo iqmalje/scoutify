@@ -501,7 +501,7 @@ class _DetailsprogramState extends State<Detailsprogram> {
         builder: (context) {
           return AlertDialog(
             title: const Text(
-              'Are you sure to delete this facility?',
+              'Are you sure to delete this activity?',
               style: TextStyle(fontFamily: 'Poppins', fontSize: 18),
             ),
             actions: [

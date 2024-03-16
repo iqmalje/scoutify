@@ -121,7 +121,8 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                                 );
                               } else {
                                 return Container(
-                                  height: 200, //uncomment this to create a const height
+                                    height:
+                                        200, //uncomment this to create a const height
                                     child: Image.file(File(imagePicked!.path)));
                               }
                             }),
@@ -528,7 +529,7 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                                         .format(startdate!),
                                     'enddate': DateFormat('yyyy-MM-dd')
                                         .format(enddate!),
-                                    'status' : 'ONGOING',
+                                    'status': 'ONGOING',
                                     //TODO: figure out how to do ongoing, done
                                     'file': File(imagePicked!.path)
                                   });
@@ -601,9 +602,9 @@ class _CreateActivityPage extends State<CreateActivityPage> {
             const SizedBox(
               width: 30,
             ),
-            const Text(
-              'Create Activity',
-              style: TextStyle(
+            Text(
+              isEditMode == true ? 'Update Activity' : 'Create Activity',
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 25,
                 fontFamily: 'Poppins',

@@ -5,8 +5,13 @@ class ActivityDAO {
   var supabase = Supabase.instance.client;
 
   Future<List<Activity>> getAttendedActivities(String filter) async {
-    var data = await supabase.rpc('filter_attended_activities',
-        params: {'filter': filter, 'aid': supabase.auth.currentUser!.id});
+    var data;
+    try {
+      data = await supabase.rpc('filter_attended_activities',
+          params: {'filter': filter, 'aid': supabase.auth.currentUser!.id});
+    } catch (e) {
+      throw Exception(e.toString());
+    }
 
     List<Activity> activities = [];
     for (var activity in data) {
@@ -20,14 +25,26 @@ class ActivityDAO {
     List<dynamic> rawData = [];
     List<Activity> activities = [];
     if (filters == null) {
-      var activities = await supabase.from('activities').select('*');
+      var activities;
+
+      try {
+        activities = await supabase.from('activities').select('*');
+      } catch (e) {
+        throw Exception(e.toString());
+      }
 
       rawData = activities;
     } else {
-      var activities = await supabase.rpc('filter_activities', params: {
-        'filter':
-            '${filters['year']}-${filters['month'].toString().padLeft(2, '0')}-%'
-      });
+      var activities;
+
+      try {
+        activities = await supabase.rpc('filter_activities', params: {
+          'filter':
+              '${filters['year']}-${filters['month'].toString().padLeft(2, '0')}-%'
+        });
+      } catch (e) {
+        throw Exception(e.toString());
+      }
 
       rawData = activities;
     }
@@ -40,11 +57,15 @@ class ActivityDAO {
   }
 
   Future<List<Activity>> getFeed() async {
-    var feed = await supabase
-        .from('activities')
-        .select('*')
-        .match({'is_show_feed': true}).order('created_at');
-
+    var feed;
+    try {
+      feed = await supabase
+          .from('activities')
+          .select('*')
+          .match({'is_show_feed': true}).order('created_at');
+    } catch (e) {
+      throw Exception(e.toString());
+    }
     List<Activity> activities = [];
 
     for (var data in feed) {
@@ -66,24 +87,31 @@ class ActivityDAO {
           'is_show_activity': items['is_show_activity'],
           'created_by': accid,
           'fee': items['fee'],
-          'registrationenddate': items['registrationenddate'],
+          'registration_end_date': items['registration_end_date'],
           'description': items['description'],
           'is_show_feed': true,
+          'status': 'ONGOING',
         })
         .select('activityid')
         .single();
 
     //upload to storage
-
-    await supabase.storage
-        .from('activities')
-        .upload('${activity['activityid']}/cover.png', items['file']);
-
-    await supabase.from('activities').update({
-      'imageurl': supabase.storage
+    try {
+      await supabase.storage
           .from('activities')
-          .getPublicUrl('${activity['activityid']}/cover.png')
-    }).eq('activityid', activity['activityid']);
+          .upload('${activity['activityid']}/cover.png', items['file']);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+    try {
+      await supabase.from('activities').update({
+        'image_url': supabase.storage
+            .from('activities')
+            .getPublicUrl('${activity['activityid']}/cover.png')
+      }).eq('activityid', activity['activityid']);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   Future<void> updateFeed(Map<String, dynamic> items, String activityID) async {
@@ -97,7 +125,7 @@ class ActivityDAO {
       'is_show_activity': items['is_show_activity'],
       'created_by': accid,
       'fee': items['fee'],
-      'registrationenddate': items['registrationenddate'],
+      'registration_end_date': items['registration_end_date'],
       'description': items['description'],
       'is_show_feed': true,
     }).eq('activityid', activityID);
@@ -109,7 +137,7 @@ class ActivityDAO {
           .update('$activityID/cover.png', items['file']);
 
       await supabase.from('activities').update({
-        'imageurl': supabase.storage
+        'image_url': supabase.storage
             .from('activities')
             .getPublicUrl('$activityID/cover.png')
       }).eq('activityid', activityID);
@@ -142,7 +170,7 @@ class ActivityDAO {
           .update('$activityID/cover.png', items['file']);
       //update activity db
       await supabase.from('activities').update({
-        'imageurl': supabase.storage
+        'image_url': supabase.storage
             .from('activities')
             .getPublicUrl('$activityID/cover.png')
       });
@@ -189,33 +217,50 @@ class ActivityDAO {
     } catch (e) {
       throw Exception(e.toString());
     }
-  
-    //update activity db
 
-    await supabase.from('activities').update({
-      'image_url': supabase.storage
-          .from('activities')
-          .getPublicUrl('${activity['activityid']}/cover.png')
-    }).eq('activityid', activity['activityid']);
+    //update activity db
+    try {
+      await supabase.from('activities').update({
+        'image_url': supabase.storage
+            .from('activities')
+            .getPublicUrl('${activity['activityid']}/cover.png')
+      }).eq('activityid', activity['activityid']);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 
   Future<List<dynamic>> getAttendance(String activityid, {String? id}) async {
-    var data = await supabase.from('attendance').select('*').match({
-      'activityid': activityid,
-      'accountid': id ?? supabase.auth.currentUser!.id
-    });
+    var data;
+
+    try {
+      data = await supabase.from('attendance').select('*').match({
+        'activityid': activityid,
+        'accountid': id ?? supabase.auth.currentUser!.id
+      });
+    } catch (e) {
+      throw Exception(e.toString());
+    }
 
     return data;
   }
 
   Future<void> deleteActivity(Activity activity) async {
-    await supabase.storage
-        .from('activities')
-        .remove(['${activity.activityid}/cover.png']);
+    try {
+      await supabase.storage
+          .from('activities')
+          .remove(['${activity.activityid}/cover.png']);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
 
-    await supabase
-        .from('activities')
-        .delete()
-        .eq('activityid', activity.activityid);
+    try {
+      await supabase
+          .from('activities')
+          .delete()
+          .eq('activityid', activity.activityid);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 }

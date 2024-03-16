@@ -11,7 +11,7 @@ class Activity {
 
   String? description;
   late DateTime created_at, startdate, enddate;
-  DateTime? registrationenddate;
+  DateTime? registration_end_date;
   double? fee;
   List<DateTime> dateInvolved = [];
 
@@ -30,9 +30,9 @@ class Activity {
         DateTime.parse(item['created_at']).add(const Duration(hours: 8));
     startdate = DateTime.parse(item['startdate']);
     enddate = DateTime.parse(item['enddate']);
-    registrationenddate = item['registrationenddate'] == null
+    registration_end_date = item['registration_end_date'] == null
         ? null
-        : DateTime.tryParse(item['registrationenddate']);
+        : DateTime.tryParse(item['registration_end_date']);
 
     //fill list with involved dates
     int diff = enddate.difference(startdate).inDays;
