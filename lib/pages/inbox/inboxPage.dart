@@ -61,7 +61,7 @@ class _InboxMainPageState extends State<InboxMainPage> {
             // this one is not finished yet so we close it for a moment
 
             if (!snapshot.hasData) {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
             // TODO : implement in model inbox
             inboxes.clear();
@@ -201,7 +201,7 @@ class _InboxMainPageState extends State<InboxMainPage> {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () async{
+            onTap: () async {
               //TODO: back end for has read = true
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => InboxDetailPage(
