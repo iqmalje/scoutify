@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:scoutify/components/components.dart';
+import 'package:scoutify/model/inbox.dart';
 
 class InboxDetailPage extends StatefulWidget {
-  const InboxDetailPage({super.key});
+  final Inbox inbox;
+  const InboxDetailPage({super.key, required this.inbox});
 
   @override
-  State<InboxDetailPage> createState() => _InboxDetailPageState();
+  State<InboxDetailPage> createState() => _InboxDetailPageState(inbox);
 }
 
 class _InboxDetailPageState extends State<InboxDetailPage> {
+  Inbox inbox;
+  _InboxDetailPageState(this.inbox);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +27,9 @@ class _InboxDetailPageState extends State<InboxDetailPage> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
-                  const Text(
-                    'Welcome to Scoutify!',
-                    style: TextStyle(
+                  Text(
+                    inbox.title,
+                    style: const TextStyle(
                         fontFamily: 'Poppins',
                         color: Colors.black,
                         fontWeight: FontWeight.w500),
@@ -43,21 +47,50 @@ class _InboxDetailPageState extends State<InboxDetailPage> {
               ),
             ),
           ),
-          Container(
-            height: 240,
-            color: Colors.black.withOpacity(0.25),
-          ),
+          Builder(builder: (context) {
+            if (inbox.imageURL == null) {
+              return Container();
+            }
+            return Container(
+              height: 240,
+              color: Colors.black.withOpacity(0.25),
+            );
+          }),
           const SizedBox(
             height: 20,
           ),
           //description
-          const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                  'Hey there, Scout!\n\nWelcome aboard Scoutify, your ultimate ticket to an epic scout adventure! 🎉 Get ready to supercharge your scouting experience with this all-in-one mobile app. Whether you\'re exploring the great outdoors or embarking on thrilling new challenges, Scoutify has got your back!\n\nStay tuned for all the latest updates, tips, and tricks to make your scouting journey unforgettable. Get ready to unleash your inner explorer and dive into the excitement!\n\nAdventure awaits - let\'s make every moment count!',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                  ))),
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(inbox.description,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                      fontFamily: 'Poppins',
+                    )),
+              )),
+          const Spacer(),
+          Builder(builder: (context) {
+            if (inbox.type == 'update') {
+              return ScoutifyComponents().filledButton(
+                  height: 60,
+                  width: MediaQuery.sizeOf(context).width * 0.8,
+                  text: 'Update Profile',
+                  style: const TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                  onTap: () {},
+                  color: Color(0xFF2E3B78));
+            } else {
+              return Container();
+            }
+          }),
+          const SizedBox(
+            height: 15,
+          )
         ],
       ),
     );

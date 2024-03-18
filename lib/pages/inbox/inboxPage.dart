@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:scoutify/backend/inboxDAO.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/pages/inbox/inboxdetail.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../model/inbox.dart';
 
@@ -14,143 +16,143 @@ class InboxMainPage extends StatefulWidget {
 class _InboxMainPageState extends State<InboxMainPage> {
   List<Inbox> dummyInboxes = [
     Inbox(
-      inboxId: '1',
+      id: '1',
       title: 'Welcome to Scoutify',
       type: 'Welcome',
       description: 'Hey there, Scout!',
-      image_url: '',
-      isRead: false,
+      imageURL: '',
+      has_read: false,
       target_group: "",
       target_id: "",
     ),
     Inbox(
-      inboxId: '2',
+      id: '2',
       title: 'New Activity Has Recorded',
       type: 'Welcome',
       description: 'Congratulations',
-      image_url: '',
-      isRead: false,
+      imageURL: '',
+      has_read: false,
       target_group: "",
       target_id: "",
     ),
     Inbox(
-      inboxId: '3',
+      id: '3',
       title: 'Update Your Johor Scout Digital ID',
       type: 'Welcome',
       description:
           'Hey there, it\'s time to update your Johor Scout Digital ID',
-      image_url: '',
-      isRead: false,
+      imageURL: '',
+      has_read: false,
       target_group: "",
       target_id: "",
     ),
   ];
+  final _stream =
+      Supabase.instance.client.from('inboxes').stream(primaryKey: ['id']);
 
+  List<Inbox> inboxes = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ScoutifyComponents().normalAppBar('Inbox', context),
-      body: Builder(builder: (context) {
-        // this one is not finished yet so we close it for a moment
-        if (true) {
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50.0),
-              child: Text(
-                'This page is not yet completed! \n\n\nDo wait for an upcoming update that will be including all the inbox functionalities',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                ),
-              ),
-            ),
-          );
-        } else {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CircleAvatar(
-                      radius: 25,
-                      backgroundColor: const Color(0xFFF44236),
-                      child: Text(
-                        dummyInboxes.length.toString(),
-                        style: const TextStyle(
-                            fontFamily: 'Poppins',
-                            color: Colors.white,
-                            fontSize: 20),
-                      ),
-                    ),
-                    Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(100),
-                            boxShadow: [
-                              BoxShadow(
-                                  offset: const Offset(0, 1),
-                                  blurRadius: 4,
-                                  color: Colors.black.withOpacity(0.25))
-                            ]),
-                        child: IconButton(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return bottomSheet();
-                                  });
-                            },
-                            icon: const Icon(Icons.more_vert))),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  height: 3,
-                  width: MediaQuery.sizeOf(context).width,
-                  color: const Color(0xFFD9D9D9),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Flexible(
-                  child: dummyInboxes.isEmpty
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/inbox_empty.png',
-                              width: MediaQuery.of(context).size.width * 0.5,
-                              // Replace with your image asset path
-                            ),
-                            const SizedBox(height: 5),
-                            const Text('Your inbox is empty'),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: dummyInboxes.length,
-                          itemBuilder: (context, index) {
-                            return buildInboxMessage(
-                                dummyInboxes.elementAt(index), index);
-                          },
+      body: StreamBuilder(
+          stream: _stream,
+          builder: (context, snapshot) {
+            // this one is not finished yet so we close it for a moment
+
+            if (!snapshot.hasData) {
+              return const CircularProgressIndicator();
+            }
+            // TODO : implement in model inbox
+            inboxes.clear();
+            for (var item in snapshot.data!) {
+              inboxes.add(Inbox.parse(item));
+            }
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CircleAvatar(
+                        radius: 25,
+                        backgroundColor: const Color(0xFFF44236),
+                        child: Text(
+                          inboxes.length.toString(),
+                          style: const TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
+                              fontSize: 20),
                         ),
-                )
-              ],
-            ),
-          );
-        }
-      }),
+                      ),
+                      Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100),
+                              boxShadow: [
+                                BoxShadow(
+                                    offset: const Offset(0, 1),
+                                    blurRadius: 4,
+                                    color: Colors.black.withOpacity(0.25))
+                              ]),
+                          child: IconButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return bottomSheet();
+                                    });
+                              },
+                              icon: const Icon(Icons.more_vert))),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    height: 3,
+                    width: MediaQuery.sizeOf(context).width,
+                    color: const Color(0xFFD9D9D9),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Flexible(
+                    child: dummyInboxes.isEmpty
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/inbox_empty.png',
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                // Replace with your image asset path
+                              ),
+                              const SizedBox(height: 5),
+                              const Text('Your inbox is empty'),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: inboxes.length,
+                            itemBuilder: (context, index) {
+                              return buildInboxMessage(
+                                  inboxes.elementAt(index), index);
+                            },
+                          ),
+                  )
+                ],
+              ),
+            );
+          }),
     );
   }
 
@@ -188,14 +190,10 @@ class _InboxMainPageState extends State<InboxMainPage> {
       key: UniqueKey(),
       direction: DismissDirection.endToStart,
       dismissThresholds: const {DismissDirection.endToStart: 0.3},
-      onDismissed: (direction) {
+      onDismissed: (direction) async {
         //ask confirmation to delete, i think better for ux
         print(direction.name);
-        setState(
-          () {
-            dummyInboxes.removeAt(index);
-          },
-        );
+        await InboxDAO().deleteInbox(inbox.id);
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 10.0),
@@ -204,7 +202,9 @@ class _InboxMainPageState extends State<InboxMainPage> {
           child: InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const InboxDetailPage()));
+                  builder: (context) => InboxDetailPage(
+                        inbox: inbox,
+                      )));
             },
             child: Ink(
               color: Colors.white,
