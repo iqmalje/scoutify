@@ -35,6 +35,15 @@ class _ScoutInfoState extends State<ScoutInfo> {
   late TextEditingController _credentialNumberController =
       TextEditingController(text: '');
 
+  late String originalGender;
+  late String originalRace;
+  late String originalReligion;
+  late String originalDistrict;
+  late String originalUnitNumber;
+  late String originalTeamCrewNumber;
+  late String originalSchoolCrewCode;
+  late String originalSchoolCrewName;
+  late String originalCredentialNumber;
   @override
   void initState() {
     super.initState();
@@ -56,6 +65,15 @@ class _ScoutInfoState extends State<ScoutInfo> {
         TextEditingController(text: account.scoutInfo.schoolCode ?? '');
     _credentialNumberController =
         TextEditingController(text: account.scoutInfo.noTauliah ?? '');
+    originalGender = _genderController.text;
+    originalRace = _raceController.text;
+    originalReligion = _religionController.text;
+    originalDistrict = _districtController.text;
+    originalUnitNumber = _unitNumberController.text;
+    originalTeamCrewNumber = _teamCrewNumberController.text;
+    originalSchoolCrewCode = _schoolCrewCodeController.text;
+    originalSchoolCrewName = _schoolCrewNameController.text;
+    originalCredentialNumber = _credentialNumberController.text;
   }
 
   @override
@@ -119,12 +137,13 @@ class _ScoutInfoState extends State<ScoutInfo> {
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox(
-                    'Credentials Number (Nombor Tauliah)', _credentialNumberController, true),
+                buildInputBox('Credentials Number (Nombor Tauliah)',
+                    _credentialNumberController, true),
                 const SizedBox(
                   height: 15,
                 ),
-                buildDropDown('Gender', ['Lelaki', 'Perempuan'], _genderController),
+                buildDropDown(
+                    'Gender', ['Lelaki', 'Perempuan'], _genderController),
                 const SizedBox(
                   height: 15,
                 ),
@@ -201,6 +220,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
                               setState(
                                 () {
                                   isEdit = false;
+                                  resetControllers();
                                 },
                               );
                             }),
@@ -213,7 +233,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
                                 onTap: () {
                                   setState(
                                     () {
-                                      // TODO: Update the value in the controller when text changes. 
+                                      // TODO: Update the value in the controller when text changes.
                                       // TODO: Backend goes here kemal :)
                                       isEdit = false;
                                     },
@@ -324,13 +344,15 @@ class _ScoutInfoState extends State<ScoutInfo> {
                   const DropdownMenuItem<String?>(
                     value: null,
                     child: Text('Select',
-                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal, fontSize: 15)),
                   ),
                   ...options.map((String? value) {
                     return DropdownMenuItem<String?>(
                       value: value,
                       child: Text(value ?? '',
-                          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
+                          style: TextStyle(
+                              fontWeight: FontWeight.normal, fontSize: 15)),
                     );
                   }),
                 ],
@@ -355,5 +377,17 @@ class _ScoutInfoState extends State<ScoutInfo> {
             ),
           )
         : buildInputBox(title, controller, false);
+  }
+
+  void resetControllers() {
+    _genderController.text = originalGender;
+    _raceController.text = originalRace;
+    _religionController.text = originalReligion;
+    _districtController.text = originalDistrict;
+    _unitNumberController.text = originalUnitNumber;
+    _teamCrewNumberController.text = originalTeamCrewNumber;
+    _schoolCrewCodeController.text = originalSchoolCrewCode;
+    _schoolCrewNameController.text = originalSchoolCrewName;
+    _credentialNumberController.text = originalCredentialNumber;
   }
 }
