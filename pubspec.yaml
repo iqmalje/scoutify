@@ -47,6 +47,7 @@ dependencies:
   image_cropper: ^5.0.1
   flutter_launcher_icons: ^0.13.1
   flutter_svg: ^2.0.9
+  flutter_native_splash: ^2.3.10
 
 dev_dependencies:
   flutter_test:
@@ -115,3 +116,15 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icons/scoutify_white.png"
+
+flutter_native_splash:
+  image: assets/images/splashscreen.png
+  color: "#2E3B78"
+
+  android_12:
+    image: assets/images/splashscreen_android12.png
+    color: "#2E3B78"
+
+  android: true
+  ios: true
+  web: false
