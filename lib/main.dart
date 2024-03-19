@@ -25,11 +25,15 @@ void main() async {
     anonKey: dotenv.env['SUPABASE_AUTH_KEY']!,
   );
 
+  // get version of mobile application and determine whether app must be updated or not
+  var needUpdate = await AccountDAO().isNewerUpdate(1);
+
+  // initialize account information upon app opening
   if (Supabase.instance.client.auth.currentUser == null) {
     isSignedIn = false;
   } else {
-    await Supabase.instance.client.auth.signOut();
-    isSignedIn = false;
+    isSignedIn = true;
+    await AccountDAO().setInstanceAccount();
   }
   bool isAvailable = await NfcManager.instance.isAvailable();
 

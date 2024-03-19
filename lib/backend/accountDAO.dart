@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:scoutify/model/account.dart';
 import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/model/scoutinfo.dart';
+import 'package:scoutify/model/version.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AccountDAO {
@@ -76,17 +77,34 @@ class AccountDAO {
 
     print(auth.user!.role);
 
-    // fill in CurrentAccount
+    // set instance account
+    await setInstanceAccount(auth: auth);
+
+    try {} catch (e) {
+      if (e.toString().contains('login credentials')) {
+        throw Exception("Invalid login credentials");
+      }
+
+      rethrow;
+    }
+
+    return true;
+  }
+
+  // fill in CurrentAccount
+  Future<void> setInstanceAccount({AuthResponse? auth}) async {
     var data = await supabase
         .from('accounts')
         .select('*')
-        .eq('accountid', auth.user!.id)
+        .eq('accountid',
+            auth == null ? supabase.auth.currentUser!.id : auth.user!.id)
         .single();
     print('KAT SINI DAPAT DO WEHH');
     var scoutdata = await supabase
         .from('scouts')
         .select('*')
-        .eq('accountid', auth.user!.id)
+        .eq('accountid',
+            auth == null ? supabase.auth.currentUser!.id : auth.user!.id)
         .single();
 
     print('KAT SCOUT DAPAT DO WEHH');
@@ -104,19 +122,11 @@ class AccountDAO {
     ca.isMember = data['is_member'];
     ca.icNo = data['ic_no'];
 
-    ca.role = auth.user!.role!;
+    ca.role =
+        auth == null ? supabase.auth.currentUser!.role! : auth.user!.role!;
     ca.isAdminToggled = false;
 
     ca.scoutInfo = scoutInfoModel;
-
-    return true;
-    try {} catch (e) {
-      if (e.toString().contains('login credentials')) {
-        throw Exception("Invalid login credentials");
-      }
-
-      rethrow;
-    }
   }
 
   /// Send an OTP to user's email for forgot password
@@ -213,5 +223,21 @@ class AccountDAO {
         .single();
 
     return data;
+  }
+
+  // get the latest version of the mobile app and determine if important update
+  Future<bool> isNewerUpdate(int currVersion) async {
+    var data = Version.parse(await supabase
+        .from('VERSION')
+        .select('*')
+        .order('created_at', ascending: false)
+        .limit(1)
+        .single());
+
+    if (data.version > currVersion && data.isImportant) {
+      // require force update
+      return true;
+    }
+    return false;
   }
 }
