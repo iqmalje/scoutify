@@ -4,13 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:scoutify/model/account.dart';
 
 class ScoutifyComponents {
-  Widget filledNormalButton(BuildContext context, String text,
-      {Function()? onTap}) {
+  Widget filledNormalButton(BuildContext context, String text, 
+      {Function()? onTap, double? width,}) {
     return Material(
       child: InkWell(
         onTap: onTap,
         child: Ink(
-          width: MediaQuery.sizeOf(context).width,
+          width: width,
           height: 50,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),

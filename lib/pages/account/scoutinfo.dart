@@ -16,6 +16,48 @@ class ScoutInfo extends StatefulWidget {
 
 class _ScoutInfoState extends State<ScoutInfo> {
   Account account = CurrentAccount.getInstance().getAccount();
+  bool isEdit = false;
+  late TextEditingController _genderController =
+      TextEditingController(text: '');
+  late TextEditingController _raceController = TextEditingController(text: '');
+  late TextEditingController _religionController =
+      TextEditingController(text: '');
+  late TextEditingController _districtController =
+      TextEditingController(text: '');
+  late TextEditingController _unitNumberController =
+      TextEditingController(text: '');
+  late TextEditingController _teamCrewNumberController =
+      TextEditingController(text: '');
+  late TextEditingController _schoolCrewCodeController =
+      TextEditingController(text: '');
+  late TextEditingController _schoolCrewNameController =
+      TextEditingController(text: '');
+  late TextEditingController _credentialNumberController =
+      TextEditingController(text: '');
+
+  @override
+  void initState() {
+    super.initState();
+    _genderController = TextEditingController(text: '');
+    _raceController = TextEditingController(
+        text: account.scoutInfo.kaum ?? ''); //TODO: update controller here
+    //TextEditingController(text: account.fullname ?? '')
+    _religionController =
+        TextEditingController(text: account.scoutInfo.agama ?? '');
+    _districtController =
+        TextEditingController(text: account.scoutInfo.daerah ?? '');
+    _unitNumberController =
+        TextEditingController(text: account.scoutInfo.unit ?? '');
+    _teamCrewNumberController =
+        TextEditingController(text: account.scoutInfo.crewNo ?? '');
+    _schoolCrewCodeController =
+        TextEditingController(text: account.scoutInfo.schoolCode ?? '');
+    _schoolCrewNameController =
+        TextEditingController(text: account.scoutInfo.schoolCode ?? '');
+    _credentialNumberController =
+        TextEditingController(text: account.scoutInfo.noTauliah ?? '');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,73 +91,148 @@ class _ScoutInfoState extends State<ScoutInfo> {
                 buildInputBox(
                     'Identification ID',
                     TextEditingController(
-                        text: AccountDAO().supabase.auth.currentUser!.id)),
+                        text: AccountDAO().supabase.auth.currentUser!.id),
+                    false),
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox('Full Name',
-                    TextEditingController(text: account.fullname ??= 'None')),
+                buildInputBox(
+                    'Full Name',
+                    TextEditingController(text: account.fullname ??= 'None'),
+                    false),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
                     'Position',
                     TextEditingController(
-                        text: account.scoutInfo.position ??= 'None')),
+                        text: account.scoutInfo.position ??= 'None'),
+                    false),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
                     'Scout ID',
                     TextEditingController(
-                        text: account.scoutInfo.noAhli ??= 'None')),
+                        text: account.scoutInfo.noAhli ??= 'None'),
+                    false),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
-                    'Credentials Number',
-                    TextEditingController(
-                        text: account.scoutInfo.noTauliah ??= 'None')),
+                    'Credentials Number (Nombor Tauliah)', _credentialNumberController, true),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildDropDown('Gender', ['Lelaki', 'Perempuan'], _genderController),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildDropDown('Race', ['Melayu', 'Cina', 'India', 'Others'],
+                    _raceController),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildDropDown(
+                    'Religion',
+                    ['Islam', 'Kristian', 'Hindu', 'Buddha', 'Others'],
+                    _religionController),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildInputBox('Unit Number', _unitNumberController, true),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
-                    'Unit Number',
-                    TextEditingController(
-                        text: account.scoutInfo.unit ??= 'None')),
+                    'Team / Crew Number', _teamCrewNumberController, true),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
-                    'Team Number / Crew',
-                    TextEditingController(
-                        text: account.scoutInfo.crewNo ??= 'None')),
+                    'School / Crew Code', _schoolCrewCodeController, true),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
-                    'School Code / Crew',
-                    TextEditingController(
-                        text: account.scoutInfo.schoolCode ??= 'None')),
+                    'School / Crew Name', _schoolCrewNameController, true),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildDropDown(
+                  'District',
+                  [
+                    'BATU PAHAT',
+                    "JOHOR BAHRU",
+                    "KLUANG",
+                    "KOTA TINGGI",
+                    "KULAI",
+                    "MERSING",
+                    "MAUR",
+                    "PONTIAN",
+                    "SEGAMAT",
+                    'TANGKAK'
+                  ],
+                  TextEditingController(
+                      text: account.scoutInfo.daerah ??= 'None'),
+                ),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
-                    'School Name / Crew Name',
-                    TextEditingController(
-                        // todo implement school name
-                        text: account.scoutInfo.schoolCode ??= 'None')),
+                    'State', TextEditingController(text: 'JOHOR'), false),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
-                    'District',
-                    TextEditingController(
-                        text: account.scoutInfo.daerah ??= 'None')),
+                    'Country', TextEditingController(text: 'MALAYSIA'), false),
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox('State', TextEditingController(text: 'Johor')),
+                isEdit == true
+                    ? Container(
+                        width: MediaQuery.sizeOf(context).width * 0.8,
+                        child: Row(
+                          children: [
+                            ScoutifyComponents().filledNormalButton(
+                                context, "CANCEL",
+                                width: MediaQuery.sizeOf(context).width * 0.375,
+                                onTap: () {
+                              setState(
+                                () {
+                                  isEdit = false;
+                                },
+                              );
+                            }),
+                            const Spacer(),
+                            GestureDetector(
+                                child: ScoutifyComponents().filledNormalButton(
+                                    context, "CONFIRM",
+                                    width: MediaQuery.sizeOf(context).width *
+                                        0.375),
+                                onTap: () {
+                                  setState(
+                                    () {
+                                      // TODO: Update the value in the controller when text changes. 
+                                      // TODO: Backend goes here kemal :)
+                                      isEdit = false;
+                                    },
+                                  );
+                                }),
+                          ],
+                        ),
+                      )
+                    : GestureDetector(
+                        child: ScoutifyComponents().filledNormalButton(
+                            context, "UPDATE",
+                            width: MediaQuery.sizeOf(context).width * 0.8),
+                        onTap: () {
+                          setState(
+                            () {
+                              isEdit = true;
+                            },
+                          );
+                        }),
                 const SizedBox(
                   height: 40,
                 ),
@@ -127,18 +244,21 @@ class _ScoutInfoState extends State<ScoutInfo> {
     );
   }
 
-  Container buildInputBox(String title, TextEditingController controller) {
+  Container buildInputBox(
+      String title, TextEditingController controller, bool isEditable) {
     return Container(
       width: MediaQuery.sizeOf(context).width * 0.8,
       height: 50,
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        shadows: const [
+        shadows: [
           BoxShadow(
-            color: Color(0x3F000000),
+            color: (isEdit && isEditable) == true
+                ? Colors.blue
+                : const Color(0x3F000000),
             blurRadius: 2,
-            offset: Offset(0, 1),
+            offset: const Offset(0, 1),
             spreadRadius: 0,
           ),
         ],
@@ -147,7 +267,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
         padding: const EdgeInsets.only(top: 5.0),
         child: TextField(
           controller: controller,
-          readOnly: true,
+          readOnly: !isEdit, // Make it editable only when isEdit is true
           style: const TextStyle(
             color: Colors.black,
             fontSize: 14,
@@ -156,6 +276,11 @@ class _ScoutInfoState extends State<ScoutInfo> {
             height: 0,
           ),
           maxLines: 1,
+          onChanged: (newValue) {
+            setState(() {
+              controller.text = newValue;
+            });
+          },
           decoration: InputDecoration(
               contentPadding: const EdgeInsets.only(top: 1, left: 10),
               labelStyle: const TextStyle(
@@ -170,5 +295,65 @@ class _ScoutInfoState extends State<ScoutInfo> {
         ),
       ),
     );
+  }
+
+  Container buildDropDown(
+      String title, List<String?> options, TextEditingController controller) {
+    return isEdit
+        ? Container(
+            width: MediaQuery.sizeOf(context).width * 0.8,
+            height: 50,
+            decoration: ShapeDecoration(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              shadows: [
+                BoxShadow(
+                  color: isEdit == true ? Colors.blue : const Color(0x3F000000),
+                  blurRadius: 2,
+                  offset: const Offset(0, 1),
+                  spreadRadius: 0,
+                )
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: DropdownButtonFormField<String?>(
+                value: controller.text.isEmpty ? null : controller.text,
+                items: [
+                  const DropdownMenuItem<String?>(
+                    value: null,
+                    child: Text('Select',
+                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
+                  ),
+                  ...options.map((String? value) {
+                    return DropdownMenuItem<String?>(
+                      value: value,
+                      child: Text(value ?? '',
+                          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
+                    );
+                  }),
+                ],
+                onChanged: (String? newValue) {
+                  setState(() {
+                    controller.text = newValue ?? '';
+                  });
+                },
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.only(top: 1, left: 10),
+                  labelStyle: const TextStyle(
+                    color: const Color.fromARGB(255, 183, 183, 183),
+                    fontSize: 14,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                  border: InputBorder.none,
+                  labelText: title,
+                ),
+              ),
+            ),
+          )
+        : buildInputBox(title, controller, false);
   }
 }
