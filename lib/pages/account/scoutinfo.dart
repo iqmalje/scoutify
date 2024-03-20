@@ -39,6 +39,16 @@ class _ScoutInfoState extends State<ScoutInfo> {
   late TextEditingController _fullnameController =
       TextEditingController(text: '');
 
+  late String originalGender;
+  late String originalRace;
+  late String originalReligion;
+  late String originalDistrict;
+  late String originalUnitNumber;
+  late String originalTeamCrewNumber;
+  late String originalSchoolCrewCode;
+  late String originalSchoolCrewName;
+  late String originalCredentialNumber;
+
   @override
   void initState() {
     super.initState();
@@ -61,6 +71,15 @@ class _ScoutInfoState extends State<ScoutInfo> {
     _credentialNumberController =
         TextEditingController(text: account.scoutInfo.noTauliah ?? '');
     _fullnameController = TextEditingController(text: account.fullname);
+    originalGender = _genderController.text;
+    originalRace = _raceController.text;
+    originalReligion = _religionController.text;
+    originalDistrict = _districtController.text;
+    originalUnitNumber = _unitNumberController.text;
+    originalTeamCrewNumber = _teamCrewNumberController.text;
+    originalSchoolCrewCode = _schoolCrewCodeController.text;
+    originalSchoolCrewName = _schoolCrewNameController.text;
+    originalCredentialNumber = _credentialNumberController.text;
   }
 
   @override
@@ -206,6 +225,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
                               setState(
                                 () {
                                   isEdit = false;
+                                  resetControllers();
                                 },
                               );
                             }),
@@ -394,5 +414,17 @@ class _ScoutInfoState extends State<ScoutInfo> {
             ),
           )
         : buildInputBox(title, controller, false);
+  }
+
+  void resetControllers() {
+    _genderController.text = originalGender;
+    _raceController.text = originalRace;
+    _religionController.text = originalReligion;
+    _districtController.text = originalDistrict;
+    _unitNumberController.text = originalUnitNumber;
+    _teamCrewNumberController.text = originalTeamCrewNumber;
+    _schoolCrewCodeController.text = originalSchoolCrewCode;
+    _schoolCrewNameController.text = originalSchoolCrewName;
+    _credentialNumberController.text = originalCredentialNumber;
   }
 }
