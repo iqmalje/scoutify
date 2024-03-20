@@ -240,4 +240,29 @@ class AccountDAO {
     }
     return false;
   }
+
+  Future<void> updateAccountInfo(Account account) async {
+    //update at db
+    await supabase.from('accounts').update({
+      'fullname': account.fullname,
+    }).eq('accountid', account.accountid);
+
+    ScoutInfoModel sim = account.scoutInfo;
+    await supabase.from('scouts').update({
+      'no_tauliah': sim.noTauliah,
+      'unit': sim.unit,
+      'daerah': sim.daerah,
+      'crew_no': sim.crewNo,
+      'school_code': sim.schoolCode,
+      'manikayu': sim.manikayu,
+      'negara': sim.negara,
+      'jantina': sim.jantina,
+      'kaum': sim.kaum,
+      'agama': sim.agama,
+      'school_name': sim.schoolName
+    }).eq('accountid', account.accountid);
+    // update current account
+    CurrentAccount.getInstance().updateAccount(account);
+    print('dah update');
+  }
 }

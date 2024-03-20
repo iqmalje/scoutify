@@ -1,12 +1,13 @@
 class ScoutInfoModel {
   late String noAhli, position, unit, jantina, kaum, agama;
 
-  late String? noTauliah,
+  String? noTauliah,
       daerah,
       negara,
       cardID,
       cardName,
       schoolCode,
+      schoolName,
       crewNo,
       manikayu;
 
@@ -31,6 +32,7 @@ class ScoutInfoModel {
     cardID = items['card_id'];
     cardName = items['card_name'];
     schoolCode = items['school_code'];
+    schoolName = items['school_name'];
     manikayu = items['manikayu'];
   }
 

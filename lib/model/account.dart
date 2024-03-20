@@ -6,7 +6,7 @@ class Account {
   late String accountid, fullname, email, phoneNo, icNo;
   late bool activated, isMember;
 
-  late String? imageURL;
+  String? imageURL;
 
   late ScoutInfoModel scoutInfo;
 
@@ -35,5 +35,6 @@ class Account {
     activated = false;
     isMember = false;
     icNo = 'None';
+    scoutInfo = ScoutInfoModel();
   }
 }

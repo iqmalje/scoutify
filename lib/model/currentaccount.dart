@@ -52,4 +52,17 @@ class CurrentAccount {
 
     return ac;
   }
+
+  void updateAccount(Account account) {
+    CurrentAccount ca = getInstance();
+    ca.accountid = account.accountid;
+    ca.fullname = account.fullname;
+    ca.email = account.email;
+    ca.phoneNo = account.phoneNo;
+    ca.imageURL = account.imageURL;
+    ca.activated = account.activated;
+    ca.isMember = account.isMember;
+    ca.icNo = account.icNo;
+    ca.scoutInfo = account.scoutInfo;
+  }
 }
