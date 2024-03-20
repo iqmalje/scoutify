@@ -1,8 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:scoutify/model/account.dart';
 import 'package:scoutify/pages/activation/confirmemail.dart';
+import 'package:scoutify/pages/homepage/termcondition.dart';
 
 class ActivateAccountForm extends StatefulWidget {
   Account account;
@@ -101,10 +103,37 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                         },
                         activeColor: const Color(0xFF2E3B78),
                       ),
-                      const Text(
-                        'I agree with terms & conditions',
-                        style: TextStyle(
-                            fontFamily: 'Poppins', fontWeight: FontWeight.w500),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'I agree with ',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'terms & conditions',
+                              style: const TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w500,
+                                decoration: TextDecoration.underline,
+                                color: Colors.black
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TermAndCondition()),
+                                  );
+                                },
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   ),

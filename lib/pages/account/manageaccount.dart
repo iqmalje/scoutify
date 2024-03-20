@@ -1,9 +1,11 @@
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
 import 'package:scoutify/pages/account/accountinfo.dart';
+import 'package:scoutify/pages/account/privacypolicy.dart';
 import 'package:scoutify/pages/account/scoutid.dart';
 import 'package:scoutify/pages/account/scoutinfo.dart';
 import 'package:flutter/material.dart';
+import 'package:scoutify/pages/homepage/termcondition.dart';
 
 class ManageAccountPage extends StatefulWidget {
   Account account;
@@ -51,6 +53,15 @@ class _ManageAccountPageState extends State<ManageAccountPage> {
                 () => {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const ScoutInfo()))
+                    }),
+            const SizedBox(
+              height: 20,
+            ),
+            createButtons(
+                'PRIVACY POLICY',
+                () => {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const PrivacyPolicy()))
                     }),
           ],
         ),

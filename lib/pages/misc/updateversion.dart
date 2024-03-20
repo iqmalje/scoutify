@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scoutify/components/components.dart';
 
-class ActivationSuccessful extends StatelessWidget {
-  const ActivationSuccessful({super.key});
+class UpdateVersion extends StatelessWidget {
+  const UpdateVersion({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ActivationSuccessful extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Congrats!',
+                    'New Update!',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,
@@ -39,7 +39,7 @@ class ActivationSuccessful extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   const Text(
-                    'You have successfully created an account with Scoutify. Please click \'Proceed\' to sign in to your account.',
+                    'Scoutify has released a new update. Please update your Scoutify app to the latest version.',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 13,
@@ -50,14 +50,13 @@ class ActivationSuccessful extends StatelessWidget {
                   ),
                   SizedBox(height: 40),
                   Center(
-                    child: Image.asset(
-                        "assets/images/account_creation_successful.png"),
+                    child: Image.asset("assets/images/update_version.png"),
                   ),
                   SizedBox(height: 120),
                   ScoutifyComponents().outlinedButton(
                       height: 50,
                       width: MediaQuery.sizeOf(context).width * 0.8,
-                      text: "Proceed",
+                      text: "Update",
                       onTap: () => _proceedButton(context),
                       style: TextStyle(
                         color: Colors.white,
@@ -74,6 +73,6 @@ class ActivationSuccessful extends StatelessWidget {
   }
 
   void _proceedButton(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil('/signin', (_) => false);
+    //TODO: function goes here kemal :D
   }
 }

@@ -234,6 +234,7 @@ class ScoutifyComponents {
                       offset: const Offset(-25, 0),
                       child: Text(
                         title,
+                        textScaler: TextScaler.noScaling,
                         style: const TextStyle(
                           color: Color.fromARGB(255, 255, 255, 255),
                           fontSize: 24,

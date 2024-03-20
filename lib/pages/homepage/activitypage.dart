@@ -179,7 +179,7 @@ class _ActivityPageState extends State<ActivityPage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Image.asset(
-                                        "assets/images/activity_empty.png",
+                                        "assets/images/activity_empty_new.png",
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.75),
