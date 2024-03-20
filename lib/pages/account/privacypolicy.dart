@@ -26,7 +26,7 @@ class PrivacyPolicy extends StatelessWidget {
       height: 0,
     );
 
-    int ageLimit = 13;
+    int ageLimit = 18;
     return Scaffold(
         appBar: ScoutifyComponents()
             .appBarWithBackButton("Privacy Policy", context),

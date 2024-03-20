@@ -37,7 +37,7 @@ class UpdateVersion extends StatelessWidget {
                       height: 0,
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   const Text(
                     'Scoutify has released a new update. Please update your Scoutify app to the latest version.',
                     style: TextStyle(
@@ -48,21 +48,21 @@ class UpdateVersion extends StatelessWidget {
                       height: 0,
                     ),
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                   Center(
                     child: Image.asset("assets/images/update_version.png"),
                   ),
-                  SizedBox(height: 120),
+                  const SizedBox(height: 120),
                   ScoutifyComponents().outlinedButton(
                       height: 50,
                       width: MediaQuery.sizeOf(context).width * 0.8,
                       text: "Update",
                       onTap: () => _proceedButton(context),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontFamily: 'Poppins',
                       )),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),

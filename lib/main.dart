@@ -9,6 +9,7 @@ import 'package:scoutify/pages/homepage/activitypage.dart';
 import 'package:scoutify/pages/attendance/new_attendance.dart';
 import 'package:scoutify/pages/forgotpassword/verifyOTP.dart';
 import 'package:scoutify/pages/homepage/temppage.dart';
+import 'package:scoutify/pages/misc/updateversion.dart';
 import 'package:scoutify/pages/signin/signinpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -18,6 +19,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'backend/backend.dart';
 
 bool isSignedIn = false;
+bool needUpdate = false;
+int version = 1;
 void main() async {
   await dotenv.load(fileName: '2.env');
   await Supabase.initialize(
@@ -26,7 +29,7 @@ void main() async {
   );
 
   // get version of mobile application and determine whether app must be updated or not
-  var needUpdate = await AccountDAO().isNewerUpdate(1);
+  needUpdate = await AccountDAO().isNewerUpdate(version);
 
   // initialize account information upon app opening
   if (Supabase.instance.client.auth.currentUser == null) {
@@ -67,6 +70,10 @@ class MyApp extends StatelessWidget {
         routes: {
           '/signin': (context) => const SignInPage(),
         },
-        home: isSignedIn ? const TempPage() : const SignInPage());
+        home: needUpdate
+            ? const UpdateVersion()
+            : isSignedIn
+                ? const TempPage()
+                : const SignInPage());
   }
 }
