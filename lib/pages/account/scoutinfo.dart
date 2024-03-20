@@ -1,9 +1,11 @@
+import 'package:flutter/services.dart';
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
 import 'package:flutter/material.dart';
 import 'package:scoutify/model/currentaccount.dart';
+import 'package:scoutify/pages/account/scoutid.dart';
 
 class ScoutInfo extends StatefulWidget {
   const ScoutInfo({
@@ -34,6 +36,8 @@ class _ScoutInfoState extends State<ScoutInfo> {
       TextEditingController(text: '');
   late TextEditingController _credentialNumberController =
       TextEditingController(text: '');
+  late TextEditingController _fullnameController =
+      TextEditingController(text: '');
 
   @override
   void initState() {
@@ -56,6 +60,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
         TextEditingController(text: account.scoutInfo.schoolCode ?? '');
     _credentialNumberController =
         TextEditingController(text: account.scoutInfo.noTauliah ?? '');
+    _fullnameController = TextEditingController(text: account.fullname);
   }
 
   @override
@@ -91,15 +96,13 @@ class _ScoutInfoState extends State<ScoutInfo> {
                 buildInputBox(
                     'Identification ID',
                     TextEditingController(
-                        text: AccountDAO().supabase.auth.currentUser!.id),
+                        text: CurrentAccount.getInstance().icNo),
                     false),
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox(
-                    'Full Name',
-                    TextEditingController(text: account.fullname ??= 'None'),
-                    false),
+                buildInputBox('Full Name', _fullnameController, true,
+                    formatter: [UpperCaseTextFilter()]),
                 const SizedBox(
                   height: 15,
                 ),
@@ -119,12 +122,14 @@ class _ScoutInfoState extends State<ScoutInfo> {
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox(
-                    'Credentials Number (Nombor Tauliah)', _credentialNumberController, true),
+                buildInputBox('Credentials Number (Nombor Tauliah)',
+                    _credentialNumberController, true,
+                    formatter: [UpperCaseTextFilter()]),
                 const SizedBox(
                   height: 15,
                 ),
-                buildDropDown('Gender', ['Lelaki', 'Perempuan'], _genderController),
+                buildDropDown(
+                    'Gender', ['Lelaki', 'Perempuan'], _genderController),
                 const SizedBox(
                   height: 15,
                 ),
@@ -210,11 +215,41 @@ class _ScoutInfoState extends State<ScoutInfo> {
                                     context, "CONFIRM",
                                     width: MediaQuery.sizeOf(context).width *
                                         0.375),
-                                onTap: () {
+                                onTap: () async {
+                                  Account tempAccount = Account();
+                                  tempAccount.accountid =
+                                      CurrentAccount.getInstance().accountid;
+
+                                  tempAccount.fullname =
+                                      _fullnameController.text;
+
+                                  tempAccount.scoutInfo.noTauliah =
+                                      _credentialNumberController.text;
+                                  tempAccount.scoutInfo.jantina =
+                                      _genderController.text;
+                                  tempAccount.scoutInfo.kaum =
+                                      _raceController.text;
+                                  tempAccount.scoutInfo.agama =
+                                      _religionController.text;
+                                  tempAccount.scoutInfo.unit =
+                                      _unitNumberController.text;
+                                  tempAccount.scoutInfo.crewNo =
+                                      _teamCrewNumberController.text;
+                                  tempAccount.scoutInfo.schoolCode =
+                                      _schoolCrewCodeController.text;
+                                  tempAccount.scoutInfo.schoolName =
+                                      _schoolCrewNameController.text;
+                                  tempAccount.scoutInfo.daerah =
+                                      _districtController.text;
+                                  await AccountDAO()
+                                      .updateAccountInfo(tempAccount);
                                   setState(
                                     () {
-                                      // TODO: Update the value in the controller when text changes. 
+                                      // TODO: Update the value in the controller when text changes.
                                       // TODO: Backend goes here kemal :)
+                                      // Implemented update functionality
+                                      // thanks for the todo sayang
+
                                       isEdit = false;
                                     },
                                   );
@@ -245,7 +280,8 @@ class _ScoutInfoState extends State<ScoutInfo> {
   }
 
   Container buildInputBox(
-      String title, TextEditingController controller, bool isEditable) {
+      String title, TextEditingController controller, bool isEditable,
+      {List<TextInputFormatter>? formatter}) {
     return Container(
       width: MediaQuery.sizeOf(context).width * 0.8,
       height: 50,
@@ -267,6 +303,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
         padding: const EdgeInsets.only(top: 5.0),
         child: TextField(
           controller: controller,
+          inputFormatters: formatter,
           readOnly: !isEdit, // Make it editable only when isEdit is true
           style: const TextStyle(
             color: Colors.black,
@@ -324,13 +361,15 @@ class _ScoutInfoState extends State<ScoutInfo> {
                   const DropdownMenuItem<String?>(
                     value: null,
                     child: Text('Select',
-                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal, fontSize: 15)),
                   ),
                   ...options.map((String? value) {
                     return DropdownMenuItem<String?>(
                       value: value,
                       child: Text(value ?? '',
-                          style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15)),
+                          style: TextStyle(
+                              fontWeight: FontWeight.normal, fontSize: 15)),
                     );
                   }),
                 ],
