@@ -52,7 +52,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
   @override
   void initState() {
     super.initState();
-    _genderController = TextEditingController(text: '');
+    _genderController = TextEditingController(text: account.scoutInfo.jantina ?? '');
     _raceController = TextEditingController(
         text: account.scoutInfo.kaum ?? ''); //TODO: update controller here
     //TextEditingController(text: account.fullname ?? '')
@@ -65,7 +65,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
     _teamCrewNumberController =
         TextEditingController(text: account.scoutInfo.crewNo ?? '');
     _schoolCrewCodeController =
-        TextEditingController(text: account.scoutInfo.schoolCode ?? '');
+        TextEditingController(text: account.scoutInfo.schoolName ?? '');
     _schoolCrewNameController =
         TextEditingController(text: account.scoutInfo.schoolCode ?? '');
     _credentialNumberController =
@@ -127,8 +127,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
                 ),
                 buildInputBox(
                     'Position',
-                    TextEditingController(
-                        text: account.scoutInfo.position ??= 'None'),
+                    TextEditingController(text: account.scoutInfo.position),
                     false),
                 const SizedBox(
                   height: 15,
@@ -329,8 +328,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
             color: Colors.black,
             fontSize: 14,
             fontFamily: 'Poppins',
-            fontWeight: FontWeight.w400,
-            height: 0,
+            fontWeight: FontWeight.w400
           ),
           maxLines: 1,
           onChanged: (newValue) {

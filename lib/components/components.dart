@@ -4,8 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:scoutify/model/account.dart';
 
 class ScoutifyComponents {
-  Widget filledNormalButton(BuildContext context, String text, 
-      {Function()? onTap, double? width,}) {
+  Widget filledNormalButton(
+    BuildContext context,
+    String text, {
+    Function()? onTap,
+    double? width,
+  }) {
     return Material(
       child: InkWell(
         onTap: onTap,
@@ -550,10 +554,11 @@ class ScoutifyComponents {
                           ),
                         ),
                         SizedBox(
-                          width: width * 2,
+                          width: width * 2.5,
                           child: Text(
                             textScaleFactor: 1.0,
                             ': ${account.scoutInfo.noAhli}',
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -584,9 +589,10 @@ class ScoutifyComponents {
                           ),
                         ),
                         SizedBox(
-                          width: width * 2,
+                          width: width * 2.5,
                           child: Text(
                             ': ${account.scoutInfo.noTauliah ?? account.scoutInfo.manikayu}',
+                            overflow: TextOverflow.ellipsis,
                             textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
@@ -617,15 +623,19 @@ class ScoutifyComponents {
                                 ),
                               ),
                             ),
-                            Text(
-                              ': ${account.scoutInfo.unit}',
-                              textScaleFactor: 1.0,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: size,
-                                fontFamily: 'Hafontia',
-                                fontWeight: FontWeight.w500,
-                                height: 0,
+                            SizedBox(
+                              width: width * 2.5,
+                              child: Text(
+                                ': ${account.scoutInfo.unit}',
+                                textScaleFactor: 1.0,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: size,
+                                  fontFamily: 'Hafontia',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                ),
                               ),
                             )
                           ],
@@ -652,15 +662,19 @@ class ScoutifyComponents {
                             ),
                           ),
                         ),
-                        Text(
-                          ': ${account.scoutInfo.negara ??= account.scoutInfo.daerah}',
-                          textScaleFactor: 1.0,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: size,
-                            fontFamily: 'Hafontia',
-                            fontWeight: FontWeight.w500,
-                            height: 0,
+                        SizedBox(
+                          width: width * 2.5,
+                          child: Text(
+                            ': ${account.scoutInfo.negara ?? account.scoutInfo.daerah}',
+                            overflow: TextOverflow.ellipsis,
+                            textScaleFactor: 1.0,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size,
+                              fontFamily: 'Hafontia',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
                           ),
                         )
                       ],
@@ -710,7 +724,7 @@ class ScoutifyComponents {
 
   Widget buildSpecialCard(Account account) {
     double size = 27;
-    double width = 100;
+    double width = 120;
     return Stack(
       children: [
         Container(
@@ -882,9 +896,9 @@ class ScoutifyComponents {
                           ),
                         ),
                         SizedBox(
-                          width: width,
+                          width: width * 2.5,
                           child: Text(
-                            ': ${account.scoutInfo.noAhli}',
+                            ': ${account.scoutInfo.noAhli}',overflow: TextOverflow.ellipsis,
                             textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
@@ -916,9 +930,10 @@ class ScoutifyComponents {
                           ),
                         ),
                         SizedBox(
-                          width: width,
+                          width: width * 2.5,
                           child: Text(
                             ': ${account.scoutInfo.noTauliah ?? account.scoutInfo.manikayu}',
+                            overflow: TextOverflow.ellipsis,
                             textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
@@ -949,15 +964,17 @@ class ScoutifyComponents {
                                 ),
                               ),
                             ),
-                            Text(
-                              ': ${account.scoutInfo.unit}',
-                              textScaleFactor: 1.0,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: size,
-                                fontFamily: 'Hafontia',
-                                fontWeight: FontWeight.w500,
-                                height: 0,
+                            SizedBox(width: width * 2.5,
+                              child: Text(
+                                ': ${account.scoutInfo.unit}',
+                                textScaleFactor: 1.0,overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: size,
+                                  fontFamily: 'Hafontia',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                ),
                               ),
                             )
                           ],
@@ -984,15 +1001,18 @@ class ScoutifyComponents {
                             ),
                           ),
                         ),
-                        Text(
-                          ': ${account.scoutInfo.negara ??= account.scoutInfo.daerah}',
-                          textScaleFactor: 1.0,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: size,
-                            fontFamily: 'Hafontia',
-                            fontWeight: FontWeight.w500,
-                            height: 0,
+                        SizedBox(
+                          width: width * 2.5,
+                          child: Text(
+                            ': ${account.scoutInfo.negara ?? account.scoutInfo.daerah}',
+                            textScaleFactor: 1.0,overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: size,
+                              fontFamily: 'Hafontia',
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
                           ),
                         )
                       ],
