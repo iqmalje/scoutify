@@ -192,7 +192,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
                     "KOTA TINGGI",
                     "KULAI",
                     "MERSING",
-                    "MAUR",
+                    "MUAR",
                     "PONTIAN",
                     "SEGAMAT",
                     'TANGKAK'
