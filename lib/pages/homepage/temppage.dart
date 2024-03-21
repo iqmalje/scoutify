@@ -38,7 +38,9 @@ class _TempPageState extends State<TempPage> {
         controller: pageController,
         children: _pages,
       ),
-      floatingActionButton: Padding(
+      /*
+      Uncomment later if want to use
+      floatingActionButton:  Padding(
         padding: const EdgeInsets.only(left: 30),
         child: Align(
           alignment: Alignment.bottomLeft,
@@ -56,6 +58,7 @@ class _TempPageState extends State<TempPage> {
           ),
         ),
       ),
+      */
       bottomNavigationBar: Container(
         height: 60,
         decoration: const BoxDecoration(color: Colors.white, boxShadow: [

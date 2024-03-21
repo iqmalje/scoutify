@@ -3,6 +3,7 @@
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/activity/createactivitypage.dart';
@@ -50,341 +51,294 @@ class _DetailsActivityState extends State<DetailsActivity> {
   List<DateTime> daysInvolved = [];
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xFF2E3B78),
-      child: SafeArea(
-        bottom: false,
-        child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(100),
-            child: Container(
-              width: MediaQuery.sizeOf(context).width,
-              height: 90,
-              decoration: const BoxDecoration(color: Color(0xFF2E3B78)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+    return Scaffold(
+      appBar: ScoutifyComponents().appBarWithBackButton('Details Activity', context),
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.sizeOf(context).width,
+          child: Column(
+            children: [
+              Stack(
                 children: [
-                  const SizedBox(
-                    width: 30,
+                  Image.network(
+                    activity.imageurl,
+                    width: MediaQuery.sizeOf(context).width,
                   ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: const ShapeDecoration(
-                      color: Colors.white,
-                      shape: OvalBorder(),
-                    ),
-                    child: IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        icon: const Icon(Icons.arrow_back_ios_new)),
-                  ),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  const Text(
-                    'Details Activity',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w600,
-                      height: 0,
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: 90,
+                        height: 20,
+                        decoration: ShapeDecoration(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(3)),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 15,
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                activity.category,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              SizedBox(
+                                  height: 15,
+                                  child: activity.category == "MEETING"
+                                      ? Image.asset(
+                                          "assets/icons/meeting_icon.png")
+                                      : Image.asset(
+                                          "assets/icons/camping_icon.png")),
+                            ],
+                          ),
+                        ),
+                        // child: Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Container(
+                        //       width: 10,
+                        //       height: 10,
+                        //       decoration: const ShapeDecoration(
+                        //         color: Colors.black,
+                        //         shape: OvalBorder(),
+                        //       ),
+                        //     ),
+                        //     const SizedBox(
+                        //       width: 5,
+                        //     ),
+                        //     Text(
+                        //       activity.category,
+                        //       style: const TextStyle(
+                        //         color: Colors.black,
+                        //         fontSize: 12,
+                        //         fontFamily: 'Poppins',
+                        //         fontWeight: FontWeight.w400,
+                        //         height: 0,
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
-          body: SingleChildScrollView(
-            child: SizedBox(
-              width: MediaQuery.sizeOf(context).width,
-              child: Column(
-                children: [
-                  Stack(
+              const SizedBox(
+                height: 40,
+              ),
+              Container(
+                width: MediaQuery.sizeOf(context).width * 0.85,
+                decoration: ShapeDecoration(
+                  color: const Color(0xFFFAFAFA),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                  shadows: const [
+                    BoxShadow(
+                      color: Color(0x3F000000),
+                      blurRadius: 2,
+                      offset: Offset(0, 2),
+                      spreadRadius: 0,
+                    )
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Image.network(
-                        activity.imageurl,
-                        width: MediaQuery.sizeOf(context).width,
-                      ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: 90,
-                            height: 20,
-                            decoration: ShapeDecoration(
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(3)),
-                            ),
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: 15,
-                              child: Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    activity.category,
-                                    style: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  SizedBox(
-                                      height: 15,
-                                      child: activity.category == "MEETING"
-                                          ? Image.asset(
-                                              "assets/icons/meeting_icon.png")
-                                          : Image.asset(
-                                              "assets/icons/camping_icon.png")),
-                                ],
-                              ),
-                            ),
-                            // child: Row(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     Container(
-                            //       width: 10,
-                            //       height: 10,
-                            //       decoration: const ShapeDecoration(
-                            //         color: Colors.black,
-                            //         shape: OvalBorder(),
-                            //       ),
-                            //     ),
-                            //     const SizedBox(
-                            //       width: 5,
-                            //     ),
-                            //     Text(
-                            //       activity.category,
-                            //       style: const TextStyle(
-                            //         color: Colors.black,
-                            //         fontSize: 12,
-                            //         fontFamily: 'Poppins',
-                            //         fontWeight: FontWeight.w400,
-                            //         height: 0,
-                            //       ),
-                            //     )
-                            //   ],
-                            // ),
-                          ),
+                      Text(
+                        activity.name,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                          height: 0,
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Container(
-                    width: MediaQuery.sizeOf(context).width * 0.85,
-                    decoration: ShapeDecoration(
-                      color: const Color(0xFFFAFAFA),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)),
-                      shadows: const [
-                        BoxShadow(
-                          color: Color(0x3F000000),
-                          blurRadius: 2,
-                          offset: Offset(0, 2),
-                          spreadRadius: 0,
-                        )
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0, vertical: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            activity.name,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                              height: 0,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children: [
-                              const Icon(Icons.location_on),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Flexible(
-                                child: Text(
-                                  activity.location,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  softWrap: false,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w400,
-                                    height: 0,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const Icon(Icons.calendar_month),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                dateFormatter(
-                                    activity.startdate, activity.enddate),
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                ),
-                              )
-                            ],
-                          ),
-                          const Row(
-                            children: [
-                              Icon(Icons.account_circle),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'PPM NEGERI JOHOR',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
+                      const SizedBox(
+                        height: 10,
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.sizeOf(context).width * 0.85,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Builder(builder: (context) {
-                          if (CurrentAccount.getInstance().isAdminToggled) {
-                            return EditButton();
-                          } else {
-                            return Container();
-                          }
-                        }),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Builder(builder: (context) {
-                    if (CurrentAccount.getInstance().isAdminToggled) {
-                      return buildDateSelector(context);
-                    } else {
-                      return buildAttendedList(context, activity.activityid);
-                    }
-                  }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Builder(builder: (context) {
-                    if (CurrentAccount.getInstance().isAdminToggled) {
-                      return InkWell(
-                        onTap: () async {
-                          //warning
-                          bool? isDelete = await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: const Text(
-                                    'Are you sure to delete this activity?',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w500,
-                                      height: 0,
-                                    ),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text('No')),
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop(true);
-                                        },
-                                        child: const Text('Yes')),
-                                  ],
-                                );
-                              });
-
-                          if (isDelete != null && isDelete) {
-                            await ActivityDAO().deleteActivity(activity);
-                            Navigator.of(context).pop();
-                          }
-                        },
-                        borderRadius: BorderRadius.circular(10),
-                        child: Ink(
-                          width: MediaQuery.sizeOf(context).width * 0.85,
-                          height: 50,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF2E3B78),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                      Row(
+                        children: [
+                          const Icon(Icons.location_on),
+                          const SizedBox(
+                            width: 10,
                           ),
-                          child: const Center(
+                          Flexible(
                             child: Text(
-                              'Delete activity',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
+                              activity.location,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              softWrap: false,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
                                 fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w400,
                                 height: 0,
                               ),
                             ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Icon(Icons.calendar_month),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            dateFormatter(
+                                activity.startdate, activity.enddate),
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w400,
+                              height: 0,
+                            ),
+                          )
+                        ],
+                      ),
+                      const Row(
+                        children: [
+                          Icon(Icons.account_circle),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'PPM NEGERI JOHOR',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w400,
+                              height: 0,
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width * 0.85,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Builder(builder: (context) {
+                      if (CurrentAccount.getInstance().isAdminToggled) {
+                        return EditButton();
+                      } else {
+                        return Container();
+                      }
+                    }),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Builder(builder: (context) {
+                if (CurrentAccount.getInstance().isAdminToggled) {
+                  return buildDateSelector(context);
+                } else {
+                  return buildAttendedList(context, activity.activityid);
+                }
+              }),
+              const SizedBox(
+                height: 10,
+              ),
+              Builder(builder: (context) {
+                if (CurrentAccount.getInstance().isAdminToggled) {
+                  return InkWell(
+                    onTap: () async {
+                      //warning
+                      bool? isDelete = await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text(
+                                'Are you sure to delete this activity?',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('No')),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop(true);
+                                    },
+                                    child: const Text('Yes')),
+                              ],
+                            );
+                          });
+    
+                      if (isDelete != null && isDelete) {
+                        await ActivityDAO().deleteActivity(activity);
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    borderRadius: BorderRadius.circular(10),
+                    child: Ink(
+                      width: MediaQuery.sizeOf(context).width * 0.85,
+                      height: 50,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFF2E3B78),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Delete activity',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            height: 0,
                           ),
                         ),
-                      );
-                    } else {
-                      return Container();
-                    }
-                  }),
-                  const SizedBox(
-                    height: 40,
-                  )
-                ],
-              ),
-            ),
+                      ),
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              }),
+              const SizedBox(
+                height: 40,
+              )
+            ],
           ),
         ),
       ),

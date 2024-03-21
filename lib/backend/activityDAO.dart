@@ -132,9 +132,15 @@ class ActivityDAO {
 
     //upload to storage
     if (items['file'] != null) {
-      await supabase.storage
-          .from('activities')
-          .update('$activityID/cover.png', items['file']);
+      try {
+        await supabase.storage
+            .from('activities')
+            .upload('$activityID/cover.png', items['file']);
+      } catch (e) {
+        await supabase.storage
+            .from('activities')
+            .update('$activityID/cover.png', items['file']);
+      }
 
       await supabase.from('activities').update({
         'image_url': supabase.storage
@@ -165,16 +171,27 @@ class ActivityDAO {
     //{activityid: blabla}
 
     if (items['file'] != null) {
-      await supabase.storage
-          .from('activities')
-          .update('$activityID/cover.png', items['file']);
-      //update activity db
-      await supabase.from('activities').update({
-        'image_url': supabase.storage
+      try {
+        await supabase.storage
             .from('activities')
-            .getPublicUrl('$activityID/cover.png')
-      });
+            .upload('$activityID/cover.png', items['file']);
+      } catch (e) {
+        await supabase.storage
+            .from('activities')
+            .update('$activityID/cover.png', items['file']);
+      }
+      //update activity db
     }
+
+    String activityURL = supabase.storage
+        .from('activities')
+        .getPublicUrl('$activityID/cover.png');
+
+    await supabase.from('activities').update({
+      'image_url': supabase.storage
+          .from('activities')
+          .getPublicUrl('$activityID/cover.png')
+    }).eq('activityid', activityID);
 
     print('dah update');
   }

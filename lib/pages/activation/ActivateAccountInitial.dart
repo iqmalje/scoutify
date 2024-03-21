@@ -33,15 +33,15 @@ class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 30),
+                SizedBox(height: 15),
                 
                 //back button
                 CircleAvatar(
-                  radius: 30,
+                  radius: 25,
                   backgroundColor: Colors.white,
                   child: IconButton(
                     padding: EdgeInsets.zero,

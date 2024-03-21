@@ -1,6 +1,8 @@
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
 import 'package:flutter/material.dart';
+import 'package:scoutify/model/currentaccount.dart';
+import 'package:scoutify/pages/forgotpassword/verifyOTP.dart';
 
 class AccountInfoPage extends StatefulWidget {
   final Account account;
@@ -17,7 +19,7 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:
-          ScoutifyComponents().appBarWithBackButton('Account Info', context),
+          ScoutifyComponents().appBarWithBackButton('Manage Account', context),
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.sizeOf(context).width * 0.05),
@@ -176,6 +178,18 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
               height: 40,
             ),
             ScoutifyComponents().filledNormalButton(
+              context,
+              'Reset Password',
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => VerifyResetPassword(
+                        email: CurrentAccount.getInstance().email)));
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ScoutifyComponents().outlinedNormalButton(
               context,
               'Delete Account',
               onTap: () {},

@@ -3,6 +3,7 @@
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/attendanceDAO.dart';
 import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:flutter/material.dart';
 
@@ -28,92 +29,21 @@ class _attendancePage2State extends State<attendancePage2> {
   Widget build(BuildContext context) {
     var _mediaQuery = MediaQuery.of(context);
 
-    return Container(
-      color: const Color(0xFF2E3B78),
-      child: SafeArea(
-        child: Scaffold(
-            body: Container(
-          width: _mediaQuery.size.width,
-          height: _mediaQuery.size.height,
-          color: const Color.fromRGBO(237, 237, 237, 100),
-          child: Column(children: <Widget>[
-            _appBar(context),
-            displayActivity(context, activity),
-            addParticipant(scoutid),
-            _addButton(scoutid, activity, context),
-          ]),
-        )),
-      ),
-    );
+    return Scaffold(
+      appBar: ScoutifyComponents().appBarWithBackButton('Add Participant', context),
+        body: Container(
+      width: _mediaQuery.size.width,
+      height: _mediaQuery.size.height,
+      color: const Color.fromRGBO(237, 237, 237, 100),
+      child: Column(children: <Widget>[
+        displayActivity(context, activity),
+        addParticipant(scoutid),
+        _addButton(scoutid, activity, context),
+      ]),
+    ));
   }
 }
 
-Widget _appBar(context) {
-  return Container(
-    width: MediaQuery.sizeOf(context).width,
-    height: 90,
-    decoration: const BoxDecoration(color: Color(0xFF2C225B)),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(
-          width: 30,
-        ),
-        Container(
-          width: 50,
-          height: 50,
-          decoration: const ShapeDecoration(
-            color: Colors.white,
-            shape: OvalBorder(),
-          ),
-          child: IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: const Icon(Icons.arrow_back_ios_new)),
-        ),
-        const SizedBox(
-          width: 30,
-        ),
-        const Text(
-          'Add Participant',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 25,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-            height: 0,
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-Widget _backButton(context) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 10, left: 25),
-    child: Container(
-      width: 50,
-      height: 50,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
-        color: Colors.white,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0),
-        child: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          iconSize: 25,
-          color: const Color.fromRGBO(59, 63, 101, 100),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
-    ),
-  );
-}
 
 Widget displayActivity(BuildContext context, Activity activity) {
   DateTime startdate = activity.startdate;

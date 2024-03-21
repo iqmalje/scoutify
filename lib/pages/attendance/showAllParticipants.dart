@@ -1,6 +1,7 @@
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/attendanceDAO.dart';
 import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -60,9 +61,7 @@ class _showAllParticipantsState extends State<showAllParticipants> {
       color: const Color(0xFF2E3B78),
       child: SafeArea(
         child: Scaffold(
-          appBar: PreferredSize(
-              preferredSize: Size(MediaQuery.sizeOf(context).width, 200),
-              child: _appBar(context)),
+          appBar: ScoutifyComponents().appBarWithBackButton('Attendances', context),
           body: Center(
               child: Column(
             children: [
@@ -372,71 +371,4 @@ class _showAllParticipantsState extends State<showAllParticipants> {
           )),
     );
   }
-}
-
-Widget _appBar(context) {
-  return Container(
-    width: MediaQuery.sizeOf(context).width,
-    height: 90,
-    decoration: const BoxDecoration(color: Color(0xFF2E3B78)),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(
-          width: 30,
-        ),
-        Container(
-          width: 50,
-          height: 50,
-          decoration: const ShapeDecoration(
-            color: Colors.white,
-            shape: OvalBorder(),
-          ),
-          child: IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: const Icon(Icons.arrow_back_ios_new)),
-        ),
-        const SizedBox(
-          width: 30,
-        ),
-        const Text(
-          'Attendances',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 25,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-            height: 0,
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-Widget _backButton(context) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 10, left: 25),
-    child: Container(
-      width: 50,
-      height: 50,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
-        color: Colors.white,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0),
-        child: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          iconSize: 25,
-          color: const Color.fromRGBO(59, 63, 101, 100),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
-    ),
-  );
 }

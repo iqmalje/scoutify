@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scoutify/components/components.dart';
 
 class attendancePage extends StatefulWidget {
   const attendancePage({super.key});
@@ -13,67 +14,16 @@ class _attendancePageState extends State<attendancePage> {
     var _mediaQuery = MediaQuery.of(context);
 
     return Scaffold(
+      appBar: ScoutifyComponents().appBarWithBackButton('Attendances', context),
         body: Container(
       width: _mediaQuery.size.width,
       height: _mediaQuery.size.height,
       color: const Color.fromRGBO(237, 237, 237, 100),
       child: Column(children: <Widget>[
-        _appBar(context),
         _instruction(),
       ]),
     ));
   }
-}
-
-Widget _appBar(context) {
-  return Container(
-      height: 155,
-      width: MediaQuery.of(context).size.width,
-      color: const Color.fromRGBO(44, 34, 91, 100),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 50, right: 20),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            _backButton(context),
-            const SizedBox(width: 25),
-            const Padding(
-              padding: EdgeInsets.only(top: 5.0),
-              child: Text(
-                'Attendences',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 29,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: .3),
-              ),
-            )
-          ],
-        ),
-      ));
-}
-
-Widget _backButton(context) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 10, left: 25),
-    child: Container(
-      width: 50,
-      height: 50,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
-        color: Colors.white,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0),
-        child: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          iconSize: 25,
-          color: const Color.fromRGBO(59, 63, 101, 100),
-          onPressed: () {},
-        ),
-      ),
-    ),
-  );
 }
 
 Widget _instruction() {

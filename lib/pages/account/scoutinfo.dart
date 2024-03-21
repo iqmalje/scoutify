@@ -92,9 +92,9 @@ class _ScoutInfoState extends State<ScoutInfo> {
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.sizeOf(context).width * 0.05),
         child: SingleChildScrollView(
+          clipBehavior: Clip.none,
           child: Center(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
                   height: 20,
@@ -143,43 +143,48 @@ class _ScoutInfoState extends State<ScoutInfo> {
                 ),
                 buildInputBox('Credentials Number (Nombor Tauliah)',
                     _credentialNumberController, true,
-                    formatter: [UpperCaseTextFilter()]),
+                    hintText: 'Eg: PN-252, PIPN-252, TIADA'),
                 const SizedBox(
                   height: 15,
                 ),
                 buildDropDown(
-                    'Gender', ['Lelaki', 'Perempuan'], _genderController),
+                    'Gender', ['LELAKI', 'PEREMPUAN'], _genderController),
                 const SizedBox(
                   height: 15,
                 ),
-                buildDropDown('Race', ['Melayu', 'Cina', 'India', 'Others'],
+                buildDropDown('Race', ['MELAYU', 'CINA', 'INDIA', 'LAIN-LAIN'],
                     _raceController),
                 const SizedBox(
                   height: 15,
                 ),
                 buildDropDown(
                     'Religion',
-                    ['Islam', 'Kristian', 'Hindu', 'Buddha', 'Others'],
+                    ['ISLAM', 'KRISTIAN', 'HINDU', 'BUDDHA', 'LAIN-LAIN'],
                     _religionController),
                 const SizedBox(
                   height: 15,
                 ),
-                buildInputBox('Unit Number', _unitNumberController, true),
+                buildInputBox('Unit Number', _unitNumberController, true,
+                    hintText: 'Eg: 1983 ( PM / PR ), 2018 ( PKK / PM / PK )'),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
-                    'Team / Crew Number', _teamCrewNumberController, true),
+                    'Team / Crew Number', _teamCrewNumberController, true,
+                    hintText: 'Eg: A, 01, KELANA A, TERBUKA'),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
-                    'School / Crew Code', _schoolCrewCodeController, true),
+                    'School / Crew Code', _schoolCrewCodeController, true,
+                    hintText: 'Eg: JEA0001, KELANA A, TERBUKA'),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
-                    'School / Crew Name', _schoolCrewNameController, true),
+                    'School / Crew Name', _schoolCrewNameController, true,
+                    hintText:
+                        'Eg: SK, SJK (C), SMK, SMKA, SM, KELANA A, TERBUKA'),
                 const SizedBox(
                   height: 15,
                 ),
@@ -215,12 +220,11 @@ class _ScoutInfoState extends State<ScoutInfo> {
                 ),
                 isEdit == true
                     ? Container(
-                        width: MediaQuery.sizeOf(context).width * 0.8,
                         child: Row(
                           children: [
-                            ScoutifyComponents().filledNormalButton(
+                            ScoutifyComponents().cancelNormalButton(
                                 context, "CANCEL",
-                                width: MediaQuery.sizeOf(context).width * 0.375,
+                                width: MediaQuery.sizeOf(context).width * 0.4,
                                 onTap: () {
                               setState(
                                 () {
@@ -233,8 +237,8 @@ class _ScoutInfoState extends State<ScoutInfo> {
                             GestureDetector(
                                 child: ScoutifyComponents().filledNormalButton(
                                     context, "CONFIRM",
-                                    width: MediaQuery.sizeOf(context).width *
-                                        0.375),
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.4),
                                 onTap: () async {
                                   Account tempAccount =
                                       CurrentAccount.getInstance().getAccount();
@@ -278,8 +282,9 @@ class _ScoutInfoState extends State<ScoutInfo> {
                       )
                     : GestureDetector(
                         child: ScoutifyComponents().filledNormalButton(
-                            context, "UPDATE",
-                            width: MediaQuery.sizeOf(context).width * 0.8),
+                          context,
+                          "UPDATE",
+                        ),
                         onTap: () {
                           setState(
                             () {
@@ -300,18 +305,23 @@ class _ScoutInfoState extends State<ScoutInfo> {
 
   Container buildInputBox(
       String title, TextEditingController controller, bool isEditable,
-      {List<TextInputFormatter>? formatter}) {
+      {List<TextInputFormatter>? formatter, String? hintText}) {
     return Container(
-      width: MediaQuery.sizeOf(context).width * 0.8,
       height: 50,
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         shadows: [
           BoxShadow(
-            color: (isEdit && isEditable) == true
-                ? Colors.blue
-                : const Color(0x3F000000),
+            color: (() {
+              if (isEdit && isEditable && controller.text == '') {
+                return Colors.red;
+              } else if (isEdit && isEditable) {
+                return Colors.blue;
+              } else {
+                return const Color(0x3F000000);
+              }
+            })(),
             blurRadius: 2,
             offset: const Offset(0, 1),
             spreadRadius: 0,
@@ -320,9 +330,9 @@ class _ScoutInfoState extends State<ScoutInfo> {
       ),
       child: Padding(
         padding: const EdgeInsets.only(top: 5.0),
-        child: TextField(
+        child: TextFormField(
           controller: controller,
-          inputFormatters: formatter,
+          inputFormatters: [UpperCaseTextFilter()],
           readOnly: !isEdit, // Make it editable only when isEdit is true
           style: const TextStyle(
               color: Colors.black,
@@ -336,16 +346,19 @@ class _ScoutInfoState extends State<ScoutInfo> {
             });
           },
           decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(top: 1, left: 10),
-              labelStyle: const TextStyle(
-                color: const Color.fromARGB(255, 183, 183, 183),
-                fontSize: 14,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w400,
-                height: 0,
-              ),
-              border: InputBorder.none,
-              labelText: title),
+            hintText: hintText,
+            hintStyle: TextStyle(fontSize: 12),
+            contentPadding: const EdgeInsets.only(top: 1, left: 10),
+            labelStyle: const TextStyle(
+              color: const Color.fromARGB(255, 183, 183, 183),
+              fontSize: 14,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w400,
+              height: 0,
+            ),
+            border: InputBorder.none,
+            labelText: title,
+          ),
         ),
       ),
     );
@@ -353,9 +366,12 @@ class _ScoutInfoState extends State<ScoutInfo> {
 
   Container buildDropDown(
       String title, List<String?> options, TextEditingController controller) {
+    String? initialOption = options.firstWhere(
+        (option) => option?.toLowerCase() == controller.text.toLowerCase(),
+        orElse: () => null);
+
     return isEdit
         ? Container(
-            width: MediaQuery.sizeOf(context).width * 0.8,
             height: 50,
             decoration: ShapeDecoration(
               color: Colors.white,
@@ -363,7 +379,15 @@ class _ScoutInfoState extends State<ScoutInfo> {
                   borderRadius: BorderRadius.circular(5)),
               shadows: [
                 BoxShadow(
-                  color: isEdit == true ? Colors.blue : const Color(0x3F000000),
+                  color: (() {
+                    if (isEdit && initialOption == null) {
+                      return Colors.red;
+                    } else if (isEdit) {
+                      return Colors.blue;
+                    } else {
+                      return const Color(0x3F000000);
+                    }
+                  })(),
                   blurRadius: 2,
                   offset: const Offset(0, 1),
                   spreadRadius: 0,
@@ -373,11 +397,11 @@ class _ScoutInfoState extends State<ScoutInfo> {
             child: Padding(
               padding: const EdgeInsets.only(top: 5.0),
               child: DropdownButtonFormField<String?>(
-                value: controller.text.isEmpty ? null : controller.text,
+                value: initialOption,
                 items: [
                   const DropdownMenuItem<String?>(
                     value: null,
-                    child: Text('Select',
+                    child: Text('SELECT',
                         style: TextStyle(
                             fontWeight: FontWeight.normal, fontSize: 15)),
                   ),

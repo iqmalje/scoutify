@@ -443,143 +443,31 @@ class _ProfilePageState extends State<ProfilePage> {
                       const SizedBox(
                         height: 30,
                       ),
-                      const Text(
-                        'PASSWORD',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w600,
-                          height: 0,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      InkWell(
+                      ScoutifyComponents().outlinedNormalButton(
+                        context,
+                        'Manage Account',
                         onTap: () {
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) =>
-                          //         VerifyResetPassword(email: email.text)));
-
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ManageAccountPage(
                                     account: ca.getAccount(),
                                   )));
                           setState(() {});
                         },
-                        child: Ink(
-                          width: MediaQuery.sizeOf(context).width * 0.8,
-                          height: 40,
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 2,
-                                offset: Offset(0, 1),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: Center(
-                            child: SizedBox(
-                              width:
-                                  MediaQuery.sizeOf(context).width * 0.8 - 20,
-                              child: const Text(
-                                'Manage Account',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w500,
-                                  height: 0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        width: MediaQuery.sizeOf(context).width * 0.8,
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 20,
                       ),
-                      InkWell(
+                      ScoutifyComponents().filledNormalButton(
+                        context,
+                        'Log Out',
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  VerifyResetPassword(email: email.text)));
-                        },
-                        child: Ink(
-                          width: MediaQuery.sizeOf(context).width * 0.8,
-                          height: 40,
-                          decoration: ShapeDecoration(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 2,
-                                offset: Offset(0, 1),
-                                spreadRadius: 0,
-                              )
-                            ],
-                          ),
-                          child: Center(
-                            child: SizedBox(
-                              width:
-                                  MediaQuery.sizeOf(context).width * 0.8 - 20,
-                              child: const Text(
-                                'Reset Password',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w500,
-                                  height: 0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 35,
-                      ),
-                      InkWell(
-                        onTap: () async {
-                          await AccountDAO().signout();
-
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => const SignInPage()),
                               (route) => false);
                         },
-                        child: Ink(
-                          width: MediaQuery.sizeOf(context).width * 0.8,
-                          height: 40,
-                          decoration: ShapeDecoration(
-                            color: const Color(0xFF3B4367),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              'Log Out',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w600,
-                                height: 0,
-                              ),
-                            ),
-                          ),
-                        ),
+                        width: MediaQuery.sizeOf(context).width * 0.8,
                       ),
                       const SizedBox(
                         height: 15,

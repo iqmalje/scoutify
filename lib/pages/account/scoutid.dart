@@ -33,6 +33,7 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
             padding: EdgeInsets.symmetric(
                 horizontal: MediaQuery.sizeOf(context).width * 0.05),
             child: SingleChildScrollView(
+              clipBehavior: Clip.none,
               child: Column(
                 children: [
                   const SizedBox(
@@ -217,7 +218,7 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                           height: 10,
                         ),
                         const Text(
-                          'The display name on the card must be less than 10 characters',
+                          'The display name on the card must be less than 15 characters',
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 14,
@@ -242,7 +243,7 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                               });
                             },
                             inputFormatters: [
-                              LengthLimitingTextInputFormatter(10),
+                              LengthLimitingTextInputFormatter(15),
                               UpperCaseTextFilter()
                             ],
                             controller: displayName,
@@ -251,7 +252,7 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                                 hintText: 'Name Display',
                                 suffix: Padding(
                                   padding: const EdgeInsets.only(right: 5.0),
-                                  child: Text('${wordCount}/10'),
+                                  child: Text('${wordCount}/15'),
                                 ),
                                 prefixIcon: const Icon(Icons.person_outline)),
                           ),

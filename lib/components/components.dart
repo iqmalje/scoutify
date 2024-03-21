@@ -33,6 +33,68 @@ class ScoutifyComponents {
     );
   }
 
+  Widget outlinedNormalButton(
+    BuildContext context,
+    String text, {
+    Function()? onTap,
+    double? width,
+  }) {
+    return Material(
+      child: InkWell(
+        onTap: onTap,
+        child: Ink(
+          width: width,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+              color: const Color(0xFF3B4367),
+              width: 3,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              text,
+              style: const TextStyle(
+                  fontFamily: 'Poppins',
+                  color: const Color(0xFF3B4367),
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget cancelNormalButton(
+    BuildContext context,
+    String text, {
+    Function()? onTap,
+    double? width,
+  }) {
+    return Material(
+      child: InkWell(
+        onTap: onTap,
+        child: Ink(
+          width: width,
+          height: 50,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.grey),
+          child: Center(
+            child: Text(
+              text,
+              style: const TextStyle(
+                  fontFamily: 'Poppins',
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget outlinedButton(
       {required double height,
       required double width,
@@ -192,7 +254,7 @@ class ScoutifyComponents {
                 title,
                 style: const TextStyle(
                   color: Color.fromARGB(255, 255, 255, 255),
-                  fontSize: 24,
+                  fontSize: 22,
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w600,
                 ),
@@ -241,7 +303,7 @@ class ScoutifyComponents {
                         textScaler: TextScaler.noScaling,
                         style: const TextStyle(
                           color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 24,
+                          fontSize: 22,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
                         ),
@@ -534,7 +596,7 @@ class ScoutifyComponents {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 34.0, top: 0),
+                padding: const EdgeInsets.only(left: 25.0, top: 0),
                 child: Column(
                   children: [
                     Row(
@@ -558,7 +620,7 @@ class ScoutifyComponents {
                           child: Text(
                             textScaleFactor: 1.0,
                             ': ${account.scoutInfo.noAhli}',
-                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -592,7 +654,7 @@ class ScoutifyComponents {
                           width: width * 2.5,
                           child: Text(
                             ': ${account.scoutInfo.noTauliah ?? account.scoutInfo.manikayu}',
-                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                             textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
@@ -628,7 +690,7 @@ class ScoutifyComponents {
                               child: Text(
                                 ': ${account.scoutInfo.unit}',
                                 textScaleFactor: 1.0,
-                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: size,
@@ -666,7 +728,7 @@ class ScoutifyComponents {
                           width: width * 2.5,
                           child: Text(
                             ': ${account.scoutInfo.negara ?? account.scoutInfo.daerah}',
-                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                             textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
@@ -824,7 +886,7 @@ class ScoutifyComponents {
                           account.scoutInfo.cardName ??= '-',
                           textAlign: TextAlign.center,
                           textScaleFactor: 1.0,
-                          maxLines: 2,
+                          maxLines: 1,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 40,
@@ -876,7 +938,7 @@ class ScoutifyComponents {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 34.0, top: 0),
+                padding: const EdgeInsets.only(left: 25.0, top: 0),
                 child: Column(
                   children: [
                     Row(
@@ -898,7 +960,8 @@ class ScoutifyComponents {
                         SizedBox(
                           width: width * 2.5,
                           child: Text(
-                            ': ${account.scoutInfo.noAhli}',overflow: TextOverflow.ellipsis,
+                            ': ${account.scoutInfo.noAhli}',
+                            maxLines: 1,
                             textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
@@ -933,7 +996,7 @@ class ScoutifyComponents {
                           width: width * 2.5,
                           child: Text(
                             ': ${account.scoutInfo.noTauliah ?? account.scoutInfo.manikayu}',
-                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                             textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
@@ -964,10 +1027,12 @@ class ScoutifyComponents {
                                 ),
                               ),
                             ),
-                            SizedBox(width: width * 2.5,
+                            SizedBox(
+                              width: width * 2.5,
                               child: Text(
                                 ': ${account.scoutInfo.unit}',
-                                textScaleFactor: 1.0,overflow: TextOverflow.ellipsis,
+                                textScaleFactor: 1.0,
+                                maxLines: 1,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: size,
@@ -1005,7 +1070,8 @@ class ScoutifyComponents {
                           width: width * 2.5,
                           child: Text(
                             ': ${account.scoutInfo.negara ?? account.scoutInfo.daerah}',
-                            textScaleFactor: 1.0,overflow: TextOverflow.ellipsis,
+                            textScaleFactor: 1.0,
+                            maxLines: 1,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:scoutify/pages/homepage/temppage.dart';
 import 'package:flutter/material.dart';
@@ -61,11 +62,11 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
   Widget build(BuildContext context) {
     var _mediaQuery = MediaQuery.of(context);
 
-    return Container(
-      color: const Color(0xFF2E3B78),
-      child: SafeArea(
-        child: Scaffold(
-            body: Container(
+    return Scaffold(
+        appBar: ScoutifyComponents().appBarWithBackButton(
+            isEditMode == true ? 'Update Activity' : 'Create Activity',
+            context),
+        body: Container(
           width: _mediaQuery.size.width,
           height: _mediaQuery.size.height,
           color: Colors.white,
@@ -73,8 +74,6 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  _appBar(context),
-
                   SizedBox(
                     height: 10,
                     child: Container(
@@ -460,54 +459,7 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
                   postButton(),
                 ]),
           ),
-        )),
-      ),
-    );
-  }
-
-  Widget _appBar(context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(100),
-      child: Container(
-        width: MediaQuery.sizeOf(context).width,
-        height: 90,
-        decoration: const BoxDecoration(color: Color(0xFF2E3B78)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(
-              width: 30,
-            ),
-            Container(
-              width: 50,
-              height: 50,
-              decoration: const ShapeDecoration(
-                color: Colors.white,
-                shape: OvalBorder(),
-              ),
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(Icons.arrow_back_ios_new)),
-            ),
-            const SizedBox(
-              width: 30,
-            ),
-            Text(
-              isEditMode == true ? 'Update Activity' : 'Create Activity',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 25,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w600,
-                height: 0,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+        ));
   }
 
   Widget postAuthor(context) {
