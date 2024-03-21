@@ -16,7 +16,7 @@ class ScoutInfoModel {
   }
 
   ScoutInfoModel.parse(Map<String, dynamic> items) {
-    // ensuring null data safely stored
+    // ensuring null data safely storedw
     _init();
     noAhli = items['no_ahli'];
     position = items['position'];

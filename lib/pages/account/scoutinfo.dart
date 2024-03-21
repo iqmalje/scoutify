@@ -52,7 +52,8 @@ class _ScoutInfoState extends State<ScoutInfo> {
   @override
   void initState() {
     super.initState();
-    _genderController = TextEditingController(text: account.scoutInfo.jantina ?? '');
+    _genderController =
+        TextEditingController(text: account.scoutInfo.jantina ?? '');
     _raceController = TextEditingController(
         text: account.scoutInfo.kaum ?? ''); //TODO: update controller here
     //TextEditingController(text: account.fullname ?? '')
@@ -235,9 +236,8 @@ class _ScoutInfoState extends State<ScoutInfo> {
                                     width: MediaQuery.sizeOf(context).width *
                                         0.375),
                                 onTap: () async {
-                                  Account tempAccount = Account();
-                                  tempAccount.accountid =
-                                      CurrentAccount.getInstance().accountid;
+                                  Account tempAccount =
+                                      CurrentAccount.getInstance().getAccount();
 
                                   tempAccount.fullname =
                                       _fullnameController.text;
@@ -325,11 +325,10 @@ class _ScoutInfoState extends State<ScoutInfo> {
           inputFormatters: formatter,
           readOnly: !isEdit, // Make it editable only when isEdit is true
           style: const TextStyle(
-            color: Colors.black,
-            fontSize: 14,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w400
-          ),
+              color: Colors.black,
+              fontSize: 14,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w400),
           maxLines: 1,
           onChanged: (newValue) {
             setState(() {

@@ -1,5 +1,6 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:flutter/services.dart';
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/activation/activateaccount.dart';
@@ -51,6 +52,12 @@ void main() async {
       print('since logged out, admin toggled to false');
     }
   });
+
+  // lock the app into portrait mode
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const MyApp());
 }
 
