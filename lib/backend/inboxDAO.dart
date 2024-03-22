@@ -7,6 +7,10 @@ class InboxDAO {
   Future<void> deleteInbox(String inboxID) async {
     await supabase.from('inboxes').delete().eq('id', inboxID);
   }
+
+  Future<void> markSeen(String inboxID) async {
+    await supabase.from('inboxes').update({'has_read': true}).eq('id', inboxID);
+  }
 }
 
 enum InboxType {

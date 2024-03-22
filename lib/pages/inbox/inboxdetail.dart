@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scoutify/backend/inboxDAO.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/inbox.dart';
 
@@ -13,6 +14,14 @@ class InboxDetailPage extends StatefulWidget {
 class _InboxDetailPageState extends State<InboxDetailPage> {
   Inbox inbox;
   _InboxDetailPageState(this.inbox);
+
+  // mark it as seen
+  @override
+  void initState() {
+    InboxDAO().markSeen(inbox.id);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
