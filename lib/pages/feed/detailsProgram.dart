@@ -103,7 +103,7 @@ class _DetailsprogramState extends State<Detailsprogram> {
                 color: Colors.transparent,
                 child: Stack(children: <Widget>[
                   //event image
-                  Center(child: Image.network(activity.imageurl+ "#" + DateFormat('yyyyddMMHHmm').format(DateTime.now()))),
+                  Center(child: Image.network(activity.imageurl )),
     
                   //event type details
                   Positioned(

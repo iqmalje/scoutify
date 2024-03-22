@@ -69,7 +69,7 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                   });
                 }, child: Builder(builder: (context) {
                   if (imagePicked == null) {
-                    return Center(child: Image.network(activity!.imageurl + "#" + DateFormat('yyyyddMMHHmm').format(DateTime.now())));
+                    return Center(child: Image.network(activity!.imageurl ));
                   } else {
                     return Center(
                       child: Image.file(File(imagePicked!.path)),

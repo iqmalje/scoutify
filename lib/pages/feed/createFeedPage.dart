@@ -528,9 +528,7 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
             );
           } else if (imagePicked == null && isEditMode) {
             return Center(
-                child: Image.network(activity!.imageurl +
-                    "#" +
-                    DateFormat('yyyyddMMHHmm').format(DateTime.now())));
+                child: Image.network(activity!.imageurl));
           } else {
             return Center(child: Image.file(File(imagePicked!.path)));
           }

@@ -273,7 +273,7 @@ class _ActivityPageState extends State<ActivityPage> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: item.imageurl != null
-                          ? NetworkImage(item.imageurl  + "#" + DateFormat('yyyyddMMHHmm').format(DateTime.now())) 
+                          ? NetworkImage(item.imageurl   ) 
                           : AssetImage("assets/images/Scoutify_Logo_NEW.png")
                               as ImageProvider<Object>,
                       fit: BoxFit.cover,

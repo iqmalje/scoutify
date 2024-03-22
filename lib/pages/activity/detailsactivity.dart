@@ -61,7 +61,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
               Stack(
                 children: [
                   Image.network(
-                    activity.imageurl + "#" + DateFormat('yyyyddMMHHmm').format(DateTime.now()),
+                    activity.imageurl ,
                     width: MediaQuery.sizeOf(context).width,
                   ),
                   Align(

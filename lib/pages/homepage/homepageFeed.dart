@@ -196,7 +196,7 @@ Widget buildAPost(BuildContext context, Activity item) {
                     BoxConstraints(minWidth: MediaQuery.sizeOf(context).width),
                 child: Stack(children: <Widget>[
                   //event image
-                  Center(child: Image.network(item.imageurl + "#" + DateFormat('yyyyddMMHHmm').format(DateTime.now()))),
+                  Center(child: Image.network(item.imageurl  )),
 
                   //event type details
                   Positioned(
