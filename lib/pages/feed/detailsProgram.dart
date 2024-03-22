@@ -100,10 +100,10 @@ class _DetailsprogramState extends State<Detailsprogram> {
               ),
               const SizedBox(height: 10),
               Container(
-                color: Colors.lightBlue,
+                color: Colors.transparent,
                 child: Stack(children: <Widget>[
                   //event image
-                  Image.network(activity.imageurl),
+                  Center(child: Image.network(activity.imageurl+ "#" + DateFormat('yyyyddMMHHmm').format(DateTime.now()))),
     
                   //event type details
                   Positioned(

@@ -419,7 +419,6 @@ class ScoutifyComponents {
             fontSize: 14,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w400,
-            height: 0,
           ),
           maxLines: 1,
           decoration: InputDecoration(

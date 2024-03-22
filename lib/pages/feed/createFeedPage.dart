@@ -527,9 +527,12 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
                   ]),
             );
           } else if (imagePicked == null && isEditMode) {
-            return Image.network(activity!.imageurl);
+            return Center(
+                child: Image.network(activity!.imageurl +
+                    "#" +
+                    DateFormat('yyyyddMMHHmm').format(DateTime.now())));
           } else {
-            return Image.file(File(imagePicked!.path));
+            return Center(child: Image.file(File(imagePicked!.path)));
           }
         }),
       ),
@@ -695,6 +698,8 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
       'description': description.text,
       'file': imagePicked == null ? null : File(imagePicked!.path)
     }, activity!.activityid);
+
+    imageCache.clear();
 
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const TempPage()),

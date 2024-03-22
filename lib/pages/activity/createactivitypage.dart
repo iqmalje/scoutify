@@ -69,11 +69,11 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                   });
                 }, child: Builder(builder: (context) {
                   if (imagePicked == null) {
-                    return Image.network(activity!.imageurl);
+                    return Center(child: Image.network(activity!.imageurl + "#" + DateFormat('yyyyddMMHHmm').format(DateTime.now())));
                   } else {
-                    return FittedBox(
-                        fit: BoxFit.fill,
-                        child: Image.file(File(imagePicked!.path)));
+                    return Center(
+                      child: Image.file(File(imagePicked!.path)),
+                    );
                   }
                 }));
               }
@@ -511,6 +511,10 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                                 ? null
                                 : File(imagePicked!.path)
                           }, activity!.activityid);
+setState(() {
+  
+});
+
                         } else {
                           await ActivityDAO().addEvent({
                             'name': name.text,

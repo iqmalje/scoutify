@@ -268,12 +268,8 @@ class _ScoutInfoState extends State<ScoutInfo> {
                                       .updateAccountInfo(tempAccount);
                                   setState(
                                     () {
-                                      // TODO: Update the value in the controller when text changes.
-                                      // TODO: Backend goes here kemal :)
-                                      // Implemented update functionality
-                                      // thanks for the todo sayang
-
                                       isEdit = false;
+                                      resetOldControllers();
                                     },
                                   );
                                 }),
@@ -314,7 +310,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
         shadows: [
           BoxShadow(
             color: (() {
-              if (isEdit && isEditable && controller.text == '') {
+              if (isEditable && controller.text == '') {
                 return Colors.red;
               } else if (isEdit && isEditable) {
                 return Colors.blue;
@@ -447,5 +443,17 @@ class _ScoutInfoState extends State<ScoutInfo> {
     _schoolCrewCodeController.text = originalSchoolCrewCode;
     _schoolCrewNameController.text = originalSchoolCrewName;
     _credentialNumberController.text = originalCredentialNumber;
+  }
+
+  void resetOldControllers() {
+    originalGender = _genderController.text;
+    originalRace = _raceController.text;
+    originalReligion = _religionController.text;
+    originalDistrict = _districtController.text;
+    originalUnitNumber = _unitNumberController.text;
+    originalTeamCrewNumber = _teamCrewNumberController.text;
+    originalSchoolCrewCode = _schoolCrewCodeController.text;
+    originalSchoolCrewName = _schoolCrewNameController.text;
+    originalCredentialNumber = _credentialNumberController.text;
   }
 }

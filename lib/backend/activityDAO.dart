@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -136,20 +137,23 @@ class ActivityDAO {
         await supabase.storage
             .from('activities')
             .upload('$activityID/cover.png', items['file']);
+
+        await supabase.from('activities').update({
+          'image_url': supabase.storage
+              .from('activities')
+              .getPublicUrl('$activityID/cover.png')
+        }).eq('activityid', activityID);
       } catch (e) {
         await supabase.storage
             .from('activities')
             .update('$activityID/cover.png', items['file']);
       }
-
-      await supabase.from('activities').update({
-        'image_url': supabase.storage
-            .from('activities')
-            .getPublicUrl('$activityID/cover.png')
-      }).eq('activityid', activityID);
     }
 
-    print('dah update');
+    String activityURL = supabase.storage
+        .from('activities')
+        .getPublicUrl('$activityID/cover.png');
+
   }
 
   Future<void> updateEvent(
@@ -175,6 +179,12 @@ class ActivityDAO {
         await supabase.storage
             .from('activities')
             .upload('$activityID/cover.png', items['file']);
+
+        await supabase.from('activities').update({
+          'image_url': supabase.storage
+              .from('activities')
+              .getPublicUrl('$activityID/cover.png')
+        }).eq('activityid', activityID);
       } catch (e) {
         await supabase.storage
             .from('activities')
@@ -187,13 +197,7 @@ class ActivityDAO {
         .from('activities')
         .getPublicUrl('$activityID/cover.png');
 
-    await supabase.from('activities').update({
-      'image_url': supabase.storage
-          .from('activities')
-          .getPublicUrl('$activityID/cover.png')
-    }).eq('activityid', activityID);
-
-    print('dah update');
+    //return activity url to clear cache of updated image
   }
 
   /// Since adding an event requires many params, it is better
@@ -280,4 +284,5 @@ class ActivityDAO {
       throw Exception(e.toString());
     }
   }
+
 }
