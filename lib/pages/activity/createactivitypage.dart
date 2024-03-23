@@ -342,8 +342,11 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                           onTap: () async {
                             DateTime? pickedDate = await showDatePicker(
                                 context: context,
-                                initialDate: startdate ??= DateTime.now(),
-                                firstDate: DateTime.now(),
+                                initialDate: (startdate == null)
+                                    ? DateTime.now()
+                                    : startdate,
+                                firstDate: DateTime.now()
+                                    .subtract(const Duration(days: 365)),
                                 lastDate: DateTime.now()
                                     .add(const Duration(days: 365)));
 
@@ -356,13 +359,10 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                               });
                               return;
                             }
-                            if (pickedDate.millisecondsSinceEpoch >
-                                enddate!.millisecondsSinceEpoch) {
-                            } else {
-                              setState(() {
-                                startdate = pickedDate;
-                              });
-                            }
+
+                            setState(() {
+                              startdate = pickedDate;
+                            });
                           },
                           child: Container(
                             height: 40,
@@ -405,8 +405,11 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                           onTap: () async {
                             DateTime? pickedDate = await showDatePicker(
                                 context: context,
-                                initialDate: enddate ??= DateTime.now(),
-                                firstDate: DateTime.now(),
+                                initialDate: (enddate == null)
+                                    ? DateTime.now()
+                                    : enddate,
+                                firstDate: DateTime.now()
+                                    .subtract(const Duration(days: 365)),
                                 lastDate: DateTime.now()
                                     .add(const Duration(days: 365)));
 
@@ -420,13 +423,10 @@ class _CreateActivityPage extends State<CreateActivityPage> {
 
                               return;
                             }
-                            if (startdate!.millisecondsSinceEpoch >
-                                pickedDate.millisecondsSinceEpoch) {
-                            } else {
-                              setState(() {
-                                enddate = pickedDate;
-                              });
-                            }
+
+                            setState(() {
+                              enddate = pickedDate;
+                            });
                           },
                           child: Container(
                             height: 40,
@@ -492,6 +492,16 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                                   content: Text('Please choose the dates!')));
                           return;
                         }
+
+                        if (startdate!.millisecondsSinceEpoch >
+                            enddate!.millisecondsSinceEpoch) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      'Start date must be before end date')));
+                          return;
+                        }
+
                         if (isEditMode) {
                           await ActivityDAO().updateEvent({
                             'name': name.text,
@@ -505,10 +515,15 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                                 ? null
                                 : File(imagePicked!.path)
                           }, activity!.activityid);
-                        Activity a = await ActivityDAO().getActivityAt(activity!.activityid);
-                        
-                        Navigator.pop(context, true);
-                        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => DetailsActivity(activity: a)));
+                          Activity a = await ActivityDAO()
+                              .getActivityAt(activity!.activityid);
+
+                          Navigator.pop(context, true);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailsActivity(activity: a)));
                         } else {
                           await ActivityDAO().addEvent({
                             'name': name.text,
@@ -522,7 +537,7 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                             //TODO: figure out how to do ongoing, done
                             'file': File(imagePicked!.path)
                           });
-                        Navigator.pop(context, true);
+                          Navigator.pop(context, true);
                         }
                       },
                       child: Ink(

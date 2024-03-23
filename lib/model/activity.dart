@@ -14,6 +14,7 @@ class Activity {
   DateTime? registration_end_date;
   double? fee;
   List<DateTime> dateInvolved = [];
+  bool? is_show_activity;
 
   Activity(Map<String, dynamic> item) {
     activityid = item['activityid'];
@@ -24,6 +25,7 @@ class Activity {
     created_by = item['created_by'];
     description = item['description'];
     status = item['status'];
+    is_show_activity = item['is_show_activity'];
     fee = double.tryParse(item['fee'].toString());
 
     created_at =

@@ -66,7 +66,7 @@ class _SignInPageState extends State<SignInPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 40,
+                          height: 35,
                         ),
                         Text(
                           'Welcome to Scoutify',
@@ -79,7 +79,7 @@ class _SignInPageState extends State<SignInPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 8,
                         ),
                         Text(
                           'Log In',
@@ -101,7 +101,7 @@ class _SignInPageState extends State<SignInPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 57,
+                          height: 65,
                           child: TextField(
                             controller: email,
                             decoration: InputDecoration(
@@ -121,10 +121,10 @@ class _SignInPageState extends State<SignInPage> {
                           ),
                         ),
                         const SizedBox(
-                          height: 15,
+                          height: 10,
                         ),
                         SizedBox(
-                          height: 57,
+                          height: 65,
                           child: TextField(
                             controller: password,
                             obscureText: !isShown,

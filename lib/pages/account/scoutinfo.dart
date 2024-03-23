@@ -198,6 +198,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
                     "KULAI",
                     "MERSING",
                     "MUAR",
+                    "PASIR GUDANG"
                     "PONTIAN",
                     "SEGAMAT",
                     'TANGKAK'
@@ -303,7 +304,6 @@ class _ScoutInfoState extends State<ScoutInfo> {
       String title, TextEditingController controller, bool isEditable,
       {List<TextInputFormatter>? formatter, String? hintText}) {
     return Container(
-      height: 50,
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
@@ -368,7 +368,6 @@ class _ScoutInfoState extends State<ScoutInfo> {
 
     return isEdit
         ? Container(
-            height: 50,
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(

@@ -55,6 +55,7 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
       startdate = activity!.startdate;
       enddate = activity!.enddate;
       registerenddate = activity!.registration_end_date;
+      isShowActivity = activity!.is_show_activity!;
     }
   }
 
@@ -440,17 +441,20 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Add the program in the activity list',
-                          style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 12,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
+                        Expanded(
+                          flex: 5,
+                          child: const Text(
+                            'Add the program in the activity list',
+                            style: TextStyle(
+                              fontStyle: FontStyle.italic,
+                              fontSize: 12,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                         //toggle button
-                        switchButton(),
+                        Expanded(flex: 1, child: switchButton()),
                       ],
                     ),
                   ),
@@ -527,8 +531,7 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
                   ]),
             );
           } else if (imagePicked == null && isEditMode) {
-            return Center(
-                child: Image.network(activity!.imageurl));
+            return Center(child: Image.network(activity!.imageurl));
           } else {
             return Center(child: Image.file(File(imagePicked!.path)));
           }

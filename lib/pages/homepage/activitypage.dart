@@ -160,7 +160,8 @@ class _ActivityPageState extends State<ActivityPage> {
                               child: CircularProgressIndicator());
                         }
                         activities = snapshot.data!;
-
+                        activities.sort((a,b)=> a.startdate.compareTo(b.startdate));
+                        
                         return Expanded(
                           // child: Column(
                           //   children: [
@@ -300,9 +301,9 @@ class _ActivityPageState extends State<ActivityPage> {
               const SizedBox(height: 5),
               Padding(
                 padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.6),
+                    left: MediaQuery.of(context).size.width * 0.55),
                 child: Text(
-                  DateFormat('dd/MM/yyyy').format(item.created_at),
+                  DateFormat('dd/MM/yyyy').format(item.startdate),
                   style: const TextStyle(
                     color: Color.fromARGB(255, 136, 136, 136),
                     fontSize: 10,

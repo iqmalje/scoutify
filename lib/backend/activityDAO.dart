@@ -16,8 +16,8 @@ class ActivityDAO {
 
     List<Activity> activities = [];
     for (var activity in data) {
-      data['image_url'] =
-          "${data['image_url']}?v=${DateTime.now().millisecondsSinceEpoch}";
+      activity['image_url'] =
+          "${activity['image_url']}?v=${DateTime.now().millisecondsSinceEpoch}";
       activities.add(Activity(activity));
     }
     return activities;
@@ -57,7 +57,7 @@ class ActivityDAO {
           "${activity['image_url']}?v=${DateTime.now().millisecondsSinceEpoch}";
       activities.add(Activity(activity));
     }
-
+    
     return activities;
   }
 

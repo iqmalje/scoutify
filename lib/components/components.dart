@@ -252,6 +252,7 @@ class ScoutifyComponents {
             child: Center(
               child: Text(
                 title,
+                textScaleFactor: 1.0,
                 style: const TextStyle(
                   color: Color.fromARGB(255, 255, 255, 255),
                   fontSize: 22,
@@ -396,7 +397,6 @@ class ScoutifyComponents {
 
   Container buildInputBox(String title, TextEditingController controller) {
     return Container(
-      height: 50,
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),

@@ -302,7 +302,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: [
                           Container(
                             width: MediaQuery.sizeOf(context).width * 0.8,
-                            height: 50,
                             decoration: ShapeDecoration(
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
@@ -326,7 +325,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fontSize: 14,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w400,
-                                  height: 0,
                                 ),
                                 maxLines: 1,
                                 decoration: const InputDecoration(
@@ -349,7 +347,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Container(
                             width: MediaQuery.sizeOf(context).width * 0.8,
-                            height: 50,
                             decoration: ShapeDecoration(
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
@@ -373,7 +370,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fontSize: 14,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w400,
-                                  height: 0,
                                 ),
                                 maxLines: 1,
                                 decoration: const InputDecoration(
@@ -384,7 +380,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                       fontSize: 14,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
-                                      height: 0,
                                     ),
                                     border: InputBorder.none,
                                     labelText: 'Mobile Number'),
@@ -396,7 +391,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Container(
                             width: MediaQuery.sizeOf(context).width * 0.8,
-                            height: 50,
                             decoration: ShapeDecoration(
                               color: Colors.white,
                               shape: RoundedRectangleBorder(
@@ -420,18 +414,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                   fontSize: 14,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w400,
-                                  height: 0,
                                 ),
                                 maxLines: 1,
                                 decoration: const InputDecoration(
                                     contentPadding:
-                                        EdgeInsets.only(top: 1, left: 10),
+                                        EdgeInsets.only(top: 1, left: 10,),
+                                      
                                     labelStyle: TextStyle(
                                       color: Color.fromARGB(255, 183, 183, 183),
                                       fontSize: 14,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
-                                      height: 0,
                                     ),
                                     border: InputBorder.none,
                                     labelText: 'Email'),

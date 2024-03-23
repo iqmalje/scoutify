@@ -43,7 +43,6 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
               height: 30,
             ),
             Container(
-              height: 50,
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -67,7 +66,6 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
                     fontSize: 14,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
-                    height: 0,
                   ),
                   maxLines: 1,
                   decoration: const InputDecoration(
@@ -77,7 +75,6 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
                         fontSize: 14,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w400,
-                        height: 0,
                       ),
                       border: InputBorder.none,
                       labelText: 'Full Name'),
@@ -88,7 +85,6 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
               height: 10,
             ),
             Container(
-              height: 50,
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -133,7 +129,6 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
               height: 10,
             ),
             Container(
-              height: 50,
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
@@ -157,7 +152,6 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
                     fontSize: 14,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
-                    height: 0,
                   ),
                   maxLines: 1,
                   decoration: const InputDecoration(
@@ -167,7 +161,6 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
                         fontSize: 14,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w400,
-                        height: 0,
                       ),
                       border: InputBorder.none,
                       labelText: 'Email'),
