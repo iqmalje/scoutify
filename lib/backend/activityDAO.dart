@@ -61,6 +61,18 @@ class ActivityDAO {
     return activities;
   }
 
+  Future<Activity> getActivityAt(String id) async {
+  try {
+    var activityData = await supabase.from('activities').select('*').eq('activityid', id).single();
+
+    activityData['image_url'] = "${activityData['image_url']}?v=${DateTime.now().millisecondsSinceEpoch}";
+    
+    return Activity(activityData);
+  } catch (e) {
+    throw Exception(e.toString());
+  }
+}
+
   Future<List<Activity>> getFeed() async {
     var feed;
     try {
@@ -121,8 +133,7 @@ class ActivityDAO {
     }
   }
 
-  Future<void> updateFeed(
-      Map<String, dynamic> items, String activityID) async {
+  Future<void> updateFeed(Map<String, dynamic> items, String activityID) async {
     var accid = supabase.auth.currentUser!.id;
     await supabase.from('activities').update({
       'name': items['name'],
@@ -156,7 +167,6 @@ class ActivityDAO {
             .update('$activityID/cover.png', items['file']);
       }
     }
-
   }
 
   Future<void> updateEvent(

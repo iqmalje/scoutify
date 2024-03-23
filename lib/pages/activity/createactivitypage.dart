@@ -7,6 +7,7 @@ import 'package:scoutify/model/activity.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:scoutify/pages/activity/detailsactivity.dart';
 
 class CreateActivityPage extends StatefulWidget {
   final Activity? activity;
@@ -53,7 +54,6 @@ class _CreateActivityPage extends State<CreateActivityPage> {
       appBar: ScoutifyComponents().appBarWithBackButton(
           isEditMode == true ? 'Update Activity' : 'Create Activity', context),
       body: SingleChildScrollView(
-        
         child: Column(
           //blue bow column
           children: [
@@ -62,14 +62,14 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                 return GestureDetector(onTap: () async {
                   XFile? image =
                       await picker.pickImage(source: ImageSource.gallery);
-                
+
                   if (image == null) return;
                   setState(() {
                     imagePicked = image;
                   });
                 }, child: Builder(builder: (context) {
                   if (imagePicked == null) {
-                    return Center(child: Image.network(activity!.imageurl ));
+                    return Center(child: Image.network(activity!.imageurl));
                   } else {
                     return Center(
                       child: Image.file(File(imagePicked!.path)),
@@ -81,7 +81,7 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                 onTap: () async {
                   XFile? image =
                       await picker.pickImage(source: ImageSource.gallery);
-                
+
                   if (image == null) return;
                   setState(() {
                     imagePicked = image;
@@ -92,16 +92,14 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                       minWidth: MediaQuery.sizeOf(context).width,
                       minHeight: 180),
                   child: Ink(
-                    decoration:
-                        const BoxDecoration(color: Color(0xFFECECEC)),
+                    decoration: const BoxDecoration(color: Color(0xFFECECEC)),
                     child: Builder(builder: (context) {
                       if (imagePicked == null) {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                                child: Image.asset(
-                                    'assets/images/upload.png')),
+                                child: Image.asset('assets/images/upload.png')),
                             const Text(
                               'Upload an image',
                               style: TextStyle(
@@ -117,7 +115,7 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                       } else {
                         return Container(
                             //height:    200,
-                             //uncomment this to create a const height
+                            //uncomment this to create a const height
                             child: Image.file(File(imagePicked!.path)));
                       }
                     }),
@@ -206,8 +204,7 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                         ),
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 10),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
                           hintText: 'Program Name',
                           hintStyle: TextStyle(
                             color: Color(0xFF9397A0),
@@ -247,8 +244,7 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                             borderRadius: BorderRadius.circular(3)),
                       ),
                       child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 10.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: DropdownButton<String>(
                           value: dropdownValue,
                           isExpanded: true,
@@ -264,8 +260,8 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                               dropdownValue = value!;
                             });
                           },
-                          items: list.map<DropdownMenuItem<String>>(
-                              (String value) {
+                          items: list
+                              .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),
@@ -308,8 +304,7 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                         ),
                         decoration: const InputDecoration(
                           border: InputBorder.none,
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 10),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
                           hintText: 'Program Location',
                           hintStyle: TextStyle(
                             color: Color(0xFF9397A0),
@@ -351,9 +346,9 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime.now()
                                     .add(const Duration(days: 365)));
-                
+
                             if (pickedDate == null) return;
-                
+
                             //check if end date is later or equal to start date
                             if (enddate == null) {
                               setState(() {
@@ -414,15 +409,15 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime.now()
                                     .add(const Duration(days: 365)));
-                
+
                             if (pickedDate == null) return;
-                
+
                             //check if end date is less or equal to start date
                             if (startdate == null) {
                               setState(() {
                                 enddate = pickedDate;
                               });
-                
+
                               return;
                             }
                             if (startdate!.millisecondsSinceEpoch >
@@ -478,11 +473,11 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                         if (name.text.isEmpty || location.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text(
-                                      'Please fill in all the fields!')));
+                                  content:
+                                      Text('Please fill in all the fields!')));
                           return;
                         }
-                
+
                         if (imagePicked == null && !isEditMode) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -490,12 +485,11 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                                       Text('Please pick an image first!')));
                           return;
                         }
-                
+
                         if (startdate == null || enddate == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content:
-                                      Text('Please choose the dates!')));
+                                  content: Text('Please choose the dates!')));
                           return;
                         }
                         if (isEditMode) {
@@ -511,10 +505,10 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                                 ? null
                                 : File(imagePicked!.path)
                           }, activity!.activityid);
-setState(() {
-  
-});
-
+                        Activity a = await ActivityDAO().getActivityAt(activity!.activityid);
+                        
+                        Navigator.pop(context, true);
+                        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => DetailsActivity(activity: a)));
                         } else {
                           await ActivityDAO().addEvent({
                             'name': name.text,
@@ -528,9 +522,8 @@ setState(() {
                             //TODO: figure out how to do ongoing, done
                             'file': File(imagePicked!.path)
                           });
+                        Navigator.pop(context, true);
                         }
-                
-                        Navigator.of(context).pop();
                       },
                       child: Ink(
                         width: MediaQuery.sizeOf(context).width * 0.8,
