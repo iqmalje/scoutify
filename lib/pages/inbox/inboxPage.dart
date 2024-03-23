@@ -79,7 +79,8 @@ class _InboxMainPageState extends State<InboxMainPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CircleAvatar(
+                      inboxes.where((inbox) => inbox.has_read == false).length == 0 ? 
+                      Container () : CircleAvatar(
                         radius: 25,
                         backgroundColor: const Color(0xFFF44236),
                         child: Text(
@@ -124,20 +125,20 @@ class _InboxMainPageState extends State<InboxMainPage> {
                     height: 20,
                   ),
                   Flexible(
-                    child: dummyInboxes.isEmpty
+                    child: inboxes.isEmpty
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Image.asset(
                                 'assets/images/inbox_empty.png',
-                                width: MediaQuery.of(context).size.width * 0.5,
+                                width: MediaQuery.of(context).size.width * 0.7,
                                 // Replace with your image asset path
                               ),
                               const SizedBox(height: 5),
                               const Text('Your inbox is empty'),
                               const SizedBox(
-                                height: 20,
+                                height: 50,
                               ),
                             ],
                           )
