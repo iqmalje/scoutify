@@ -697,8 +697,6 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
       'file': imagePicked == null ? null : File(imagePicked!.path)
     }, activity!.activityid);
 
-    imageCache.clear();
-
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const TempPage()),
         (route) => false);

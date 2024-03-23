@@ -16,6 +16,8 @@ class ActivityDAO {
 
     List<Activity> activities = [];
     for (var activity in data) {
+      data['image_url'] =
+          "${data['image_url']}?v=${DateTime.now().millisecondsSinceEpoch}";
       activities.add(Activity(activity));
     }
     return activities;
@@ -51,6 +53,8 @@ class ActivityDAO {
     }
 
     for (var activity in rawData) {
+      activity['image_url'] =
+          "${activity['image_url']}?v=${DateTime.now().millisecondsSinceEpoch}";
       activities.add(Activity(activity));
     }
 
@@ -70,6 +74,8 @@ class ActivityDAO {
     List<Activity> activities = [];
 
     for (var data in feed) {
+      data['image_url'] =
+          "${data['image_url']}?v=${DateTime.now().millisecondsSinceEpoch}";
       activities.add(Activity(data));
     }
     return activities;
@@ -115,7 +121,8 @@ class ActivityDAO {
     }
   }
 
-  Future<void> updateFeed(Map<String, dynamic> items, String activityID) async {
+  Future<void> updateFeed(
+      Map<String, dynamic> items, String activityID) async {
     var accid = supabase.auth.currentUser!.id;
     await supabase.from('activities').update({
       'name': items['name'],
@@ -149,10 +156,6 @@ class ActivityDAO {
             .update('$activityID/cover.png', items['file']);
       }
     }
-
-    String activityURL = supabase.storage
-        .from('activities')
-        .getPublicUrl('$activityID/cover.png');
 
   }
 
@@ -284,5 +287,4 @@ class ActivityDAO {
       throw Exception(e.toString());
     }
   }
-
 }
