@@ -26,7 +26,8 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ScoutifyComponents().appBarWithBackButton('Activate Account', context),
+      appBar: ScoutifyComponents()
+          .appBarWithBackButton('Activate Account', context),
       body: SizedBox(
         width: MediaQuery.sizeOf(context).width,
         child: Padding(
@@ -105,19 +106,17 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                         const TextSpan(
                           text: 'I agree with ',
                           style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black
-                          ),
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
                         ),
                         TextSpan(
                           text: 'terms & conditions',
                           style: const TextStyle(
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w500,
-                            decoration: TextDecoration.underline,
-                            color: Colors.black
-                          ),
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.underline,
+                              color: Colors.black),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.push(
@@ -143,16 +142,16 @@ class _ActivateAccountFormState extends State<ActivateAccountForm> {
                 onTap: () async {
                   if (!agreed) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text(
-                            'Please agree to the terms and conditions!')));
+                        content:
+                            Text('Please agree to the terms and conditions!')));
                     return;
                   }
-        
+
                   print(account.email);
-        
+
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => ConfirmEmailActivationPage(
-                          email: account.email!)));
+                      builder: (context) =>
+                          ConfirmEmailActivationPage(email: account.email!)));
                 },
                 color: const Color(0xFF2E3B78),
                 style: const TextStyle(

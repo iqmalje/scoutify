@@ -12,9 +12,14 @@ class AccountDAO {
   Future<Account> selectAccountFromIC(String ICno) async {
     var data = await supabase
         .from('accounts')
-        .select('ic_no, email, fullname, accountid, activated')
-        .eq('ic_no', ICno)
-        .single();
+        .select('ic_no, email, fullname, accountid, activated, phone_no')
+        .eq('ic_no', ICno);
+
+    print(ICno);
+
+    print(data);
+
+    data = data[0];
 
     // parse into acc
     Account account = Account();
@@ -23,6 +28,7 @@ class AccountDAO {
     account.email = data['email'];
     account.fullname = data['fullname'];
     account.activated = data['activated'];
+    account.phoneNo = data['phone_no'];
     if (account.activated) throw Exception('Account is already activated!');
     return account;
   }

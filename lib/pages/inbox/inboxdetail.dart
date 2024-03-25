@@ -47,7 +47,10 @@ class _InboxDetailPageState extends State<InboxDetailPage> {
                   CircleAvatar(
                       backgroundColor: Colors.red,
                       child: IconButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await InboxDAO().deleteInbox(inbox.id);
+                            Navigator.of(context).pop();
+                          },
                           icon: const Icon(
                             Icons.delete,
                             color: Colors.white,
@@ -61,8 +64,13 @@ class _InboxDetailPageState extends State<InboxDetailPage> {
               return Container();
             }
             return Container(
-              height: 240,
+              width: MediaQuery.sizeOf(context).width,
               color: Colors.black.withOpacity(0.25),
+              padding: EdgeInsets.zero,
+              child: Image.network(
+                inbox.imageURL!,
+                width: MediaQuery.sizeOf(context).width,
+              ),
             );
           }),
           const SizedBox(

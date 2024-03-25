@@ -79,19 +79,20 @@ class _InboxMainPageState extends State<InboxMainPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      inboxes.where((inbox) => inbox.has_read == false).length == 0 ? 
-                      Container () : CircleAvatar(
-                        radius: 25,
-                        backgroundColor: const Color(0xFFF44236),
-                        child: Text(
-                          "${inboxes.where((inbox) => inbox.has_read == false).length}",
-                          style: const TextStyle(
-                            fontFamily: 'Poppins',
-                            color: Colors.white,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
+                      inboxes.where((inbox) => inbox.has_read == false).isEmpty
+                          ? Container()
+                          : CircleAvatar(
+                              radius: 25,
+                              backgroundColor: const Color(0xFFF44236),
+                              child: Text(
+                                "${inboxes.where((inbox) => inbox.has_read == false).length}",
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
                       Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
@@ -203,7 +204,6 @@ class _InboxMainPageState extends State<InboxMainPage> {
           color: Colors.transparent,
           child: InkWell(
             onTap: () async {
-              //TODO: back end for has read = true
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => InboxDetailPage(
                         inbox: inbox,
@@ -218,8 +218,8 @@ class _InboxMainPageState extends State<InboxMainPage> {
                     radius: 26,
                     backgroundColor: inbox.has_read == true
                         ? Colors.grey[350]
-                        : Color(0xFF2E3B78),
-                    child: Icon(
+                        : const Color(0xFF2E3B78),
+                    child: const Icon(
                       Icons.person_outline,
                       color: Colors.white,
                       size: 34,
@@ -298,8 +298,10 @@ class _InboxMainPageState extends State<InboxMainPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 //TODO: back end for delete all
+                await InboxDAO().deleteAll();
+                Navigator.of(context).pop();
               },
               style: TextButton.styleFrom(
                   fixedSize: Size(MediaQuery.sizeOf(context).width, 40)),
@@ -315,8 +317,9 @@ class _InboxMainPageState extends State<InboxMainPage> {
               ),
             ),
             TextButton(
-              onPressed: () {
-                //TODO: back end for read all
+              onPressed: () async {
+                await InboxDAO().markAllSeen();
+                Navigator.of(context).pop();
               },
               style: TextButton.styleFrom(
                   fixedSize: Size(MediaQuery.sizeOf(context).width, 10)),

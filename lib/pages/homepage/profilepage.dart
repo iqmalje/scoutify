@@ -10,6 +10,7 @@ import 'package:scoutify/pages/forgotpassword/verifyOTP.dart';
 import 'package:scoutify/pages/misc/officers.dart';
 import 'package:flutter/material.dart';
 import 'package:scoutify/pages/signin/signinpage.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -417,9 +418,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 maxLines: 1,
                                 decoration: const InputDecoration(
-                                    contentPadding:
-                                        EdgeInsets.only(top: 1, left: 10,),
-                                      
+                                    contentPadding: EdgeInsets.only(
+                                      top: 1,
+                                      left: 10,
+                                    ),
                                     labelStyle: TextStyle(
                                       color: Color.fromARGB(255, 183, 183, 183),
                                       fontSize: 14,
@@ -454,7 +456,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ScoutifyComponents().filledNormalButton(
                         context,
                         'Log Out',
-                        onTap: () {
+                        onTap: () async {
+                          await Supabase.instance.client.auth.signOut();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => const SignInPage()),
