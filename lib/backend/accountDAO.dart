@@ -77,18 +77,19 @@ class AccountDAO {
   /// Sign in the user to the application, will auto login
   /// So the user wont have to login everytime.
   Future<bool> signIn(String email, String password) async {
-    AuthResponse auth = await supabase.auth
-        .signInWithPassword(password: password, email: email);
-    //on sign in, just set the var to false
+    try {
+      AuthResponse auth = await supabase.auth
+          .signInWithPassword(password: password, email: email);
+      //on sign in, just set the var to false
 
-    print(auth.user!.role);
+      print(auth.user!.role);
 
-    // set instance account
-    await setInstanceAccount(auth: auth);
-
-    try {} catch (e) {
+      // set instance account
+      await setInstanceAccount(auth: auth);
+    } catch (e) {
       if (e.toString().contains('login credentials')) {
-        throw Exception("Invalid login credentials");
+        throw "Invalid login credentials";
+        //throw Exception("Invalid login credentials");
       }
 
       rethrow;
@@ -181,7 +182,7 @@ class AccountDAO {
         .update({'image_url': profileurl}).eq('accountid', userid);
 
     print('UPDATED = ');
-    return profileurl;
+    return profileurl+"?v=${DateTime.now().microsecondsSinceEpoch}";
   }
 
   Future<void> updateDisplayName(String displayName) async {

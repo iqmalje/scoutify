@@ -59,8 +59,7 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                         backgroundColor: const Color(0xFF00579E),
                         child: CircleAvatar(
                           radius: 85,
-                          backgroundImage: NetworkImage(
-                              "${account.imageURL}?v=${DateTime.now().microsecondsSinceEpoch}"),
+                          backgroundImage: NetworkImage("${account.imageURL}"),
                         ),
                       ),
                       Positioned.fill(
@@ -69,11 +68,15 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(100),
                             onTap: () async {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => ProfilePictureGuideline(
-                                        account: account,
-                                      )));
-                              setState(() {});
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          ProfilePictureGuideline(
+                                            account: account,
+                                          )))
+                                  .then((value) {
+                                setState(() {});
+                              });
                             },
                           ),
                         ),

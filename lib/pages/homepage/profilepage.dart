@@ -442,11 +442,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         context,
                         'Manage Account',
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ManageAccountPage(
-                                    account: ca.getAccount(),
-                                  )));
-                          setState(() {});
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(
+                                  builder: (context) => ManageAccountPage(
+                                        account: ca.getAccount(),
+                                      )))
+                              .then((value) {
+                            setState(() {});
+                          });
+                          ;
                         },
                         width: MediaQuery.sizeOf(context).width * 0.8,
                       ),
@@ -457,7 +461,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         context,
                         'Log Out',
                         onTap: () async {
-                          await Supabase.instance.client.auth.signOut();
+                          await AccountDAO().signout();
+                          
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => const SignInPage()),

@@ -440,7 +440,7 @@ class ScoutifyComponents {
   Stack buildCard(Account account) {
     double size = 20;
 
-    double width = 76;
+    double width = 80;
     if (account.scoutInfo.unit == 'None') {
       size = 23;
       width = 100;
@@ -525,7 +525,7 @@ class ScoutifyComponents {
                   }
                   return CircleAvatar(
                       backgroundImage: NetworkImage(
-                          '${account.imageURL}?v=${DateTime.now().millisecondsSinceEpoch}'));
+                          '${account.imageURL}'));
                 }),
               ),
               Padding(
@@ -595,7 +595,7 @@ class ScoutifyComponents {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 25.0, top: 0),
+                padding: const EdgeInsets.only(left: 23.0, top: 0),
                 child: Column(
                   children: [
                     Row(
@@ -710,9 +710,7 @@ class ScoutifyComponents {
                         SizedBox(
                           width: width,
                           child: Text(
-                            account.scoutInfo.negara == null
-                                ? 'DAERAH'
-                                : 'NEGARA',
+                            'DAERAH',
                             textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
@@ -726,7 +724,7 @@ class ScoutifyComponents {
                         SizedBox(
                           width: width * 2.5,
                           child: Text(
-                            ': ${account.scoutInfo.negara ?? account.scoutInfo.daerah}',
+                            ': ${account.scoutInfo.daerah}',
                             maxLines: 1,
                             textScaleFactor: 1.0,
                             style: TextStyle(
@@ -784,8 +782,8 @@ class ScoutifyComponents {
   }
 
   Widget buildSpecialCard(Account account) {
-    double size = 27;
-    double width = 120;
+    double size = 20;
+    double width = 80;
     return Stack(
       children: [
         Container(
@@ -871,7 +869,7 @@ class ScoutifyComponents {
                 ),
                 child: CircleAvatar(
                     backgroundImage: NetworkImage(
-                        '${account.imageURL}?v=${DateTime.now().millisecondsSinceEpoch}')),
+                        '${account.imageURL}')),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 10),
@@ -937,7 +935,7 @@ class ScoutifyComponents {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 25.0, top: 0),
+                padding: const EdgeInsets.only(left: 23.0, top: 0),
                 child: Column(
                   children: [
                     Row(
@@ -982,6 +980,7 @@ class ScoutifyComponents {
                                 ? 'NO TAULIAH'
                                 : 'MANIKAYU',
                             textScaleFactor: 1.0,
+                            maxLines: 1,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: size,
@@ -1051,10 +1050,7 @@ class ScoutifyComponents {
                       children: [
                         SizedBox(
                           width: width,
-                          child: Text(
-                            account.scoutInfo.negara == null
-                                ? 'DAERAH'
-                                : 'NEGARA',
+                          child: Text('NEGARA',
                             textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,
@@ -1068,7 +1064,7 @@ class ScoutifyComponents {
                         SizedBox(
                           width: width * 2.5,
                           child: Text(
-                            ': ${account.scoutInfo.negara ?? account.scoutInfo.daerah}',
+                            ': MALAYSIA',
                             textScaleFactor: 1.0,
                             maxLines: 1,
                             style: TextStyle(

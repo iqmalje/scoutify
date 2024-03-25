@@ -202,19 +202,24 @@ class _SignInPageState extends State<SignInPage> {
                                         Text('Please fill in all fields!')));
                             return;
                           }
-                          await AccountDAO().signIn(email.text, password.text);
+                          try {
+                            await AccountDAO()
+                                .signIn(email.text, password.text);
 
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) =>  TempPage()),
+                                (route) => false);
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())));
+                          }
                           // //replace
                           //                       Navigator.push(
                           //                         context,
                           //                         MaterialPageRoute(
                           //                             builder: (context) => const TempPage()),
                           //                       );
-
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => const TempPage()),
-                              (route) => false);
                         },
                         child: Ink(
                           width: MediaQuery.sizeOf(context).width * 0.8,
