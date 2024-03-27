@@ -213,23 +213,12 @@ class _ProfilePictureGuidelineState extends State<ProfilePictureGuideline> {
                       alignment: Alignment.center,
                       child: Image.asset('assets/images/example_card.png')),
                   const SizedBox(
-                    height: 20,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Click here to watch a tutorial video on\nuploading your profile picture.',
-                      textAlign: TextAlign.center,
-                      style: styleReturner(FontStyleText.url),
-                    ),
-                  ),
-                  const SizedBox(
                     height: 40,
                   ),
                   ScoutifyComponents().filledButton(
                     height: 50,
                     width: MediaQuery.sizeOf(context).width,
-                    text: 'UPLOAD PROFILE',
+                    text: 'Upload Profile',
                     onTap: () async {
                       setState(() {
                         _isUpdatingPicture =
@@ -276,16 +265,21 @@ class _ProfilePictureGuidelineState extends State<ProfilePictureGuideline> {
                         return;
                       }
 
-                      String newURL = await AccountDAO()
-                          .updateDigitalPicture(File(croppedFile.path));
+                      try {
+                        String newURL = await AccountDAO()
+                            .updateDigitalPicture(File(croppedFile.path));
 
-                      CurrentAccount.getInstance().imageURL = newURL;
+                        CurrentAccount.getInstance().imageURL = newURL;
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Error occured. Ensure you connected to a network and retry.')));
+                      }
 
                       setState(() {
                         _isUpdatingPicture =
                             false; // Set this to false after picture update completes
                       });
-                      // if successful, pop page
+                      // if successful or error, pop page
                       Navigator.of(context).pop();
                     },
                     style: const TextStyle(
@@ -310,9 +304,7 @@ class _ProfilePictureGuidelineState extends State<ProfilePictureGuideline> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  
                   CircularProgressIndicator(),
-                  
                 ],
               ), // Show progress indicator when updating picture
             ),

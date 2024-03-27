@@ -100,6 +100,7 @@ class _ManageAccountPageState extends State<ManageAccountPage> {
               children: [
                 Text(
                   text,
+                  textScaleFactor: 1,
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 14,

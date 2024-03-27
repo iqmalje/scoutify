@@ -22,6 +22,7 @@ class ScoutifyComponents {
           child: Center(
             child: Text(
               text,
+              textScaleFactor: 1,
               style: const TextStyle(
                   fontFamily: 'Poppins',
                   color: Colors.white,
@@ -55,6 +56,7 @@ class ScoutifyComponents {
           child: Center(
             child: Text(
               text,
+              textScaleFactor: 1,
               style: const TextStyle(
                   fontFamily: 'Poppins',
                   color: const Color(0xFF3B4367),
@@ -326,7 +328,6 @@ class ScoutifyComponents {
       String title, TextEditingController controller, BuildContext context,
       {Function()? onTap}) {
     return Container(
-      height: 50,
       decoration: ShapeDecoration(
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
@@ -353,7 +354,6 @@ class ScoutifyComponents {
                   fontSize: 14,
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w400,
-                  height: 0,
                 ),
                 maxLines: 1,
                 decoration: InputDecoration(
@@ -363,7 +363,6 @@ class ScoutifyComponents {
                       fontSize: 14,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w400,
-                      height: 0,
                     ),
                     border: InputBorder.none,
                     labelText: title),

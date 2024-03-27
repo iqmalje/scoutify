@@ -137,7 +137,7 @@ class _InboxMainPageState extends State<InboxMainPage> {
                                 // Replace with your image asset path
                               ),
                               const SizedBox(height: 5),
-                              const Text('Your inbox is empty'),
+                              const Text('Your inbox is empty', textAlign: TextAlign.center,),
                               const SizedBox(
                                 height: 50,
                               ),

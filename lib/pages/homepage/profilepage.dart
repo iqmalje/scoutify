@@ -213,6 +213,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 CurrentAccount.getInstance().isAdminToggled
                                     ? 'Admin View'
                                     : "Scout View",
+                                textScaleFactor: 1,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
@@ -234,6 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: [
                               const Text(
                                 'JOHOR SCOUT DIGITAL ID',
+                                textScaleFactor: 1,
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: 'Poppins',
@@ -462,7 +464,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         'Log Out',
                         onTap: () async {
                           await AccountDAO().signout();
-                          
+
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => const SignInPage()),

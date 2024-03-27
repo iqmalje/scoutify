@@ -160,8 +160,9 @@ class _ActivityPageState extends State<ActivityPage> {
                               child: CircularProgressIndicator());
                         }
                         activities = snapshot.data!;
-                        activities.sort((a,b)=> a.startdate.compareTo(b.startdate));
-                        
+                        activities
+                            .sort((a, b) => a.startdate.compareTo(b.startdate));
+
                         return Expanded(
                           // child: Column(
                           //   children: [
@@ -186,7 +187,9 @@ class _ActivityPageState extends State<ActivityPage> {
                                                 0.75),
                                     const SizedBox(height: 5),
                                     const Text(
-                                        'Seeking new adventures this month!'),
+                                      'Seeking new adventures this month!',
+                                      textAlign: TextAlign.center,
+                                    ),
                                     const SizedBox(height: 48),
                                   ],
                                 ),
@@ -274,7 +277,7 @@ class _ActivityPageState extends State<ActivityPage> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: item.imageurl != null
-                          ? NetworkImage(item.imageurl   ) 
+                          ? NetworkImage(item.imageurl)
                           : AssetImage("assets/images/Scoutify_Logo_NEW.png")
                               as ImageProvider<Object>,
                       fit: BoxFit.cover,

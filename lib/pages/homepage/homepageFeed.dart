@@ -148,10 +148,9 @@ Widget buildAPost(BuildContext context, Activity item) {
             children: <Widget>[
               //feed header
               Ink(
-                height: 50,
                 color: Colors.white,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 25.0),
+                  padding: const EdgeInsets.only(left: 25.0, top: 5, bottom: 5),
                   child: Row(children: <Widget>[
                     Image.asset(
                       'assets/images/pengakap.png',
