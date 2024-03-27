@@ -9,17 +9,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class AccountDAO {
   var supabase = Supabase.instance.client;
 
-  Future<Account> selectAccountFromIC(String ICno) async {
-    var data = await supabase
-        .from('accounts')
-        .select('ic_no, email, fullname, accountid, activated, phone_no')
-        .eq('ic_no', ICno);
-
-    print(ICno);
-
-    print(data);
-
-    data = data[0];
+  Future<Account> selectAccountFromIC(String ICno, String orderID) async {
+    var dataRAW = await supabase.functions
+        .invoke("activate-account", body: {'icNo': ICno, 'orderID': orderID});
+    // most fucked up line of code here
+    var data = dataRAW.data;
 
     // parse into acc
     Account account = Account();
@@ -29,6 +23,7 @@ class AccountDAO {
     account.fullname = data['fullname'];
     account.activated = data['activated'];
     account.phoneNo = data['phone_no'];
+    print(account.activated);
     if (account.activated) throw Exception('Account is already activated!');
     return account;
   }
@@ -182,7 +177,7 @@ class AccountDAO {
         .update({'image_url': profileurl}).eq('accountid', userid);
 
     print('UPDATED = ');
-    return profileurl+"?v=${DateTime.now().microsecondsSinceEpoch}";
+    return profileurl + "?v=${DateTime.now().microsecondsSinceEpoch}";
   }
 
   Future<void> updateDisplayName(String displayName) async {
@@ -199,6 +194,9 @@ class AccountDAO {
           .verifyOTP(email: email, token: OTP, type: OtpType.recovery);
 
       if (data.session != null) {
+        await supabase
+            .from("accounts")
+            .update({'activated': true}).eq('accountid', data.user?.id);
         return true;
       } else {
         return false;

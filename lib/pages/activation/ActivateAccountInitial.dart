@@ -17,7 +17,8 @@ class ActivateAccountInitial extends StatefulWidget {
 }
 
 class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
-  TextEditingController ic = TextEditingController();
+  TextEditingController ic = TextEditingController(),
+      orderid = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +38,7 @@ class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
 
                 //back button
                 CircleAvatar(
@@ -112,26 +113,48 @@ class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
                 const SizedBox(
                   height: 40,
                 ),
+                const Text(
+                  'Order ID.',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w700,
+                    height: 0,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ScoutifyComponents().buildTextBox(
+                    controller: orderid,
+                    formatters: [],
+                    hint: 'Order ID',
+                    readOnly: false,
+                    prefixIcon: const Icon(Icons.list_alt)),
+                const SizedBox(
+                  height: 40,
+                ),
                 ScoutifyComponents().outlinedButton(
                     height: 60,
                     width: MediaQuery.sizeOf(context).width,
                     text: 'CONFIRM',
                     onTap: () async {
-                      Account account =
-                          await AccountDAO().selectAccountFromIC(ic.text);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ActivateAccountForm(
-                                account: account,
-                              )));
                       // check db for existing IC
                       try {
-                        // } on PostgrestException catch (e) {
-                        //   ScaffoldMessenger.of(context).showSnackBar(
-                        //     SnackBar(
-                        //         content:
-                        //             Text("Please ensure your order is completed and enter the correct IC number. If issues persist, kindly reach out to our support team.")),
-                        //   );
-                        //   print("PostgrestException: ${e.message}");
+                        Account account = await AccountDAO()
+                            .selectAccountFromIC(ic.text, orderid.text);
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ActivateAccountForm(
+                                  account: account,
+                                )));
+                      } on PostgrestException catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text(
+                                  "Please ensure your order is completed and enter the correct IC number. If issues persist, kindly reach out to our support team.")),
+                        );
+                        print("PostgrestException: ${e.message}");
                       } on Exception catch (e) {
                         print(Supabase.instance.client.auth.currentUser?.role);
                         ScaffoldMessenger.of(context).showSnackBar(
