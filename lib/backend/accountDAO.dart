@@ -177,6 +177,8 @@ class AccountDAO {
         .update({'image_url': profileurl}).eq('accountid', userid);
 
     print('UPDATED = ');
+
+    await sendInboxIfUpdated();
     return profileurl + "?v=${DateTime.now().microsecondsSinceEpoch}";
   }
 
@@ -186,6 +188,10 @@ class AccountDAO {
     await supabase
         .from('scouts')
         .update({'card_name': displayName}).eq('accountid', userid);
+
+    // check update
+
+    await sendInboxIfUpdated();
   }
 
   Future<bool> verifyPasswordOTP(String email, String OTP) async {
@@ -269,5 +275,22 @@ class AccountDAO {
     // update current account
     CurrentAccount.getInstance().updateAccount(account);
     print('dah update');
+  }
+
+  Future<void> sendInboxIfUpdated() async {
+    CurrentAccount ca = CurrentAccount.getInstance();
+
+    if (ca.imageURL != null && ca.scoutInfo?.cardName != null) {
+      //send inbox
+      await supabase.from('inboxes').insert({
+        'title': 'Your Johor Scout Digital ID Profile is Complete',
+        'imageURL':
+            'https://zgzfjrhzwclqyxmbinpi.supabase.co/storage/v1/object/public/inbox/updated_scout/congrats.png',
+        'description':
+            'You\'ve done it! 🎉 Your Johor Scout Digital ID\'s Profile is now complete! Ready to share your pride as a Johor Scout with friends and loved ones? Go ahead, spread the word, and let everyone know you\'re part of the amazing Johor Scout family! 🌟',
+        'target_id': ca.accountid,
+        'type': 'announce'
+      });
+    }
   }
 }

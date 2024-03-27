@@ -153,6 +153,7 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                     String? displayName = await showDisplayNameDialog(context);
                     if (displayName == null || displayName.isEmpty) return;
                     await AccountDAO().updateDisplayName(displayName);
+                    
                     setState(() {
                       CurrentAccount.getInstance().scoutInfo!.cardName =
                           displayName;
