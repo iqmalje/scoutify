@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/pages/activation/setpasswordpage.dart';
@@ -178,7 +179,12 @@ class _ConfirmEmailActivationPageState
                                             const EdgeInsets.only(bottom: 10.0),
                                         child: TextField(
                                           controller: OTP[index],
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
                                           textAlign: TextAlign.center,
+                                          keyboardType: TextInputType.number,
                                           onChanged: (value) {
                                             if (value.length == 1) {
                                               node.nextFocus();
@@ -238,10 +244,10 @@ class _ConfirmEmailActivationPageState
                             GestureDetector(
                               onTap: () async {
                                 await AccountDAO().sendPasswordOTP(email);
-                
+
                                 //reset timer
                                 if (_timer!.isActive) _timer!.cancel();
-                
+
                                 _start = 330;
                                 _timer = Timer.periodic(
                                     const Duration(seconds: 1), (timer) {
@@ -280,7 +286,7 @@ class _ConfirmEmailActivationPageState
                           splashColor: const Color.fromARGB(255, 123, 90, 255),
                           onTap: () async {
                             String OTPcollected = "";
-                
+
                             for (var element in OTP) {
                               if (element.text.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -290,7 +296,7 @@ class _ConfirmEmailActivationPageState
                               }
                               OTPcollected += element.text;
                             }
-                
+
                             try {
                               await AccountDAO()
                                   .verifyPasswordOTP(email, OTPcollected);
@@ -300,7 +306,7 @@ class _ConfirmEmailActivationPageState
                             } catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(e.toString())));
-                
+
                               return;
                             }
                           },

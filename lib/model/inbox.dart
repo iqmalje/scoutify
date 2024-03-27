@@ -28,5 +28,9 @@ class Inbox {
     target_group = items['target_group'];
     target_id = items['target_id'];
     has_read = items['has_read'];
+
+    // now parse /n -> new line
+
+    description = description.replaceAll('/n', '\n\n');
   }
 }

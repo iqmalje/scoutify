@@ -54,14 +54,28 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                   //image avatar
                   Stack(
                     children: [
-                      CircleAvatar(
-                        radius: 90,
-                        backgroundColor: const Color(0xFF00579E),
-                        child: CircleAvatar(
-                          radius: 85,
-                          backgroundImage: NetworkImage("${account.imageURL}"),
-                        ),
-                      ),
+                      Builder(builder: (context) {
+                        if (account.imageURL != null) {
+                          return CircleAvatar(
+                            radius: 90,
+                            backgroundColor: const Color(0xFF00579E),
+                            child: CircleAvatar(
+                              radius: 85,
+                              backgroundImage:
+                                  NetworkImage("${account.imageURL}"),
+                            ),
+                          );
+                        } else {
+                          return const CircleAvatar(
+                            radius: 90,
+                            backgroundColor: Color(0xFF00579E),
+                            child: CircleAvatar(
+                                radius: 85,
+                                backgroundImage: AssetImage(
+                                    'assets/images/pengakap_logo_2.png')),
+                          );
+                        }
+                      }),
                       Positioned.fill(
                         child: Material(
                           color: Colors.transparent,

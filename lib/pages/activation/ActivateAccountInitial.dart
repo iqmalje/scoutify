@@ -38,7 +38,7 @@ class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 15),
-                
+
                 //back button
                 CircleAvatar(
                   radius: 25,
@@ -117,22 +117,23 @@ class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
                     width: MediaQuery.sizeOf(context).width,
                     text: 'CONFIRM',
                     onTap: () async {
+                      Account account =
+                          await AccountDAO().selectAccountFromIC(ic.text);
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ActivateAccountForm(
+                                account: account,
+                              )));
                       // check db for existing IC
                       try {
-                        Account account =
-                            await AccountDAO().selectAccountFromIC(ic.text);
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ActivateAccountForm(
-                                  account: account,
-                                )));
-                      } on PostgrestException catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content:
-                                  Text("Please ensure your order is completed and enter the correct IC number. If issues persist, kindly reach out to our support team.")),
-                        );
-                        print("PostgrestException: ${e.message}");
+                        // } on PostgrestException catch (e) {
+                        //   ScaffoldMessenger.of(context).showSnackBar(
+                        //     SnackBar(
+                        //         content:
+                        //             Text("Please ensure your order is completed and enter the correct IC number. If issues persist, kindly reach out to our support team.")),
+                        //   );
+                        //   print("PostgrestException: ${e.message}");
                       } on Exception catch (e) {
+                        print(Supabase.instance.client.auth.currentUser?.role);
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(e.toString())));
                         print(e.toString());
