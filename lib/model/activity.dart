@@ -43,5 +43,7 @@ class Activity {
       tempdate = startdate.add(Duration(days: i));
       dateInvolved.add(tempdate);
     }
+
+    description = description!.replaceAll("\\n", "\n");
   }
 }
