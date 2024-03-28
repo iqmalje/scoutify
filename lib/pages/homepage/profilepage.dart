@@ -7,6 +7,7 @@ import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/account/manageaccount.dart';
 import 'package:scoutify/pages/account/scoutid.dart';
 import 'package:scoutify/pages/forgotpassword/verifyOTP.dart';
+import 'package:scoutify/pages/misc/lostconnection.dart';
 import 'package:scoutify/pages/misc/officers.dart';
 import 'package:flutter/material.dart';
 import 'package:scoutify/pages/signin/signinpage.dart';
@@ -49,11 +50,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     mobilenumber.text = ca.phoneNo ??= 'No phone number yet!';
                   }
 
-                  if (ca.scoutInfo!.position.length > 40) {
-                    shorten = true;
-                  } else {
-                    shorten = false;
-                  }
+                  try {
+                    if (ca.scoutInfo!.position.length > 40) {
+                      shorten = true;
+                    } else {
+                      shorten = false;
+                    }
+                  } catch (e) {}
                   return Column(
                     children: [
                       const SizedBox(
@@ -249,11 +252,25 @@ class _ProfilePageState extends State<ProfilePage> {
                               Builder(builder: (context) {
                                 if (ca.accountid ==
                                     '2f8ac5d8-d306-4690-8bd0-c075806f4b3a') {
-                                  return ScoutifyComponents()
-                                      .buildSpecialCard(ca.getAccount());
+                                  try {
+                                    return ScoutifyComponents()
+                                        .buildSpecialCard(ca.getAccount());
+                                  } catch (e) {}
                                 }
-                                return ScoutifyComponents()
-                                    .buildCard(ca.getAccount());
+                                try {
+                                  return ScoutifyComponents()
+                                      .buildCard(ca.getAccount());
+                                } catch (e) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(top: 10.0),
+                                    child: Center(
+                                      child: LostConnection(onRefresh: () {
+                                        setState(() {});
+                                        ;
+                                      }),
+                                    ),
+                                  );
+                                }
                               }),
                             ],
                           );
@@ -463,8 +480,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         context,
                         'Log Out',
                         onTap: () async {
-                          await AccountDAO().signout();
-
+                          try {
+                            await AccountDAO().signout();
+                          } catch (e) {}
+                          
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => const SignInPage()),

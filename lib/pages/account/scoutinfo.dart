@@ -114,7 +114,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
                   height: 30,
                 ),
                 buildInputBox(
-                    'Identification ID',
+                    'ID / Passport No.',
                     TextEditingController(
                         text: CurrentAccount.getInstance().icNo),
                     false),
@@ -127,14 +127,14 @@ class _ScoutInfoState extends State<ScoutInfo> {
                   height: 15,
                 ),
                 buildInputBox(
-                    'Position',
+                    'Scout Rank',
                     TextEditingController(text: account.scoutInfo.position),
                     false),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
-                    'Scout ID',
+                    'Johor Scout ID',
                     TextEditingController(
                         text: account.scoutInfo.noAhli ??= 'None'),
                     false),
@@ -148,7 +148,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
                   height: 15,
                 ),
                 buildDropDown(
-                    'Gender', ['LELAKI', 'PEREMPUAN'], _genderController),
+                    'Sex', ['LELAKI', 'PEREMPUAN'], _genderController),
                 const SizedBox(
                   height: 15,
                 ),
@@ -170,19 +170,19 @@ class _ScoutInfoState extends State<ScoutInfo> {
                   height: 15,
                 ),
                 buildInputBox(
-                    'Team / Crew Number', _teamCrewNumberController, true,
+                    'Troop / Team Number', _teamCrewNumberController, true,
                     hintText: 'Eg: A, 01, KELANA A, TERBUKA'),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
-                    'School / Crew Code', _schoolCrewCodeController, true,
+                    'Troop / School Code', _schoolCrewCodeController, true,
                     hintText: 'Eg: JEA0001, KELANA A, TERBUKA'),
                 const SizedBox(
                   height: 15,
                 ),
                 buildInputBox(
-                    'School / Crew Name', _schoolCrewNameController, true,
+                    'Troop / School Name', _schoolCrewNameController, true,
                     hintText:
                         'Eg: SK, SJK (C), SMK, SMKA, SM, KELANA A, TERBUKA'),
                 const SizedBox(

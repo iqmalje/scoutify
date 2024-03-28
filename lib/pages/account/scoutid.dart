@@ -162,12 +162,12 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                   const SizedBox(
                     height: 15,
                   ),
-                  ScoutifyComponents().buildInputBox('Position',
+                  ScoutifyComponents().buildInputBox('Scout Rank',
                       TextEditingController(text: account.scoutInfo.position)),
                   const SizedBox(
                     height: 15,
                   ),
-                  ScoutifyComponents().buildInputBox('Scout ID',
+                  ScoutifyComponents().buildInputBox('Johor Scout ID',
                       TextEditingController(text: account.scoutInfo.noAhli)),
                   const SizedBox(
                     height: 15,

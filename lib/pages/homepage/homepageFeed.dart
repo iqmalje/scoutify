@@ -1,13 +1,16 @@
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
+import 'package:scoutify/controller/networkcontroller.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/feed/createFeedPage.dart';
 import 'package:scoutify/pages/feed/detailsProgram.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:scoutify/pages/misc/lostconnection.dart';
 
 class HomeFeed extends StatefulWidget {
   const HomeFeed({super.key});
@@ -18,7 +21,7 @@ class HomeFeed extends StatefulWidget {
 
 class _HomeFeedState extends State<HomeFeed> {
   List<Activity> feeds = [];
-
+  final NetworkController networkController = Get.put(NetworkController());
   @override
   Widget build(BuildContext context) {
     var _mediaQuery = MediaQuery.of(context);
@@ -80,6 +83,13 @@ class _HomeFeedState extends State<HomeFeed> {
                       child: FutureBuilder<List<Activity>>(
                           future: ActivityDAO().getFeed(),
                           builder: (context, snapshot) {
+
+                            if (!networkController.checkInternetConnectivity()) {
+                              return LostConnection(onRefresh: () {
+                                setState(() {});
+                              });
+                            }
+                              
                             if (!snapshot.hasData) {
                               return const Center(
                                 child: CircularProgressIndicator(),
@@ -111,7 +121,9 @@ Widget _appBar(context) {
       color: const Color(0xFF2E3B78),
       child: Padding(
         padding: EdgeInsets.only(bottom: 10, top: 10),
-        child: Image.asset('assets/images/Scoutify_LOGO_NEW.png',),
+        child: Image.asset(
+          'assets/images/Scoutify_LOGO_NEW.png',
+        ),
       ));
 }
 
@@ -195,7 +207,7 @@ Widget buildAPost(BuildContext context, Activity item) {
                     BoxConstraints(minWidth: MediaQuery.sizeOf(context).width),
                 child: Stack(children: <Widget>[
                   //event image
-                  Center(child: Image.network(item.imageurl  )),
+                  Center(child: Image.network(item.imageurl)),
 
                   //event type details
                   Positioned(

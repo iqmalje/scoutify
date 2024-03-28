@@ -2,6 +2,7 @@ import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/account.dart';
 import 'package:flutter/material.dart';
 import 'package:scoutify/model/currentaccount.dart';
+import 'package:scoutify/pages/account/deleteaccount.dart';
 import 'package:scoutify/pages/forgotpassword/verifyOTP.dart';
 
 class AccountInfoPage extends StatefulWidget {
@@ -184,7 +185,10 @@ class _AccountInfoPageState extends State<AccountInfoPage> {
             ScoutifyComponents().outlinedNormalButton(
               context,
               'Delete Account',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) =>  DeleteAccount()));
+              },
             )
           ],
         ),

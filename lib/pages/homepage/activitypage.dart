@@ -1,7 +1,9 @@
+import 'package:get/get.dart';
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/activityDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/components/components.dart';
+import 'package:scoutify/controller/networkcontroller.dart';
 import 'package:scoutify/model/activity.dart';
 import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/activity/createactivitypage.dart';
@@ -9,6 +11,7 @@ import 'package:scoutify/pages/activity/detailsactivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_month_picker/flutter_month_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:scoutify/pages/misc/lostconnection.dart';
 
 class ActivityPage extends StatefulWidget {
   const ActivityPage({super.key});
@@ -18,6 +21,7 @@ class ActivityPage extends StatefulWidget {
 }
 
 class _ActivityPageState extends State<ActivityPage> {
+  final NetworkController networkController = Get.put(NetworkController());
   DateTime selectedDate = DateTime.now();
   List<Activity> activities = [];
 
@@ -155,14 +159,6 @@ class _ActivityPageState extends State<ActivityPage> {
                           : ActivityDAO().getAttendedActivities(
                               '$selectedYear-${selectedMonth.toString().padLeft(2, '0')}-%'),
                       builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-                        activities = snapshot.data!;
-                        activities
-                            .sort((a, b) => a.startdate.compareTo(b.startdate));
-
                         return Expanded(
                           // child: Column(
                           //   children: [
@@ -174,6 +170,20 @@ class _ActivityPageState extends State<ActivityPage> {
                           //   ],
                           // ),
                           child: Builder(builder: (context) {
+                            if (!networkController
+                                .checkInternetConnectivity()) {
+                              return LostConnection(onRefresh: () {
+                                setState(() {});
+                              });
+                            }
+                            if (!snapshot.hasData) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                            activities = snapshot.data!;
+                            activities.sort(
+                                (a, b) => a.startdate.compareTo(b.startdate));
+
                             if (activities.isEmpty) {
                               return Center(
                                 child: Column(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:scoutify/backend/inboxDAO.dart';
 import 'package:scoutify/components/components.dart';
+import 'package:scoutify/controller/networkcontroller.dart';
 import 'package:scoutify/pages/inbox/inboxdetail.dart';
+import 'package:scoutify/pages/misc/lostconnection.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../model/inbox.dart';
@@ -14,6 +17,7 @@ class InboxMainPage extends StatefulWidget {
 }
 
 class _InboxMainPageState extends State<InboxMainPage> {
+  final NetworkController networkController = Get.put(NetworkController());
   List<Inbox> dummyInboxes = [
     Inbox(
       id: '1',
@@ -59,6 +63,13 @@ class _InboxMainPageState extends State<InboxMainPage> {
           stream: _stream,
           builder: (context, snapshot) {
             // this one is not finished yet so we close it for a moment
+            if (!networkController.checkInternetConnectivity()) {
+              return Center(
+                child: LostConnection(onRefresh: () {
+                  setState(() {});
+                }),
+              );
+            }
 
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
@@ -137,7 +148,10 @@ class _InboxMainPageState extends State<InboxMainPage> {
                                 // Replace with your image asset path
                               ),
                               const SizedBox(height: 5),
-                              const Text('Your inbox is empty', textAlign: TextAlign.center,),
+                              const Text(
+                                'Your inbox is empty',
+                                textAlign: TextAlign.center,
+                              ),
                               const SizedBox(
                                 height: 50,
                               ),

@@ -2,6 +2,7 @@
 
 import 'package:flutter/services.dart';
 import 'package:scoutify/backend/accountDAO.dart';
+import 'package:scoutify/dependency_injection.dart';
 import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/homepage/temppage.dart';
 import 'package:scoutify/pages/misc/noconnection.dart';
@@ -11,16 +12,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:get/get.dart';
 
 bool isSignedIn = false;
 bool needUpdate = false;
 int version = 1;
 bool hasConnection = false;
-void main() async {
-  hasConnection = await InternetConnectionCheckerPlus().hasConnection;
-  debugPrint('Connection result : $hasConnection');
 
+Future<void> main() async {
   try {
     await dotenv.load(fileName: '2.env');
     await Supabase.initialize(
@@ -63,6 +62,7 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
   runApp(const MyApp());
+  DependencyInjection.init();
 }
 
 //we are in sprint-1
@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
         title: 'Scoutify App',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -81,9 +81,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/signin': (context) => const SignInPage(),
         },
-        home: !hasConnection
-            ? const NoConnection()
-            : needUpdate
+        home: needUpdate
                 ? const UpdateVersion()
                 : isSignedIn
                     ? const TempPage()
