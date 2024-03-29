@@ -52,7 +52,8 @@ class _DetailsActivityState extends State<DetailsActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ScoutifyComponents().appBarWithBackButton('Details Activity', context),
+      appBar: ScoutifyComponents()
+          .appBarWithBackButton('Details Activity', context),
       body: SingleChildScrollView(
         child: SizedBox(
           width: MediaQuery.sizeOf(context).width,
@@ -60,9 +61,14 @@ class _DetailsActivityState extends State<DetailsActivity> {
             children: [
               Stack(
                 children: [
-                  Image.network(
-                    activity.imageurl ,
-                    width: MediaQuery.sizeOf(context).width,
+                  Container(
+                    height: MediaQuery.sizeOf(context).width * 2 / 3,
+                    child: Center(
+                      child: Image.network(
+                        activity.imageurl,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
                   Align(
                     alignment: Alignment.topRight,
@@ -87,8 +93,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
                               Text(
                                 activity.category,
                                 style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: 12, fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
                                 width: 5,
@@ -202,8 +207,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
                             width: 10,
                           ),
                           Text(
-                            dateFormatter(
-                                activity.startdate, activity.enddate),
+                            dateFormatter(activity.startdate, activity.enddate),
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 12,
@@ -300,7 +304,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
                               ],
                             );
                           });
-    
+
                       if (isDelete != null && isDelete) {
                         await ActivityDAO().deleteActivity(activity);
                         Navigator.of(context).pop();
@@ -352,7 +356,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
         future: ActivityDAO().getAttendance(activityid),
         builder: (context, snapshot) {
           if (!CurrentAccount.getInstance().isAdminToggled) return Container();
-          
+
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),

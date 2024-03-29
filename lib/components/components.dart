@@ -782,8 +782,8 @@ class ScoutifyComponents {
   }
 
   Widget buildSpecialCard(Account account) {
-    double size = 20;
-    double width = 80;
+    double size = 27;
+    double width = 100;
     return Stack(
       children: [
         Container(
@@ -864,7 +864,7 @@ class ScoutifyComponents {
                 decoration: const ShapeDecoration(
                   color: Colors.white,
                   shape: OvalBorder(
-                    side: BorderSide(width: 4, color: Color(0xFF00579E)),
+                    side: BorderSide(width: 5, color: Color(0xFFF7CF42)),
                   ),
                 ),
                 child: CircleAvatar(
@@ -955,7 +955,7 @@ class ScoutifyComponents {
                           ),
                         ),
                         SizedBox(
-                          width: width * 2.5,
+                          width: width * 2.1,
                           child: Text(
                             ': ${account.scoutInfo.noAhli}',
                             maxLines: 1,
@@ -976,9 +976,7 @@ class ScoutifyComponents {
                         SizedBox(
                           width: width,
                           child: Text(
-                            account.scoutInfo.noTauliah != null
-                                ? 'NO TAULIAH'
-                                : 'MANIKAYU',
+                            'MANIKAYU',
                             textScaleFactor: 1.0,
                             maxLines: 1,
                             style: TextStyle(
@@ -991,9 +989,9 @@ class ScoutifyComponents {
                           ),
                         ),
                         SizedBox(
-                          width: width * 2.5,
+                          width: width * 2.1,
                           child: Text(
-                            ': ${account.scoutInfo.noTauliah ?? account.scoutInfo.manikayu}',
+                            ': ${account.scoutInfo.manikayu}',
                             maxLines: 1,
                             textScaleFactor: 1.0,
                             style: TextStyle(
@@ -1007,45 +1005,45 @@ class ScoutifyComponents {
                         )
                       ],
                     ),
-                    Builder(builder: (context) {
-                      if (account.scoutInfo.unit != null) {
-                        return Row(
-                          children: [
-                            SizedBox(
-                              width: width,
-                              child: Text(
-                                'UNIT',
-                                textScaleFactor: 1.0,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: size,
-                                  fontFamily: 'Hafontia',
-                                  fontWeight: FontWeight.w500,
-                                  height: 0,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: width * 2.5,
-                              child: Text(
-                                ': ${account.scoutInfo.unit}',
-                                textScaleFactor: 1.0,
-                                maxLines: 1,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: size,
-                                  fontFamily: 'Hafontia',
-                                  fontWeight: FontWeight.w500,
-                                  height: 0,
-                                ),
-                              ),
-                            )
-                          ],
-                        );
-                      } else {
-                        return Container();
-                      }
-                    }),
+                    // Builder(builder: (context) {
+                    //   if (account.scoutInfo.unit != null) {
+                    //     return Row(
+                    //       children: [
+                    //         SizedBox(
+                    //           width: width,
+                    //           child: Text(
+                    //             'UNIT',
+                    //             textScaleFactor: 1.0,
+                    //             style: TextStyle(
+                    //               color: Colors.white,
+                    //               fontSize: size,
+                    //               fontFamily: 'Hafontia',
+                    //               fontWeight: FontWeight.w500,
+                    //               height: 0,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         SizedBox(
+                    //           width: width * 2.1,
+                    //           child: Text(
+                    //             ': ${account.scoutInfo.unit}',
+                    //             textScaleFactor: 1.0,
+                    //             maxLines: 1,
+                    //             style: TextStyle(
+                    //               color: Colors.white,
+                    //               fontSize: size,
+                    //               fontFamily: 'Hafontia',
+                    //               fontWeight: FontWeight.w500,
+                    //               height: 0,
+                    //             ),
+                    //           ),
+                    //         )
+                    //       ],
+                    //     );
+                    //   } else {
+                    //     return Container();
+                    //   }
+                    // }), unit ni takyah
                     Row(
                       children: [
                         SizedBox(
@@ -1062,7 +1060,7 @@ class ScoutifyComponents {
                           ),
                         ),
                         SizedBox(
-                          width: width * 2.5,
+                          width: width * 2.1,
                           child: Text(
                             ': MALAYSIA',
                             textScaleFactor: 1.0,

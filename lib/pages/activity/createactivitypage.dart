@@ -69,10 +69,22 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                   });
                 }, child: Builder(builder: (context) {
                   if (imagePicked == null) {
-                    return Center(child: Image.network(activity!.imageurl));
+                    return Container(
+                        height: MediaQuery.sizeOf(context).width * 2 / 3,
+                        child: Center(
+                            child: Image.network(
+                          activity!.imageurl,
+                          fit: BoxFit.contain,
+                        )));
                   } else {
-                    return Center(
-                      child: Image.file(File(imagePicked!.path)),
+                    return Container(
+                      height: MediaQuery.sizeOf(context).width * 2 / 3,
+                      child: Center(
+                        child: Image.file(
+                          File(imagePicked!.path),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
                     );
                   }
                 }));
@@ -114,9 +126,12 @@ class _CreateActivityPage extends State<CreateActivityPage> {
                         );
                       } else {
                         return Container(
-                            //height:    200,
+                            height: MediaQuery.sizeOf(context).width * 2 / 3,
                             //uncomment this to create a const height
-                            child: Image.file(File(imagePicked!.path)));
+                            child: Image.file(
+                              File(imagePicked!.path),
+                              fit: BoxFit.contain,
+                            ));
                       }
                     }),
                   ),

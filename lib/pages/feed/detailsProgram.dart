@@ -50,10 +50,11 @@ class _DetailsprogramState extends State<Detailsprogram> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ScoutifyComponents().appBarWithBackButton('Details Activity', context),
+      appBar: ScoutifyComponents()
+          .appBarWithBackButton('Details Activity', context),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -62,7 +63,7 @@ class _DetailsprogramState extends State<Detailsprogram> {
                 height: 50,
                 color: Colors.white,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 25.0),
+                  padding: const EdgeInsets.only(left: 40.0),
                   child: Row(children: <Widget>[
                     Image.asset(
                       'assets/images/pengakap.png',
@@ -98,18 +99,25 @@ class _DetailsprogramState extends State<Detailsprogram> {
                   ]),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 4),
               Container(
                 color: Colors.transparent,
                 child: Stack(children: <Widget>[
                   //event image
-                  Center(child: Image.network(activity.imageurl )),
-    
+                  Container(
+                      height:
+                          MediaQuery.sizeOf(context).width * 2 / 3, //2:3 aspect
+                      child: Center(
+                          child: Image.network(
+                        activity.imageurl,
+                        fit: BoxFit.contain,
+                      ))),
+
                   //event type details
                   Positioned(
                     top: 8,
                     right: 9,
-    
+
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
                       radius: 15,
@@ -130,7 +138,7 @@ class _DetailsprogramState extends State<Detailsprogram> {
                     //   ),
                     //   child: Row(children: <Widget>[
                     //     const SizedBox(width: 7),
-    
+
                     //     //event type: colored-circle label
                     //     Container(
                     //       width: 10,
@@ -141,7 +149,7 @@ class _DetailsprogramState extends State<Detailsprogram> {
                     //       ),
                     //     ),
                     //     const SizedBox(width: 7),
-    
+
                     //     //event type: name
                     //     Text(
                     //       activity.category,
@@ -157,286 +165,293 @@ class _DetailsprogramState extends State<Detailsprogram> {
                   ),
                 ]),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 15, bottom: 15),
-                width: MediaQuery.sizeOf(context).width,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFFFAFAFA),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 2,
-                      offset: Offset(0, 2),
-                      spreadRadius: 0,
-                    )
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 25),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        activity.name,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                          height: 0,
-                        ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 15, bottom: 15),
+                      width: MediaQuery.sizeOf(context).width,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFFAFAFA),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        shadows: const [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 2,
+                            offset: Offset(0, 2),
+                            spreadRadius: 0,
+                          )
+                        ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          const Icon(Icons.location_on),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Flexible(
-                            child: Text(
-                              activity.location,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15.0, vertical: 25),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              activity.name,
                               style: const TextStyle(
                                 color: Colors.black,
-                                fontSize: 12,
+                                fontSize: 16,
                                 fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w500,
                                 height: 0,
                               ),
                             ),
-                          )
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              children: [
+                                const Icon(Icons.location_on),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    activity.location,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w400,
+                                      height: 0,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const Icon(Icons.calendar_month),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  //'30 Oct - 2 Nov 2023',
+                                  // if same day, just display a single date, how?
+
+                                  // '${activity.startdate.day} ${monthAbbreviations[activity.startdate.month - 1]} - ${activity.enddate.day} ${monthAbbreviations[activity.enddate.month - 1]} ${activity.enddate.year}',
+                                  dateFormatter(
+                                      activity.startdate, activity.enddate),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
+                                  ),
+                                )
+                              ],
+                            ),
+                            // Row(
+                            //   children: [
+                            //     const Icon(Icons.paid_rounded),
+                            //     const SizedBox(
+                            //       width: 10,
+                            //     ),
+                            //     Text(
+                            //       activity.fee == null
+                            //           ? 'Free'
+                            //           : activity.fee! != 0
+                            //               ? 'RM ${(activity.fee!).toStringAsFixed(2)}'
+                            //               : 'Free',
+                            //       style: const TextStyle(
+                            //         color: Colors.black,
+                            //         fontSize: 12,
+                            //         fontFamily: 'Poppins',
+                            //         fontWeight: FontWeight.w400,
+                            //         height: 0,
+                            //       ),
+                            //     )
+                            //   ],
+                            // ),
+                            // Row(
+                            //   children: [
+                            //     const Icon(Icons.calendar_today_rounded),
+                            //     const SizedBox(
+                            //       width: 10,
+                            //     ),
+                            //     Builder(builder: (context) {
+                            //       if (activity.registrationenddate == null) {
+                            //         return const Text(
+                            //           'Open',
+                            //           style: TextStyle(
+                            //             color: Colors.black,
+                            //             fontSize: 12,
+                            //             fontFamily: 'Poppins',
+                            //             fontWeight: FontWeight.w400,
+                            //             height: 0,
+                            //           ),
+                            //         );
+                            //       } else if (DateTime.now()
+                            //               .millisecondsSinceEpoch >
+                            //           activity.registrationenddate!
+                            //               .millisecondsSinceEpoch) {
+                            //         return const Text(
+                            //           'Closed',
+                            //           style: TextStyle(
+                            //             color: Colors.black,
+                            //             fontSize: 12,
+                            //             fontFamily: 'Poppins',
+                            //             fontWeight: FontWeight.w400,
+                            //             height: 0,
+                            //           ),
+                            //         );
+                            //       } else {
+                            //         return Text(
+                            //           'Open until ${activity.registrationenddate!.day} ${monthName[activity.registrationenddate!.month - 1]} ${activity.registrationenddate!.year}',
+                            //           style: const TextStyle(
+                            //             color: Colors.black,
+                            //             fontSize: 12,
+                            //             fontFamily: 'Poppins',
+                            //             fontWeight: FontWeight.w400,
+                            //             height: 0,
+                            //           ),
+                            //         );
+                            //       }
+                            //     })
+                            //   ],
+                            // )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 50),
+                      width: MediaQuery.sizeOf(context).width,
+                      padding: const EdgeInsets.all(10),
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFFAFAFA),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        shadows: const [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 2,
+                            offset: Offset(0, 2),
+                            spreadRadius: 0,
+                          ),
                         ],
                       ),
-                      Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(Icons.calendar_month),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            //'30 Oct - 2 Nov 2023',
-                            // if same day, just display a single date, how?
-    
-                            // '${activity.startdate.day} ${monthAbbreviations[activity.startdate.month - 1]} - ${activity.enddate.day} ${monthAbbreviations[activity.enddate.month - 1]} ${activity.enddate.year}',
-                            dateFormatter(
-                                activity.startdate, activity.enddate),
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w400,
-                              height: 0,
+                          Text.rich(
+                            TextSpan(
+                              text: activity.description ??
+                                  'No description available.',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 11,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                          )
+                          ),
                         ],
                       ),
-                      // Row(
-                      //   children: [
-                      //     const Icon(Icons.paid_rounded),
-                      //     const SizedBox(
-                      //       width: 10,
-                      //     ),
-                      //     Text(
-                      //       activity.fee == null
-                      //           ? 'Free'
-                      //           : activity.fee! != 0
-                      //               ? 'RM ${(activity.fee!).toStringAsFixed(2)}'
-                      //               : 'Free',
-                      //       style: const TextStyle(
-                      //         color: Colors.black,
-                      //         fontSize: 12,
-                      //         fontFamily: 'Poppins',
-                      //         fontWeight: FontWeight.w400,
-                      //         height: 0,
-                      //       ),
-                      //     )
-                      //   ],
-                      // ),
-                      // Row(
-                      //   children: [
-                      //     const Icon(Icons.calendar_today_rounded),
-                      //     const SizedBox(
-                      //       width: 10,
-                      //     ),
-                      //     Builder(builder: (context) {
-                      //       if (activity.registrationenddate == null) {
-                      //         return const Text(
-                      //           'Open',
-                      //           style: TextStyle(
-                      //             color: Colors.black,
-                      //             fontSize: 12,
-                      //             fontFamily: 'Poppins',
-                      //             fontWeight: FontWeight.w400,
-                      //             height: 0,
-                      //           ),
-                      //         );
-                      //       } else if (DateTime.now()
-                      //               .millisecondsSinceEpoch >
-                      //           activity.registrationenddate!
-                      //               .millisecondsSinceEpoch) {
-                      //         return const Text(
-                      //           'Closed',
-                      //           style: TextStyle(
-                      //             color: Colors.black,
-                      //             fontSize: 12,
-                      //             fontFamily: 'Poppins',
-                      //             fontWeight: FontWeight.w400,
-                      //             height: 0,
-                      //           ),
-                      //         );
-                      //       } else {
-                      //         return Text(
-                      //           'Open until ${activity.registrationenddate!.day} ${monthName[activity.registrationenddate!.month - 1]} ${activity.registrationenddate!.year}',
-                      //           style: const TextStyle(
-                      //             color: Colors.black,
-                      //             fontSize: 12,
-                      //             fontFamily: 'Poppins',
-                      //             fontWeight: FontWeight.w400,
-                      //             height: 0,
-                      //           ),
-                      //         );
-                      //       }
-                      //     })
-                      //   ],
-                      // )
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                margin: const EdgeInsets.only(bottom: 50),
-                width: MediaQuery.sizeOf(context).width,
-                padding: const EdgeInsets.all(10),
-                decoration: ShapeDecoration(
-                  color: const Color(0xFFFAFAFA),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  shadows: const [
-                    BoxShadow(
-                      color: Color(0x3F000000),
-                      blurRadius: 2,
-                      offset: Offset(0, 2),
-                      spreadRadius: 0,
                     ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                        text: activity.description ??
-                            'No description available.',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 11,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Builder(builder: (context) {
-                if (CurrentAccount.getInstance().isAdminToggled) {
-                  return Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 30.0),
-                          child: Material(
-                            child: InkWell(
-                              onTap: () async {
-                                await updateActivity();
-                              },
-                              child: Ink(
-                                height: 40,
-                                decoration: ShapeDecoration(
-                                  // ignore: prefer_const_constructors
-                                  color: Color(0xFF2E3B78),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(5)),
-                                ),
-                                child: const Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Update Activity',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                        height: 0,
+                    Builder(builder: (context) {
+                      if (CurrentAccount.getInstance().isAdminToggled) {
+                        return Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 30.0),
+                                child: Material(
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await updateActivity();
+                                    },
+                                    child: Ink(
+                                      height: 40,
+                                      decoration: ShapeDecoration(
+                                        // ignore: prefer_const_constructors
+                                        color: Color(0xFF2E3B78),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
                                       ),
-                                    )
-                                  ],
+                                      child: const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Update Activity',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w600,
+                                              height: 0,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 30.0),
-                          child: Material(
-                            child: InkWell(
-                              onTap: () async {
-                                await deleteActivity();
-                              },
-                              child: Ink(
-                                height: 40,
-                                decoration: ShapeDecoration(
-                                  // ignore: prefer_const_constructors
-                                  color: Color.fromARGB(255, 201, 54, 54),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(5)),
-                                ),
-                                child: const Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'Delete Activity',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w600,
-                                        height: 0,
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 30.0),
+                                child: Material(
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await deleteActivity();
+                                    },
+                                    child: Ink(
+                                      height: 40,
+                                      decoration: ShapeDecoration(
+                                        // ignore: prefer_const_constructors
+                                        color: Color.fromARGB(255, 201, 54, 54),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
                                       ),
-                                    )
-                                  ],
+                                      child: const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Delete Activity',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w600,
+                                              height: 0,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  );
-                } else {
-                  return Container();
-                }
-              })
+                            )
+                          ],
+                        );
+                      } else {
+                        return Container();
+                      }
+                    })
+                  ],
+                ),
+              ),
             ],
           ),
         ),

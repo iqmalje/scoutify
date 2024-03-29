@@ -531,9 +531,21 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
                   ]),
             );
           } else if (imagePicked == null && isEditMode) {
-            return Center(child: Image.network(activity!.imageurl));
+            return Container(
+                height: MediaQuery.sizeOf(context).width * 2 / 3,
+                child: Center(
+                    child: Image.network(
+                  activity!.imageurl,
+                  fit: BoxFit.contain,
+                )));
           } else {
-            return Center(child: Image.file(File(imagePicked!.path)));
+            return Container(
+                height: MediaQuery.sizeOf(context).width * 2 / 3,
+                child: Center(
+                    child: Image.file(
+                  File(imagePicked!.path),
+                  fit: BoxFit.contain,
+                )));
           }
         }),
       ),

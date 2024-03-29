@@ -159,7 +159,6 @@ class _ActivityPageState extends State<ActivityPage> {
                           : ActivityDAO().getAttendedActivities(
                               '$selectedYear-${selectedMonth.toString().padLeft(2, '0')}-%'),
                       builder: (context, snapshot) {
-                        
                         if (!networkController.checkInternetConnectivity()) {
                           return Expanded(
                             child: LostConnection(onRefresh: () {
@@ -170,13 +169,25 @@ class _ActivityPageState extends State<ActivityPage> {
 
                         if (!snapshot.hasData) {
                           return const Expanded(
-                            child:  Center(
-                                child: CircularProgressIndicator()),
+                            child: Center(child: CircularProgressIndicator()),
                           );
                         }
                         activities = snapshot.data!;
-                        activities
-                            .sort((a, b) => a.startdate.compareTo(b.startdate));
+
+                        activities.sort((a, b) {
+                          final now = DateTime.now();
+                          final diffA = (a.startdate.difference(now)).abs();
+                          final diffB = (b.startdate.difference(now)).abs();
+
+                          if (diffA.compareTo(diffB) == 0) {
+                            // If both are the same distance from now, prioritize the next one
+                            return a.startdate.compareTo(b.startdate);
+                          } else {
+                            // Otherwise, sort based on the closest to now
+                            return diffA.compareTo(diffB);
+                          }
+                        });
+
                         return Expanded(
                           // child: Column(
                           //   children: [
