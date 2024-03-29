@@ -2,6 +2,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:scoutify/backend/accountDAO.dart';
+import 'package:scoutify/model/currentaccount.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class NetworkController extends GetxController {
   final InternetConnectionCheckerPlus _connection =
@@ -14,7 +17,7 @@ class NetworkController extends GetxController {
     _connection.onStatusChange.listen(_updateConnectionStatus);
   }
 
-  void _updateConnectionStatus(InternetConnectionStatus status) {
+  Future<void> _updateConnectionStatus(InternetConnectionStatus status) async {
     if (status == InternetConnectionStatus.disconnected) {
       hasConnection = false;
       Get.rawSnackbar(
@@ -32,9 +35,17 @@ class NetworkController extends GetxController {
           snackStyle: SnackStyle.GROUNDED);
       debugPrint("No Connection");
     } else {
+      if (Supabase.instance.client.auth.currentUser != null &&
+          CurrentAccount.getInstance().scoutInfo == null) {
+        try {
+          await AccountDAO().setInstanceAccount();
+        } catch (e) {}
+      }
       hasConnection = true;
       if (Get.isSnackbarOpen) {
-        Get.closeCurrentSnackbar();
+        try {
+          Get.closeCurrentSnackbar();
+        } catch (e) {}
       }
     }
   }

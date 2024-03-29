@@ -86,6 +86,7 @@ class ScoutifyComponents {
           child: Center(
             child: Text(
               text,
+              textScaleFactor: 1,
               style: const TextStyle(
                   fontFamily: 'Poppins',
                   color: Colors.white,

@@ -66,9 +66,9 @@ class _ScoutInfoState extends State<ScoutInfo> {
     _teamCrewNumberController =
         TextEditingController(text: account.scoutInfo.crewNo ?? '');
     _schoolCrewCodeController =
-        TextEditingController(text: account.scoutInfo.schoolName ?? '');
-    _schoolCrewNameController =
         TextEditingController(text: account.scoutInfo.schoolCode ?? '');
+    _schoolCrewNameController =
+        TextEditingController(text: account.scoutInfo.schoolName ?? '');
     _credentialNumberController =
         TextEditingController(text: account.scoutInfo.noTauliah ?? '');
     _fullnameController = TextEditingController(text: account.fullname);
@@ -398,14 +398,14 @@ class _ScoutInfoState extends State<ScoutInfo> {
                     value: null,
                     child: Text('SELECT',
                         style: TextStyle(
-                            fontWeight: FontWeight.normal, fontSize: 15)),
+                            fontWeight: FontWeight.normal, fontSize: 15, fontFamily: "Poppins")),
                   ),
                   ...options.map((String? value) {
                     return DropdownMenuItem<String?>(
                       value: value,
                       child: Text(value ?? '',
                           style: TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 15)),
+                              fontWeight: FontWeight.normal, fontSize: 15, fontFamily: "Poppins")),
                     );
                   }),
                 ],
