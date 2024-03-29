@@ -203,8 +203,7 @@ class _ScoutInfoState extends State<ScoutInfo> {
                     "SEGAMAT",
                     'TANGKAK'
                   ],
-                  TextEditingController(
-                      text: account.scoutInfo.daerah ??= 'None'),
+                  _districtController,
                 ),
                 const SizedBox(
                   height: 15,
