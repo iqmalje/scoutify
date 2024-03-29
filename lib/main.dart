@@ -51,6 +51,7 @@ Future<void> main() async {
         //set admin to false
         CurrentAccount.getInstance().isAdminToggled = false;
         debugPrint('since logged out, admin toggled to false');
+        
       }
     });
   } catch (e) {

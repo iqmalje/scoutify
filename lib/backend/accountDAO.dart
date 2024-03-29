@@ -293,4 +293,12 @@ class AccountDAO {
       });
     }
   }
+
+  Future<void> deleteAcc() async {
+    await supabase.functions.invoke('delete-account',
+        body: {'accountID': CurrentAccount.getInstance().accountid});
+
+    await supabase.auth.signOut();
+    
+  }
 }

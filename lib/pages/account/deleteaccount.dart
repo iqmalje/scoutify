@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/pages/account/scoutid.dart';
+import 'package:scoutify/pages/signin/signinpage.dart';
 
 class DeleteAccount extends StatefulWidget {
   const DeleteAccount({super.key});
@@ -124,13 +126,16 @@ class _DeleteAccountState extends State<DeleteAccount> {
                               return AlertDialog(
                                 title: Text("Information"),
                                 content: Text(
-                                    "Scout members are required to contact the administrator via email or phone to obtain the approval code for deleting their account.", style: TextStyle(fontFamily: "Poppins")),
+                                    "Scout members are required to contact the administrator via email or phone to obtain the approval code for deleting their account.",
+                                    style: TextStyle(fontFamily: "Poppins")),
                                 actions: <Widget>[
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text("Close", style: TextStyle(fontFamily: "Poppins")),
+                                    child: Text("Close",
+                                        style:
+                                            TextStyle(fontFamily: "Poppins")),
                                   ),
                                 ],
                               );
@@ -154,7 +159,10 @@ class _DeleteAccountState extends State<DeleteAccount> {
                 ScoutifyComponents().outlinedNormalButton(
                   context,
                   'Delete Account',
-                  onTap: () {},
+                  onTap: () async {
+                    await AccountDAO().deleteAcc();
+                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const SignInPage()), (route) => false)
+                  },
                 )
               ],
             ),
