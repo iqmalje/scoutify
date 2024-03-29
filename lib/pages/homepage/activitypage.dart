@@ -159,6 +159,24 @@ class _ActivityPageState extends State<ActivityPage> {
                           : ActivityDAO().getAttendedActivities(
                               '$selectedYear-${selectedMonth.toString().padLeft(2, '0')}-%'),
                       builder: (context, snapshot) {
+                        
+                        if (!networkController.checkInternetConnectivity()) {
+                          return Expanded(
+                            child: LostConnection(onRefresh: () {
+                              setState(() {});
+                            }),
+                          );
+                        }
+
+                        if (!snapshot.hasData) {
+                          return const Expanded(
+                            child:  Center(
+                                child: CircularProgressIndicator()),
+                          );
+                        }
+                        activities = snapshot.data!;
+                        activities
+                            .sort((a, b) => a.startdate.compareTo(b.startdate));
                         return Expanded(
                           // child: Column(
                           //   children: [
@@ -170,20 +188,6 @@ class _ActivityPageState extends State<ActivityPage> {
                           //   ],
                           // ),
                           child: Builder(builder: (context) {
-                            if (!networkController
-                                .checkInternetConnectivity()) {
-                              return LostConnection(onRefresh: () {
-                                setState(() {});
-                              });
-                            }
-                            if (!snapshot.hasData) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
-                            activities = snapshot.data!;
-                            activities.sort(
-                                (a, b) => a.startdate.compareTo(b.startdate));
-
                             if (activities.isEmpty) {
                               return Center(
                                 child: Column(

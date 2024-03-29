@@ -44,6 +44,6 @@ class Activity {
       dateInvolved.add(tempdate);
     }
 
-    description = description!.replaceAll("\\n", "\n");
+    if (description != null) description = description!.replaceAll("\\n", "\n");
   }
 }
