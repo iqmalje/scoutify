@@ -1,24 +1,27 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/model/currentaccount.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class NetworkController extends GetxController {
-  final InternetConnectionCheckerPlus _connection =
-      InternetConnectionCheckerPlus();
+  
   bool hasConnection = true;
 
-  @override
+  final Connectivity _connectivity = Connectivity();
+
+  @override 
   void onInit() {
     super.onInit();
-    _connection.onStatusChange.listen(_updateConnectionStatus);
+    _connectivity.checkConnectivity().then((result) {
+      _updateConnectionStatus(result);
+    });
+    _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
 
-  Future<void> _updateConnectionStatus(InternetConnectionStatus status) async {
-    if (status == InternetConnectionStatus.disconnected) {
+  void _updateConnectionStatus(ConnectivityResult connectivityResult) async {
+    if (connectivityResult == ConnectivityResult.none) {
       hasConnection = false;
       Get.rawSnackbar(
           messageText: const Text('Please connect to the Internet',
@@ -43,9 +46,7 @@ class NetworkController extends GetxController {
       }
       hasConnection = true;
       if (Get.isSnackbarOpen) {
-        try {
-          Get.closeCurrentSnackbar();
-        } catch (e) {}
+        Get.closeCurrentSnackbar();
       }
     }
   }

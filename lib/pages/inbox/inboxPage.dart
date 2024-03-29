@@ -51,12 +51,13 @@ class _InboxMainPageState extends State<InboxMainPage> {
       target_id: "",
     ),
   ];
-  final _stream =
-      Supabase.instance.client.from('inboxes').stream(primaryKey: ['id']);
 
   List<Inbox> inboxes = [];
   @override
   Widget build(BuildContext context) {
+    final _stream =
+      Supabase.instance.client.from('inboxes').stream(primaryKey: ['id']);
+      
     return Scaffold(
       appBar: ScoutifyComponents().normalAppBar('Inbox', context),
       body: StreamBuilder(
