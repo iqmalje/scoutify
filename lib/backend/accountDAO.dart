@@ -10,19 +10,31 @@ class AccountDAO {
   var supabase = Supabase.instance.client;
 
   Future<Account> selectAccountFromIC(String ICno, String orderID) async {
-    var dataRAW = await supabase.functions
-        .invoke("activate-account", body: {'icNo': ICno, 'orderID': orderID});
-    // most fucked up line of code here
-    var data = dataRAW.data;
+    var data;
+
+    try {
+      var dataRAW = await supabase.functions
+          .invoke("activate-account", body: {'icNo': ICno, 'orderID': orderID});
+      // most fucked up line of code here
+      data = dataRAW.data;
+    } catch (e) {
+      throw  Exception('Error occurs');
+    }
 
     // parse into acc
     Account account = Account();
-    account.accountid = data['accountid'];
-    account.icNo = data['ic_no'];
-    account.email = data['email'];
-    account.fullname = data['fullname'];
-    account.activated = data['activated'];
-    account.phoneNo = data['phone_no'];
+
+    try {
+      account.accountid = data['accountid'];
+      account.icNo = data['ic_no'];
+      account.email = data['email'];
+      account.fullname = data['fullname'];
+      account.activated = data['activated'];
+      account.phoneNo = data['phone_no'];
+    } catch (e) {
+      throw Exception('Please enter the correct MyKad No and Order ID');
+    }
+
     print(account.activated);
     if (account.activated) throw Exception('Account is already activated!');
     return account;
@@ -299,6 +311,5 @@ class AccountDAO {
         body: {'accountID': CurrentAccount.getInstance().accountid});
 
     await supabase.auth.signOut();
-    
   }
 }
