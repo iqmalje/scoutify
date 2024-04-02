@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/backend/backend.dart';
 import 'package:scoutify/model/account.dart';
@@ -177,6 +178,11 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                                         child: TextField(
                                           controller: OTP[index],
                                           textAlign: TextAlign.center,
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
+                                          keyboardType: TextInputType.number,
                                           onChanged: (value) {
                                             if (value.length == 1) {
                                               node.nextFocus();
@@ -236,10 +242,10 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                             GestureDetector(
                               onTap: () async {
                                 await AccountDAO().sendPasswordOTP(email);
-                
+
                                 //reset timer
                                 if (_timer!.isActive) _timer!.cancel();
-                
+
                                 _start = 330;
                                 _timer = Timer.periodic(
                                     const Duration(seconds: 1), (timer) {
@@ -278,7 +284,7 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                           splashColor: const Color.fromARGB(255, 123, 90, 255),
                           onTap: () async {
                             String OTPcollected = "";
-                
+
                             for (var element in OTP) {
                               if (element.text.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -288,7 +294,7 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                               }
                               OTPcollected += element.text;
                             }
-                
+
                             try {
                               await AccountDAO()
                                   .verifyPasswordOTP(email, OTPcollected);
@@ -298,7 +304,7 @@ class _VerifyResetPasswordState extends State<VerifyResetPassword> {
                             } catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(e.toString())));
-                
+
                               return;
                             }
                           },

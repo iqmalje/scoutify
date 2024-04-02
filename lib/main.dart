@@ -51,7 +51,6 @@ Future<void> main() async {
         //set admin to false
         CurrentAccount.getInstance().isAdminToggled = false;
         debugPrint('since logged out, admin toggled to false');
-        
       }
     });
   } catch (e) {
@@ -72,7 +71,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        title: 'Scoutify App',
+        title: 'Scoutify',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
@@ -83,9 +82,9 @@ class MyApp extends StatelessWidget {
           '/signin': (context) => const SignInPage(),
         },
         home: needUpdate
-                ? const UpdateVersion()
-                : isSignedIn
-                    ? const TempPage()
-                    : const SignInPage());
+            ? const UpdateVersion()
+            : isSignedIn
+                ? const TempPage()
+                : const SignInPage());
   }
 }

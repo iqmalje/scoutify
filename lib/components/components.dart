@@ -4,12 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:scoutify/model/account.dart';
 
 class ScoutifyComponents {
-  Widget filledNormalButton(
-    BuildContext context,
-    String text, {
-    Function()? onTap,
-    double? width,
-  }) {
+  Widget filledNormalButton(BuildContext context, String text,
+      {Function()? onTap, double? width, Color? color}) {
     return Material(
       child: InkWell(
         onTap: onTap,
@@ -18,7 +14,7 @@ class ScoutifyComponents {
           height: 50,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: const Color(0xFF3B4367)),
+              color: color ?? const Color(0xFF3B4367)),
           child: Center(
             child: Text(
               text,
@@ -81,8 +77,7 @@ class ScoutifyComponents {
           width: width,
           height: 50,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.grey),
+              borderRadius: BorderRadius.circular(5), color: Colors.grey),
           child: Center(
             child: Text(
               text,
@@ -524,8 +519,7 @@ class ScoutifyComponents {
                             AssetImage('assets/images/profileDefault.png'));
                   }
                   return CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          '${account.imageURL}'));
+                      backgroundImage: NetworkImage('${account.imageURL}'));
                 }),
               ),
               Padding(
@@ -868,8 +862,7 @@ class ScoutifyComponents {
                   ),
                 ),
                 child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        '${account.imageURL}')),
+                    backgroundImage: NetworkImage('${account.imageURL}')),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 10),
@@ -1048,7 +1041,8 @@ class ScoutifyComponents {
                       children: [
                         SizedBox(
                           width: width,
-                          child: Text('NEGARA',
+                          child: Text(
+                            'NEGARA',
                             textScaleFactor: 1.0,
                             style: TextStyle(
                               color: Colors.white,

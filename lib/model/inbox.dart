@@ -32,5 +32,8 @@ class Inbox {
     // now parse /n -> new line
 
     description = description.replaceAll('/n', '\n\n');
+
+    // time + 8
+    time = time.add(const Duration(hours: 8));
   }
 }

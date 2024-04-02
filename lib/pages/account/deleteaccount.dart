@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:scoutify/backend/accountDAO.dart';
 import 'package:scoutify/components/components.dart';
+import 'package:scoutify/model/currentaccount.dart';
 import 'package:scoutify/pages/account/scoutid.dart';
 import 'package:scoutify/pages/signin/signinpage.dart';
 
@@ -14,11 +15,11 @@ class DeleteAccount extends StatefulWidget {
 }
 
 class _DeleteAccountState extends State<DeleteAccount> {
-  late TextEditingController _icController = TextEditingController(text: '');
+  final TextEditingController _icController = TextEditingController(text: '');
 
-  late TextEditingController _nameController = TextEditingController(text: '');
+  final TextEditingController _nameController = TextEditingController(text: '');
 
-  late TextEditingController _approvalCodeController =
+  final TextEditingController _approvalCodeController =
       TextEditingController(text: '');
 
   @override
@@ -35,10 +36,10 @@ class _DeleteAccountState extends State<DeleteAccount> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
-                Text(
+                const Text(
                   'To initiate the deletion of your account, kindly complete the requested information below.',
                   textAlign: TextAlign.start,
                   style: TextStyle(
@@ -49,10 +50,10 @@ class _DeleteAccountState extends State<DeleteAccount> {
                     height: 0,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
-                Text(
+                const Text(
                   'IC Number',
                   textAlign: TextAlign.start,
                   style: TextStyle(
@@ -66,7 +67,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                 buildInputBox(
                   'IC Number',
                   _icController,
-                  Icon(
+                  const Icon(
                     Icons.person_outline,
                     color: Color.fromARGB(255, 59, 63, 101),
                   ),
@@ -78,7 +79,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                     UpperCaseTextFilter()
                   ],
                 ),
-                Text(
+                const Text(
                   'Full Name as IC',
                   textAlign: TextAlign.start,
                   style: TextStyle(
@@ -92,7 +93,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                 buildInputBox(
                   'Full Name as IC',
                   _nameController,
-                  Icon(
+                  const Icon(
                     Icons.person_outline,
                     color: Color.fromARGB(255, 59, 63, 101),
                   ),
@@ -100,7 +101,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                 ),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       'Approval Code',
                       textAlign: TextAlign.start,
                       style: TextStyle(
@@ -114,7 +115,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                     Padding(
                       padding: const EdgeInsets.only(left: 5.0),
                       child: GestureDetector(
-                        child: Icon(
+                        child: const Icon(
                           Icons.info,
                           color: Colors.red,
                           size: 15,
@@ -124,8 +125,8 @@ class _DeleteAccountState extends State<DeleteAccount> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text("Information"),
-                                content: Text(
+                                title: const Text("Information"),
+                                content: const Text(
                                     "Scout members are required to contact the administrator via email or phone to obtain the approval code for deleting their account.",
                                     style: TextStyle(fontFamily: "Poppins")),
                                 actions: <Widget>[
@@ -133,7 +134,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text("Close",
+                                    child: const Text("Close",
                                         style:
                                             TextStyle(fontFamily: "Poppins")),
                                   ),
@@ -149,19 +150,45 @@ class _DeleteAccountState extends State<DeleteAccount> {
                 buildInputBox(
                   'Approval Code',
                   _approvalCodeController,
-                  Icon(
+                  const Icon(
                     Icons.lock,
                     color: Color.fromARGB(255, 59, 63, 101),
                   ),
                   formatter: [UpperCaseTextFilter()],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 ScoutifyComponents().outlinedNormalButton(
                   context,
                   'Delete Account',
                   onTap: () async {
-                    await AccountDAO().deleteAcc();
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const SignInPage()), (route) => false)
+                    if (_icController.text.isEmpty ||
+                        _nameController.text.isEmpty ||
+                        _approvalCodeController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Please fill in all the details')));
+                      return;
+                    }
+                    // show popup first then proceed
+                    bool? isConfirm = await showConfirmPopup();
+                    if (isConfirm == null || isConfirm == false) {
+                      return;
+                    }
+                    // ensure all details is correct
+                    if (_icController.text ==
+                            CurrentAccount.getInstance().icNo &&
+                        _nameController.text ==
+                            CurrentAccount.getInstance().fullname &&
+                        _approvalCodeController.text ==
+                            'SCOUTIFY2024DICODEOLEHIQMALSVDRNORIZAMDANTAUFIQSVDRADILAHTERUNGGULDANFIKRISVDRNORAINISEMOGAELOKDANSIHATSELALUSALAMRAMADAN2024SALAMRAYA2024SAVEPALESTINE') {
+                      await AccountDAO().deleteAcc();
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => const SignInPage()),
+                          (route) => false);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Wrong input, please try again!')));
+                    }
                   },
                 )
               ],
@@ -182,10 +209,10 @@ class _DeleteAccountState extends State<DeleteAccount> {
           color: Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           shadows: [
-            BoxShadow(
-              color: const Color(0x3F000000),
+            const BoxShadow(
+              color: Color(0x3F000000),
               blurRadius: 2,
-              offset: const Offset(0, 1),
+              offset: Offset(0, 1),
               spreadRadius: 0,
             ),
           ],
@@ -218,5 +245,41 @@ class _DeleteAccountState extends State<DeleteAccount> {
         ),
       ),
     );
+  }
+
+  Future<bool?> showConfirmPopup() {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text(
+              'Delete Account',
+              style:
+                  TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w600),
+            ),
+            content: const Text(
+              'All your scout information will be deleted, and we understand if you have concerns about this matter. Are you sure you want to proceed with deleting your account?',
+              style:
+                  TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.w400),
+            ),
+            actionsAlignment: MainAxisAlignment.spaceBetween,
+            actions: [
+              ScoutifyComponents().filledNormalButton(context, 'Cancel',
+                  onTap: () {
+                Navigator.of(context).pop(false);
+              },
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  color: const Color(0xFFD9D9D9)),
+              ScoutifyComponents().filledNormalButton(
+                context,
+                'Confirm',
+                onTap: () {
+                  Navigator.of(context).pop(true);
+                },
+                width: MediaQuery.of(context).size.width * 0.3,
+              ),
+            ],
+          );
+        });
   }
 }
