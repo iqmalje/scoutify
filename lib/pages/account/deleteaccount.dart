@@ -19,8 +19,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
 
   final TextEditingController _nameController = TextEditingController(text: '');
 
-  final TextEditingController _approvalCodeController =
-      TextEditingController(text: '');
+  // final TextEditingController _approvalCodeController = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
@@ -99,71 +98,13 @@ class _DeleteAccountState extends State<DeleteAccount> {
                   ),
                   formatter: [UpperCaseTextFilter()],
                 ),
-                Row(
-                  children: [
-                    const Text(
-                      'Approval Code',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                        height: 0,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5.0),
-                      child: GestureDetector(
-                        child: const Icon(
-                          Icons.info,
-                          color: Colors.red,
-                          size: 15,
-                        ),
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("Information"),
-                                content: const Text(
-                                    "Scout members are required to contact the administrator via email or phone to obtain the approval code for deleting their account.",
-                                    style: TextStyle(fontFamily: "Poppins")),
-                                actions: <Widget>[
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text("Close",
-                                        style:
-                                            TextStyle(fontFamily: "Poppins")),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    )
-                  ],
-                ),
-                buildInputBox(
-                  'Approval Code',
-                  _approvalCodeController,
-                  const Icon(
-                    Icons.lock,
-                    color: Color.fromARGB(255, 59, 63, 101),
-                  ),
-                  formatter: [UpperCaseTextFilter()],
-                ),
                 const SizedBox(height: 30),
                 ScoutifyComponents().outlinedNormalButton(
                   context,
                   'Delete Account',
                   onTap: () async {
                     if (_icController.text.isEmpty ||
-                        _nameController.text.isEmpty ||
-                        _approvalCodeController.text.isEmpty) {
+                        _nameController.text.isEmpty ) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Please fill in all the details')));
                       return;
@@ -177,9 +118,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                     if (_icController.text ==
                             CurrentAccount.getInstance().icNo &&
                         _nameController.text ==
-                            CurrentAccount.getInstance().fullname &&
-                        _approvalCodeController.text ==
-                            'SCOUTIFY2024DICODEOLEHIQMALSVDRNORIZAMDANTAUFIQSVDRADILAHTERUNGGULDANFIKRISVDRNORAINISEMOGAELOKDANSIHATSELALUSALAMRAMADAN2024SALAMRAYA2024SAVEPALESTINE') {
+                            CurrentAccount.getInstance().fullname) {
                       await AccountDAO().deleteAcc();
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
