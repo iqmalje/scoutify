@@ -116,7 +116,9 @@ class _ScoutInfoState extends State<ScoutInfo> {
                 buildInputBox(
                     'ID / Passport No.',
                     TextEditingController(
-                        text: CurrentAccount.getInstance().icNo),
+                        text: CurrentAccount.getInstance()
+                            .icNo
+                            .replaceRange(10, 14, '****')),
                     false),
                 const SizedBox(
                   height: 15,
@@ -397,14 +399,18 @@ class _ScoutInfoState extends State<ScoutInfo> {
                     value: null,
                     child: Text('SELECT',
                         style: TextStyle(
-                            fontWeight: FontWeight.normal, fontSize: 15, fontFamily: "Poppins")),
+                            fontWeight: FontWeight.normal,
+                            fontSize: 15,
+                            fontFamily: "Poppins")),
                   ),
                   ...options.map((String? value) {
                     return DropdownMenuItem<String?>(
                       value: value,
                       child: Text(value ?? '',
                           style: TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 15, fontFamily: "Poppins")),
+                              fontWeight: FontWeight.normal,
+                              fontSize: 15,
+                              fontFamily: "Poppins")),
                     );
                   }),
                 ],
