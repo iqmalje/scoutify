@@ -72,7 +72,7 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                             child: CircleAvatar(
                                 radius: 85,
                                 backgroundImage: AssetImage(
-                                    'assets/images/pengakap_logo_2.png')),
+                                    'assets/images/profileDefault.png')),
                           );
                         }
                       }),
@@ -153,7 +153,7 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                     String? displayName = await showDisplayNameDialog(context);
                     if (displayName == null || displayName.isEmpty) return;
                     await AccountDAO().updateDisplayName(displayName);
-                    
+
                     setState(() {
                       CurrentAccount.getInstance().scoutInfo!.cardName =
                           displayName;

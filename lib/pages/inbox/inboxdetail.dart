@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:scoutify/backend/inboxDAO.dart';
 import 'package:scoutify/components/components.dart';
 import 'package:scoutify/model/inbox.dart';
@@ -93,30 +94,51 @@ class _InboxDetailPageState extends State<InboxDetailPage> {
                       )),
                 )),
             const SizedBox(
-              height: 100,
-            ), //removed spacer to avoid overflow
+              height: 20,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  DateFormat('d MMMM yyyy, hh:mm a').format(inbox.time),
+                  style: const TextStyle(
+                      fontFamily: 'Poppins',
+                      color: Color(0xFF9397A0),
+                      fontSize: 11),
+                ),
+              ),
+            ),
             Builder(builder: (context) {
               if (inbox.type == 'update') {
-                return ScoutifyComponents().filledButton(
-                    height: 60,
-                    width: MediaQuery.sizeOf(context).width * 0.8,
-                    text: 'Update Profile',
-                    style: const TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ScoutIDPage()));
-                    },
-                    color: Color(0xFF2E3B78));
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 100,
+                    ), //removed spacer to avoid overflow
+                    ScoutifyComponents().filledButton(
+                        height: 60,
+                        width: MediaQuery.sizeOf(context).width * 0.8,
+                        text: 'Update Profile',
+                        style: const TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ScoutIDPage()));
+                        },
+                        color: Color(0xFF2E3B78)),
+                  ],
+                );
               } else {
                 return Container();
               }
             }),
+
             const SizedBox(
               height: 15,
             )

@@ -56,14 +56,13 @@ class _InboxMainPageState extends State<InboxMainPage> {
   @override
   Widget build(BuildContext context) {
     final _stream =
-      Supabase.instance.client.from('inboxes').stream(primaryKey: ['id']);
-      
+        Supabase.instance.client.from('inboxes').stream(primaryKey: ['id']);
+
     return Scaffold(
       appBar: ScoutifyComponents().normalAppBar('Inbox', context),
       body: StreamBuilder(
           stream: _stream,
           builder: (context, snapshot) {
-            // this one is not finished yet so we close it for a moment
             if (!networkController.checkInternetConnectivity()) {
               return Center(
                 child: LostConnection(onRefresh: () {
@@ -80,6 +79,10 @@ class _InboxMainPageState extends State<InboxMainPage> {
             for (var item in snapshot.data!) {
               inboxes.add(Inbox.parse(item));
             }
+
+            inboxes.sort((b, a) {
+              return a.time.compareTo(b.time);
+            });
 
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
