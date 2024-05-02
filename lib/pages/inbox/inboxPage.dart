@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:scoutify/backend/inboxDAO.dart';
 import 'package:scoutify/components/components.dart';
@@ -161,13 +162,35 @@ class _InboxMainPageState extends State<InboxMainPage> {
                               ),
                             ],
                           )
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: inboxes.length,
-                            itemBuilder: (context, index) {
-                              return buildInboxMessage(
-                                  inboxes.elementAt(index), index);
-                            },
+                        : SlidableAutoCloseBehavior(
+                            closeWhenOpened: true,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: inboxes.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 10.0),
+                                  child: Slidable(
+                                    endActionPane: ActionPane(
+                                        extentRatio: 0.3,
+                                        motion: BehindMotion(),
+                                        children: [
+                                          SlidableAction(
+                                            backgroundColor: Colors.red,
+                                            icon: Icons.delete,
+                                            label: 'Delete',
+                                            onPressed: (context) {
+                                              _onDismissed(index,
+                                                  inboxes.elementAt(index));
+                                            },
+                                          )
+                                        ]),
+                                    child:
+                                        buildInboxes(inboxes.elementAt(index)),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                   )
                 ],
@@ -212,9 +235,46 @@ class _InboxMainPageState extends State<InboxMainPage> {
       direction: DismissDirection.endToStart,
       dismissThresholds: const {DismissDirection.endToStart: 0.3},
       onDismissed: (direction) async {
-        //ask confirmation to delete, i think better for ux
+        //TODO : ask confirmation to delete, i think better for ux
         print(direction.name);
-        await InboxDAO().deleteInbox(inbox.id);
+        try {
+          // await InboxDAO().deleteInbox(inbox.id);
+        } catch (e) {
+          print(e);
+        }
+      },
+      confirmDismiss: (direction) {
+        return showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Delete'),
+              content: Text('Delete'),
+              actions: <Widget>[
+                FilledButton(
+                  onPressed: () {
+                    // Navigator.pop(context, false);
+                    Navigator.of(
+                      context,
+                      // rootNavigator: true,
+                    ).pop(false);
+                  },
+                  child: Text('No'),
+                ),
+                FilledButton(
+                  onPressed: () {
+                    // Navigator.pop(context, true);
+                    Navigator.of(
+                      context,
+                      // rootNavigator: true,
+                    ).pop(true);
+                  },
+                  child: Text('Yes'),
+                ),
+              ],
+            );
+          },
+        );
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 10.0),
@@ -306,6 +366,97 @@ class _InboxMainPageState extends State<InboxMainPage> {
     );
   }
 
+  Widget buildInboxes(Inbox inbox) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () async {
+          Navigator.of(context)
+              .push(MaterialPageRoute(
+                  builder: (context) => InboxDetailPage(
+                        inbox: inbox,
+                      )))
+              .then((value) {
+            setState(() {});
+          });
+        },
+        child: Ink(
+          color: Colors.white,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                radius: 26,
+                backgroundColor: inbox.has_read == true
+                    ? Colors.grey[350]
+                    : const Color(0xFF2E3B78),
+                child: const Icon(
+                  Icons.person_outline,
+                  color: Colors.white,
+                  size: 34,
+                ),
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                inbox.title,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                inbox.description,
+                                textAlign: TextAlign.start,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: const TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: Color(0xFF9397A0),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Icon(
+                          Icons.arrow_forward_ios,
+                          color: Color(0xFF2E3B78),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      height: 1,
+                      width: MediaQuery.sizeOf(context).width,
+                      color: Colors.black.withOpacity(0.25),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget bottomSheet() {
     return SizedBox(
       height: 150,
@@ -317,9 +468,7 @@ class _InboxMainPageState extends State<InboxMainPage> {
           children: [
             TextButton(
               onPressed: () async {
-                //TODO: back end for delete all
-                await InboxDAO().deleteAll();
-                Navigator.of(context).pop();
+                _onAllDismissed();
               },
               style: TextButton.styleFrom(
                   fixedSize: Size(MediaQuery.sizeOf(context).width, 40)),
@@ -356,6 +505,83 @@ class _InboxMainPageState extends State<InboxMainPage> {
           ],
         ),
       ),
+    );
+  }
+
+  void _onDismissed(int index, Inbox inbox) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Text(
+            "Delete Message?",
+            style: TextStyle(fontFamily: 'Poppins'),
+          ),
+          content: Text(
+              "Once you delete this message, you won't be able to undo it.",
+              style: TextStyle(fontFamily: 'Poppins')),
+          actions: <Widget>[
+            ScoutifyComponents().filledNormalButton(context, 'Cancel',
+                width: 100, color: Colors.grey, onTap: () {
+              Navigator.of(context).pop();
+            }),
+            ScoutifyComponents().filledNormalButton(context, 'Confirm',
+                width: 100, onTap: () async {
+              try {
+                await InboxDAO().deleteInbox(inbox.id);
+                setState(() {
+                  inboxes.removeAt(index);
+                });
+              } catch (e) {
+                print(e);
+              }
+              Navigator.of(context).pop();
+            }),
+          ],
+        );
+      },
+    );
+  }
+
+  void _onAllDismissed() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Text(
+            "Delete All Messages?",
+            style: TextStyle(fontFamily: 'Poppins'),
+          ),
+          content: Text(
+              "Once you delete all the messages, you won't be able to undo it.",
+              style: TextStyle(fontFamily: 'Poppins')),
+          actions: <Widget>[
+            ScoutifyComponents().filledNormalButton(context, 'Cancel',
+                width: 100, color: Colors.grey, onTap: () {
+              Navigator.of(context).pop();
+            }),
+            ScoutifyComponents().filledNormalButton(context, 'Confirm',
+                width: 100, onTap: () async {
+              try {
+                await InboxDAO().deleteAll();
+                setState(() {
+                  inboxes.clear();
+                });
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Error, can't delete inboxes"),
+                  ),
+                );
+              }
+            }),
+          ],
+        );
+      },
     );
   }
 }

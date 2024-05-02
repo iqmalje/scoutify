@@ -469,7 +469,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               .then((value) {
                             setState(() {});
                           });
-                          ;
                         },
                         width: MediaQuery.sizeOf(context).width * 0.8,
                       ),
