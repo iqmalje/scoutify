@@ -7,6 +7,7 @@ import 'package:scoutify/model/account.dart';
 import 'package:scoutify/pages/activation/activateaccountform.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:scoutify/pages/misc/orderidpage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ActivateAccountInitial extends StatefulWidget {
@@ -35,139 +36,166 @@ class _ActivateAccountInitialState extends State<ActivateAccountInitial> {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 15),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 15),
 
-                //back button
-                CircleAvatar(
-                  radius: 25,
-                  backgroundColor: Colors.white,
-                  child: IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: const Icon(Icons.arrow_back_ios_new),
-                    color: const Color(0xFF3B3F65),
+                  //back button
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: const Icon(Icons.arrow_back_ios_new),
+                      color: const Color(0xFF3B3F65),
+                    ),
                   ),
-                ),
 
-                // title
+                  // title
 
-                const SizedBox(
-                  height: 20,
-                ),
+                  const SizedBox(
+                    height: 20,
+                  ),
 
-                const Text(
-                  'Activate Account',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w700,
-                    height: 0,
+                  const Text(
+                    'Activate Account',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w700,
+                      height: 0,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  'Please enter your identification ID',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w500,
-                    height: 0,
+                  const SizedBox(
+                    height: 10,
                   ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                const Text(
-                  'MyKad No.',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w700,
-                    height: 0,
+                  const Text(
+                    'Please enter your identification ID',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w500,
+                      height: 0,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ScoutifyComponents().buildTextBox(
-                    controller: ic,
-                    formatters: [
-                      MaskTextInputFormatter(
-                          mask: '######-##-####',
-                          filter: {'#': RegExp(r'[0-9]')},
-                          type: MaskAutoCompletionType.lazy)
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  const Text(
+                    'MyKad No.',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w700,
+                      height: 0,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ScoutifyComponents().buildTextBox(
+                      controller: ic,
+                      formatters: [
+                        MaskTextInputFormatter(
+                            mask: '######-##-####',
+                            filter: {'#': RegExp(r'[0-9]')},
+                            type: MaskAutoCompletionType.lazy)
+                      ],
+                      hint: 'Identification ID',
+                      readOnly: false,
+                      prefixIcon: const Icon(Icons.person_outline)),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        'Order ID.',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      GestureDetector(
+                          child: const Icon(
+                            Icons.info,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const OrderIDPage()));
+                          }),
                     ],
-                    hint: 'Identification ID',
-                    readOnly: false,
-                    prefixIcon: const Icon(Icons.person_outline)),
-                const SizedBox(
-                  height: 40,
-                ),
-                const Text(
-                  'Order ID.',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w700,
-                    height: 0,
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ScoutifyComponents().buildTextBox(
-                    controller: orderid,
-                    formatters: [],
-                    hint: 'Order ID',
-                    readOnly: false,
-                    prefixIcon: const Icon(Icons.list_alt)),
-                const SizedBox(
-                  height: 40,
-                ),
-                ScoutifyComponents().outlinedButton(
-                    height: 60,
-                    width: MediaQuery.sizeOf(context).width,
-                    text: 'CONFIRM',
-                    onTap: () async {
-                      // check db for existing IC
-                      try {
-                        Account account = await AccountDAO()
-                            .selectAccountFromIC(ic.text, orderid.text);
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ActivateAccountForm(
-                                  account: account,
-                                )));
-                      } on PostgrestException catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text(
-                                  "Please ensure your order is completed and enter the correct IC number. If issues persist, kindly reach out to our support team.")),
-                        );
-                        print("PostgrestException: ${e.message}");
-                      } on Exception catch (e) {
-                        print(Supabase.instance.client.auth.currentUser?.role);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(e.toString())));
-                        print(e.toString());
-                      }
-                    },
-                    style: const TextStyle(
-                        fontFamily: 'Poppins',
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700))
-              ],
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ScoutifyComponents().buildTextBox(
+                      controller: orderid,
+                      formatters: [],
+                      hint: 'Order ID',
+                      readOnly: false,
+                      prefixIcon: const Icon(Icons.list_alt)),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  ScoutifyComponents().outlinedButton(
+                      height: 60,
+                      width: MediaQuery.sizeOf(context).width,
+                      text: 'CONFIRM',
+                      onTap: () async {
+                        // check db for existing IC
+                        if (ic.text == "" || orderid.text == "") {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content:
+                                      Text("Fill in all details required")));
+                          return;
+                        }
+                        try {
+                          Account account = await AccountDAO()
+                              .selectAccountFromIC(ic.text, orderid.text);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ActivateAccountForm(
+                                    account: account,
+                                  )));
+                        } on PostgrestException catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text(
+                                    "Please ensure your order is completed and enter the correct IC number. If issues persist, kindly reach out to our support team.")),
+                          );
+                          print("PostgrestException: ${e.message}");
+                        } on Exception catch (e) {
+                          print(
+                              Supabase.instance.client.auth.currentUser?.role);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(e.toString())));
+                          print(e.toString());
+                        }
+                      },
+                      style: const TextStyle(
+                          fontFamily: 'Poppins',
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700))
+                ],
+              ),
             ),
           ),
         ),

@@ -250,6 +250,8 @@ Widget buildAPost(BuildContext context, Activity item) {
                                 fontFamily: 'Poppins',
                                 letterSpacing: .3,
                               ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
                             ),
 
                             const SizedBox(
