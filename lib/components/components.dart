@@ -1112,4 +1112,42 @@ class ScoutifyComponents {
       ],
     );
   }
+
+  Future<dynamic> customDialog(BuildContext context, String title,
+      String description, Function() function,
+      {Function()? back}) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Text(
+            title,
+            style: TextStyle(fontFamily: 'Poppins'),
+          ),
+          content: Text(description, style: TextStyle(fontFamily: 'Poppins')),
+          actions: <Widget>[
+            ScoutifyComponents().filledNormalButton(context, 'Cancel',
+                width: 100, color: Colors.grey, onTap: () {
+              try {
+                back;
+              } catch (e) {
+                print(e);
+              }
+              Navigator.of(context).pop();
+            }),
+            ScoutifyComponents().filledNormalButton(context, 'Confirm',
+                width: 100, onTap: () async {
+              try {
+                function();
+              } catch (e) {
+                print(e);
+              }
+              Navigator.of(context).pop();
+            }),
+          ],
+        );
+      },
+    );
+  }
 }

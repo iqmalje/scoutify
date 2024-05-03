@@ -19,6 +19,7 @@ class ScoutInfo extends StatefulWidget {
 class _ScoutInfoState extends State<ScoutInfo> {
   Account account = CurrentAccount.getInstance().getAccount();
   bool isEdit = false;
+
   late TextEditingController _genderController =
       TextEditingController(text: '');
   late TextEditingController _raceController = TextEditingController(text: '');
@@ -99,6 +100,86 @@ class _ScoutInfoState extends State<ScoutInfo> {
                 const SizedBox(
                   height: 20,
                 ),
+                Builder(builder: (context) {
+                  // TODO: fix this shit
+                  if (ifNull()) {
+                    return Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            if (isEdit == false) {
+                              ScoutifyComponents().customDialog(
+                                  context,
+                                  'Update Scout Information',
+                                  'There is some scout information that you are restricted from editing. Are you sure you want to proceed and edit your scout information?',
+                                  () {
+                                setState(() {
+                                  isEdit = true;
+                                });
+                              });
+                            }
+                          },
+                          child: Container(
+                            width: MediaQuery.sizeOf(context).width * 0.7,
+                            constraints: const BoxConstraints(minHeight: 50),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: const Color(0xFFF5F5F5),
+                                boxShadow: [
+                                  BoxShadow(
+                                      offset: const Offset(0, 2),
+                                      blurRadius: 2,
+                                      color: Colors.black.withOpacity(0.25))
+                                ]),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.privacy_tip,
+                                    color: Colors.red,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Flexible(
+                                    child: RichText(
+                                      text: const TextSpan(
+                                          text:
+                                              'You have not updated your Scout Information. Please update your information below. ',
+                                          style: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontSize: 9,
+                                              color: Colors.black),
+                                          children: [
+                                            TextSpan(
+                                                text: 'Click here',
+                                                style: TextStyle(
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: 10,
+                                                  color: Color(0xFF0066FF),
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                ))
+                                          ]),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Container();
+                  }
+                }),
                 const Text(
                   'SCOUT INFORMATION',
                   textAlign: TextAlign.center,
@@ -228,12 +309,18 @@ class _ScoutInfoState extends State<ScoutInfo> {
                                 context, "CANCEL",
                                 width: MediaQuery.sizeOf(context).width * 0.4,
                                 onTap: () {
-                              setState(
-                                () {
-                                  isEdit = false;
-                                  resetControllers();
-                                },
-                              );
+                              ScoutifyComponents().customDialog(
+                                  context,
+                                  'Discard Scout Information',
+                                  'You are planning to cancel the update of your scout information. If you have provided updated scout information, it will not be saved. Are you sure you want to cancel updating your scout information?',
+                                  () async {
+                                setState(
+                                  () {
+                                    isEdit = false;
+                                    resetControllers();
+                                  },
+                                );
+                              });
                             }),
                             const Spacer(),
                             GestureDetector(
@@ -242,38 +329,44 @@ class _ScoutInfoState extends State<ScoutInfo> {
                                     width:
                                         MediaQuery.sizeOf(context).width * 0.4),
                                 onTap: () async {
-                                  Account tempAccount =
-                                      CurrentAccount.getInstance().getAccount();
+                                  ScoutifyComponents().customDialog(
+                                      context,
+                                      'Update Scout Information',
+                                      'All scout information that has been provided is true, and I am aware of the potential consequences from PPMNJ if I incorrectly state any information. Are you sure you want to save your scout information?',
+                                      () async {
+                                    Account tempAccount =
+                                        CurrentAccount.getInstance()
+                                            .getAccount();
 
-                                  tempAccount.fullname =
-                                      _fullnameController.text;
+                                    tempAccount.fullname =
+                                        _fullnameController.text;
 
-                                  tempAccount.scoutInfo.noTauliah =
-                                      _credentialNumberController.text;
-                                  tempAccount.scoutInfo.jantina =
-                                      _genderController.text;
-                                  tempAccount.scoutInfo.kaum =
-                                      _raceController.text;
-                                  tempAccount.scoutInfo.agama =
-                                      _religionController.text;
-                                  tempAccount.scoutInfo.unit =
-                                      _unitNumberController.text;
-                                  tempAccount.scoutInfo.crewNo =
-                                      _teamCrewNumberController.text;
-                                  tempAccount.scoutInfo.schoolCode =
-                                      _schoolCrewCodeController.text;
-                                  tempAccount.scoutInfo.schoolName =
-                                      _schoolCrewNameController.text;
-                                  tempAccount.scoutInfo.daerah =
-                                      _districtController.text;
-                                  await AccountDAO()
-                                      .updateAccountInfo(tempAccount);
-                                  setState(
-                                    () {
+                                    tempAccount.scoutInfo.noTauliah =
+                                        _credentialNumberController.text;
+                                    tempAccount.scoutInfo.jantina =
+                                        _genderController.text;
+                                    tempAccount.scoutInfo.kaum =
+                                        _raceController.text;
+                                    tempAccount.scoutInfo.agama =
+                                        _religionController.text;
+                                    tempAccount.scoutInfo.unit =
+                                        _unitNumberController.text;
+                                    tempAccount.scoutInfo.crewNo =
+                                        _teamCrewNumberController.text;
+                                    tempAccount.scoutInfo.schoolCode =
+                                        _schoolCrewCodeController.text;
+                                    tempAccount.scoutInfo.schoolName =
+                                        _schoolCrewNameController.text;
+                                    tempAccount.scoutInfo.daerah =
+                                        _districtController.text;
+                                    await AccountDAO()
+                                        .updateAccountInfo(tempAccount);
+
+                                    setState(() {
                                       isEdit = false;
                                       resetOldControllers();
-                                    },
-                                  );
+                                    });
+                                  });
                                 }),
                           ],
                         ),
@@ -284,11 +377,15 @@ class _ScoutInfoState extends State<ScoutInfo> {
                           "UPDATE",
                         ),
                         onTap: () {
-                          setState(
-                            () {
+                          ScoutifyComponents().customDialog(
+                              context,
+                              'Update Scout Information',
+                              'There is some scout information that you are restricted from editing. Are you sure you want to proceed and edit your scout information?',
+                              () {
+                            setState(() {
                               isEdit = true;
-                            },
-                          );
+                            });
+                          });
                         }),
                 const SizedBox(
                   height: 40,
@@ -311,7 +408,8 @@ class _ScoutInfoState extends State<ScoutInfo> {
         shadows: [
           BoxShadow(
             color: (() {
-              if (isEditable && controller.text == '') {
+              if (isEditable &&
+                  (controller.text == '' || controller.text == 'TIADA')) {
                 return Colors.red;
               } else if (isEdit && isEditable) {
                 return Colors.blue;
@@ -459,5 +557,31 @@ class _ScoutInfoState extends State<ScoutInfo> {
     originalSchoolCrewCode = _schoolCrewCodeController.text;
     originalSchoolCrewName = _schoolCrewNameController.text;
     originalCredentialNumber = _credentialNumberController.text;
+  }
+
+  //bro hahaha apa sia cara aku check ni hahahah
+  bool ifNull() {
+    return account.scoutInfo.position == null ||
+        account.scoutInfo.unit == null ||
+        account.scoutInfo.jantina == null ||
+        account.scoutInfo.kaum == null ||
+        account.scoutInfo.agama == null ||
+        account.scoutInfo.noTauliah == null ||
+        account.scoutInfo.daerah == null ||
+        account.scoutInfo.negara == null ||
+        account.scoutInfo.schoolCode == null ||
+        account.scoutInfo.schoolName == null ||
+        account.scoutInfo.crewNo == null ||
+        account.scoutInfo.position == 'TIADA' ||
+        account.scoutInfo.unit == 'TIADA' ||
+        account.scoutInfo.jantina == 'TIADA' ||
+        account.scoutInfo.kaum == 'TIADA' ||
+        account.scoutInfo.agama == 'TIADA' ||
+        account.scoutInfo.noTauliah == 'TIADA' ||
+        account.scoutInfo.daerah == 'TIADA' ||
+        account.scoutInfo.negara == 'TIADA' ||
+        account.scoutInfo.schoolCode == 'TIADA' ||
+        account.scoutInfo.schoolName == 'TIADA' ||
+        account.scoutInfo.crewNo == 'TIADA';
   }
 }

@@ -18,7 +18,7 @@ class AccountDAO {
       // most fucked up line of code here
       data = dataRAW.data;
     } catch (e) {
-      throw  Exception('Error occurs');
+      throw Exception('Error occurs');
     }
 
     // parse into acc
@@ -204,6 +204,30 @@ class AccountDAO {
     // check update
 
     await sendInboxIfUpdated();
+  }
+
+  Future<void> updateNoTauliah(String notauliah) async {
+    String userid = supabase.auth.currentUser!.id;
+
+    try {
+      await supabase
+          .from('scouts')
+          .update({'no_tauliah': notauliah}).eq('accountid', userid);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> updateUnitNumber(String unit) async {
+    String userid = supabase.auth.currentUser!.id;
+
+    try {
+      await supabase
+          .from('scouts')
+          .update({'unit': unit}).eq('accountid', userid);
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<bool> verifyPasswordOTP(String email, String OTP) async {

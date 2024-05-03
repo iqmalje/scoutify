@@ -509,79 +509,25 @@ class _InboxMainPageState extends State<InboxMainPage> {
   }
 
   void _onDismissed(int index, Inbox inbox) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: Text(
-            "Delete Message?",
-            style: TextStyle(fontFamily: 'Poppins'),
-          ),
-          content: Text(
-              "Once you delete this message, you won't be able to undo it.",
-              style: TextStyle(fontFamily: 'Poppins')),
-          actions: <Widget>[
-            ScoutifyComponents().filledNormalButton(context, 'Cancel',
-                width: 100, color: Colors.grey, onTap: () {
-              Navigator.of(context).pop();
-            }),
-            ScoutifyComponents().filledNormalButton(context, 'Confirm',
-                width: 100, onTap: () async {
-              try {
-                await InboxDAO().deleteInbox(inbox.id);
-                setState(() {
-                  inboxes.removeAt(index);
-                });
-              } catch (e) {
-                print(e);
-              }
-              Navigator.of(context).pop();
-            }),
-          ],
-        );
-      },
-    );
+    ScoutifyComponents().customDialog(context, "Delete Message?",
+        "Once you delete this message, you won't be able to undo it.",
+        () async {
+      await InboxDAO().deleteInbox(inbox.id);
+      setState(() {
+        inboxes.removeAt(index);
+      });
+    });
   }
 
   void _onAllDismissed() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: Text(
-            "Delete All Messages?",
-            style: TextStyle(fontFamily: 'Poppins'),
-          ),
-          content: Text(
-              "Once you delete all the messages, you won't be able to undo it.",
-              style: TextStyle(fontFamily: 'Poppins')),
-          actions: <Widget>[
-            ScoutifyComponents().filledNormalButton(context, 'Cancel',
-                width: 100, color: Colors.grey, onTap: () {
-              Navigator.of(context).pop();
-            }),
-            ScoutifyComponents().filledNormalButton(context, 'Confirm',
-                width: 100, onTap: () async {
-              try {
-                await InboxDAO().deleteAll();
-                setState(() {
-                  inboxes.clear();
-                });
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              } catch (e) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Error, can't delete inboxes"),
-                  ),
-                );
-              }
-            }),
-          ],
-        );
-      },
-    );
+    ScoutifyComponents().customDialog(context, 'Delete All Messages?',
+        "Once you delete all the messages, you won't be able to undo it.",
+        () async {
+      await InboxDAO().deleteAll();
+      setState(() {
+        inboxes.clear();
+      });
+      Navigator.pop(context);
+    });
   }
 }

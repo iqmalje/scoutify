@@ -148,36 +148,11 @@ class _InboxDetailPageState extends State<InboxDetailPage> {
   }
 
   void _onDismissed() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          title: const Text(
-            "Delete Message?",
-            style: TextStyle(fontFamily: 'Poppins'),
-          ),
-          content: const Text(
-              "Once you delete this message, you won't be able to undo it.",
-              style: TextStyle(fontFamily: 'Poppins')),
-          actions: <Widget>[
-            ScoutifyComponents().filledNormalButton(context, 'Cancel',
-                width: 100, color: Colors.grey, onTap: () {
-              Navigator.of(context).pop();
-            }),
-            ScoutifyComponents().filledNormalButton(context, 'Confirm',
-                width: 100, onTap: () async {
-              try {
-                await InboxDAO().deleteInbox(inbox.id);
-                Navigator.pop(context);
-                Navigator.pop(context);
-              } catch (e) {
-                print(e);
-              }
-            }),
-          ],
-        );
-      },
-    );
+    ScoutifyComponents().customDialog(context, "Delete Message?",
+        "Once you delete this message, you won't be able to undo it.",
+        () async {
+      await InboxDAO().deleteInbox(inbox.id);
+      Navigator.pop(context);
+    });
   }
 }

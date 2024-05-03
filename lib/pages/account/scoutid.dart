@@ -150,8 +150,19 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                           text: account.scoutInfo.cardName ??= '-'),
                       context, onTap: () async {
                     // display popup
-                    String? displayName = await showDisplayNameDialog(context);
-                    if (displayName == null || displayName.isEmpty) return;
+                    String? displayName = await showEditableDialog(
+                        context,
+                        'Name Display',
+                        'The display name on the card must be less than 15 characters',
+                        [
+                          LengthLimitingTextInputFormatter(15),
+                          UpperCaseTextFilter()
+                        ],
+                        15);
+                    if (displayName == null) return;
+                    displayName = displayName.trim();
+                    if (displayName.isEmpty) return;
+                    print("lalu");
                     await AccountDAO().updateDisplayName(displayName);
 
                     setState(() {
@@ -172,13 +183,63 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                   const SizedBox(
                     height: 15,
                   ),
-                  ScoutifyComponents().buildInputBox('Credentials Number',
-                      TextEditingController(text: account.scoutInfo.noTauliah)),
+                  ScoutifyComponents().buildInputBoxWithEditButton(
+                      'Credentials Number',
+                      TextEditingController(
+                          text: account.scoutInfo.noTauliah ?? '-'),
+                      context, onTap: () async {
+                    // display popup
+                    String? noTauliah = await showEditableDialog(
+                        context,
+                        'Credentials Number',
+                        'The credentials number on the card must be less than 10 characters, including the “-”.  The credential number must follow the following example.\n\nExample: PN-252 ; PIPN-252 ; TIADA\n\nNote: If you don’t have a credential number yet, you must use “TIADA” as your credential number.',
+                        [
+                          LengthLimitingTextInputFormatter(10),
+                        ],
+                        10);
+                    if (noTauliah == null) return;
+                    noTauliah = noTauliah.trim();
+                    if (noTauliah.isEmpty) return;
+                    try {
+                      await AccountDAO().updateNoTauliah(noTauliah);
+                    } catch (e) {
+                      print(e);
+                    }
+                    setState(() {
+                      CurrentAccount.getInstance().scoutInfo!.noTauliah =
+                          noTauliah;
+                    });
+                  }),
                   const SizedBox(
                     height: 15,
                   ),
-                  ScoutifyComponents().buildInputBox('Unit Number',
-                      TextEditingController(text: account.scoutInfo.unit)),
+                  ScoutifyComponents().buildInputBoxWithEditButton(
+                      'Unit Number',
+                      TextEditingController(
+                          text: account.scoutInfo.unit ?? '-'),
+                      context, onTap: () async {
+                    // display popup
+                    String? unit = await showEditableDialog(
+                        context,
+                        'Credentials Number',
+                        'The unit number on the card must be less than 27 characters, including the spaces, round brackets “( )”, and commas “,”. The unit number must follow the following format: \n\nTAHUN MANIKAYU PERTAMA ( PKK , PM , PR , PK )\n\nExample: 1983 ( PKK , PM , PR , PKK ) ; 2018 ( PKK , PR ) ; TIADA\n\nNote: If you don’t have an unit number yet, you must use “TIADA” as your unit number.',
+                        [
+                          LengthLimitingTextInputFormatter(27),
+                        ],
+                        27);
+
+                    if (unit == null) return;
+                    unit = unit.trim();
+                    if (unit.isEmpty) return;
+                    try {
+                      await AccountDAO().updateUnitNumber(unit);
+                    } catch (e) {
+                      print(e);
+                    }
+                    setState(() {
+                      CurrentAccount.getInstance().scoutInfo!.unit = unit!;
+                    });
+                  }),
                   const SizedBox(
                     height: 15,
                   ),
@@ -196,12 +257,13 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
     );
   }
 
-  Future<String?> showDisplayNameDialog(BuildContext context) {
+  Future<String?> showEditableDialog(BuildContext context, String title,
+      String description, List<TextInputFormatter> formatters, int limit) {
     return showDialog(
         context: context,
         builder: (context) {
           int wordCount = 0;
-          TextEditingController displayName = TextEditingController();
+          TextEditingController controller = TextEditingController();
           return Dialog(
             insetPadding: const EdgeInsets.symmetric(horizontal: 20),
             clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -225,8 +287,8 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Name Display',
+                        Text(
+                          title,
                           style: TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 20,
@@ -235,8 +297,8 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                         const SizedBox(
                           height: 10,
                         ),
-                        const Text(
-                          'The display name on the card must be less than 15 characters',
+                        Text(
+                          description,
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 14,
@@ -260,17 +322,14 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                                 wordCount = value.length;
                               });
                             },
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(15),
-                              UpperCaseTextFilter()
-                            ],
-                            controller: displayName,
+                            inputFormatters: formatters,
+                            controller: controller,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
-                                hintText: 'Name Display',
+                                hintText: title,
                                 suffix: Padding(
-                                  padding: const EdgeInsets.only(right: 5.0),
-                                  child: Text('${wordCount}/15'),
+                                  padding: EdgeInsets.only(right: 5.0),
+                                  child: Text('${wordCount}/$limit'),
                                 ),
                                 prefixIcon: const Icon(Icons.person_outline)),
                           ),
@@ -283,7 +342,7 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
                             width: MediaQuery.sizeOf(context).width,
                             text: 'CONFIRM',
                             onTap: () {
-                              Navigator.of(context).pop(displayName.text);
+                              Navigator.of(context).pop(controller.text);
                             },
                             color: const Color(0xFF302E84),
                             style: const TextStyle(
