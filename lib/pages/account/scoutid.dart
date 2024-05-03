@@ -269,92 +269,94 @@ class _ScoutIDPageState extends State<ScoutIDPage> {
             clipBehavior: Clip.antiAliasWithSaveLayer,
             child: StatefulBuilder(
                 builder: (BuildContext context, StateSetter setState) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: const Icon(Icons.close),
+              return SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: const Icon(Icons.close),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            description,
+                            style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          description,
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
+                              fontSize: 14,
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          height: 50,
-                          constraints: BoxConstraints(
-                            maxWidth: MediaQuery.sizeOf(context).width,
+                          const SizedBox(
+                            height: 10,
                           ),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              border: Border.all(
-                                  color: const Color(0xFF9397A0), width: 1)),
-                          child: TextFormField(
-                            onChanged: (value) {
-                              setState(() {
-                                wordCount = value.length;
-                              });
-                            },
-                            inputFormatters: formatters,
-                            controller: controller,
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: title,
-                                suffix: Padding(
-                                  padding: EdgeInsets.only(right: 5.0),
-                                  child: Text('${wordCount}/$limit'),
-                                ),
-                                prefixIcon: const Icon(Icons.person_outline)),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ScoutifyComponents().filledButton(
+                          Container(
                             height: 50,
-                            width: MediaQuery.sizeOf(context).width,
-                            text: 'CONFIRM',
-                            onTap: () {
-                              Navigator.of(context).pop(controller.text);
-                            },
-                            color: const Color(0xFF302E84),
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600)),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
+                            constraints: BoxConstraints(
+                              maxWidth: MediaQuery.sizeOf(context).width,
+                            ),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(
+                                    color: const Color(0xFF9397A0), width: 1)),
+                            child: TextFormField(
+                              onChanged: (value) {
+                                setState(() {
+                                  wordCount = value.length;
+                                });
+                              },
+                              inputFormatters: formatters,
+                              controller: controller,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: title,
+                                  suffix: Padding(
+                                    padding: EdgeInsets.only(right: 5.0),
+                                    child: Text('${wordCount}/$limit'),
+                                  ),
+                                  prefixIcon: const Icon(Icons.person_outline)),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ScoutifyComponents().filledButton(
+                              height: 50,
+                              width: MediaQuery.sizeOf(context).width,
+                              text: 'CONFIRM',
+                              onTap: () {
+                                Navigator.of(context).pop(controller.text);
+                              },
+                              color: const Color(0xFF302E84),
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600)),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             }),
           );
