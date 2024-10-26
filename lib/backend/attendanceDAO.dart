@@ -31,13 +31,14 @@ class AttendanceDAO {
     //get accountid from cardid
 
     try {
-      if (cardid[0] == 'J' || cardid[0] == 'K') {
+      if (cardid[0] == 'J' || cardid[0] == 'K' || cardid[0] == 'F') {
         await addAttendanceByScoutID(activityid, cardid);
         return;
+      } else {
+        print('tak dapat detect, mesti card id = $cardid');
+        await supabase.rpc('add_attendance_card_id',
+            params: {'aid': activityid, 'cid': cardid});
       }
-
-      await supabase.rpc('add_attendance_card_id',
-          params: {'aid': activityid, 'cid': cardid});
     } catch (e) {
       print(e);
     }

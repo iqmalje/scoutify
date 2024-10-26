@@ -256,19 +256,7 @@ class _NewAttendanceRecordPageState extends State<NewAttendanceRecordPage> {
                 onSubmitted: (value) {
                   print(value);
 
-                  if (value[0] != 'J' && value[0] != 'K') {
-                    print(isDecimal(value));
-                    if (isDecimal(value)) {
-                      String converted = decimalToHex(int.parse(value));
-                      print(converted);
-                      AttendanceDAO().addAttendance(activityid, converted);
-                    } else {
-                      AttendanceDAO().addAttendance(activityid, value);
-                    }
-// convert first
-                  } else {
-                    AttendanceDAO().addAttendance(activityid, value);
-                  }
+                  AttendanceDAO().addAttendance(activityid, value);
 
                   attendance.clear();
                   fn.requestFocus();

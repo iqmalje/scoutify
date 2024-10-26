@@ -30,20 +30,20 @@ class _attendancePage2State extends State<attendancePage2> {
     var _mediaQuery = MediaQuery.of(context);
 
     return Scaffold(
-      appBar: ScoutifyComponents().appBarWithBackButton('Add Participant', context),
+        appBar: ScoutifyComponents()
+            .appBarWithBackButton('Add Participant', context),
         body: Container(
-      width: _mediaQuery.size.width,
-      height: _mediaQuery.size.height,
-      color: const Color.fromRGBO(237, 237, 237, 100),
-      child: Column(children: <Widget>[
-        displayActivity(context, activity),
-        addParticipant(scoutid),
-        _addButton(scoutid, activity, context),
-      ]),
-    ));
+          width: _mediaQuery.size.width,
+          height: _mediaQuery.size.height,
+          color: const Color.fromRGBO(237, 237, 237, 100),
+          child: Column(children: <Widget>[
+            displayActivity(context, activity),
+            addParticipant(scoutid),
+            _addButton(scoutid, activity, context),
+          ]),
+        ));
   }
 }
-
 
 Widget displayActivity(BuildContext context, Activity activity) {
   DateTime startdate = activity.startdate;
@@ -306,7 +306,7 @@ Widget _addButton(TextEditingController scoutid, Activity activity, context) {
             padding: const EdgeInsets.only(bottom: 35),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: const Color(0xFF2C225B),
+                foregroundColor: const Color(0xFF2C225B),
                 elevation: 0,
                 fixedSize: const Size(355, 50),
                 shape: RoundedRectangleBorder(

@@ -16,7 +16,7 @@ import 'package:get/get.dart';
 
 bool isSignedIn = false;
 bool needUpdate = false;
-int version = 1;
+int version = 2;
 bool hasConnection = false;
 
 Future<void> main() async {

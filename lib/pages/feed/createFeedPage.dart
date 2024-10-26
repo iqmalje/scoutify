@@ -632,7 +632,7 @@ class _CreateFeedPageState extends State<CreateFeedPage> {
             }
           },
           style: ElevatedButton.styleFrom(
-            primary: const Color(0xFF2E3B78),
+            foregroundColor: const Color(0xFF2E3B78),
             elevation: 0,
             fixedSize: Size(MediaQuery.sizeOf(context).width * 0.9, 50),
           ),

@@ -34,20 +34,21 @@ class _attendancePage3State extends State<attendancePage3> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: ScoutifyComponents().appBarWithBackButton('Attendances', context),
+          appBar:
+              ScoutifyComponents().appBarWithBackButton('Attendances', context),
           body: Container(
-        width: _mediaQuery.size.width,
-        height: _mediaQuery.size.height,
-        color: Colors.white,
-        child: Column(children: <Widget>[
-          displayActivity(activity, timePicked),
-          const SizedBox(height: 30),
-          openAttendanceButton(context, activity.activityid, attendancekey,
-              activity, timePicked),
-          const SizedBox(height: 15),
-          showParticipantButton(context, activity, timePicked),
-        ]),
-      )),
+            width: _mediaQuery.size.width,
+            height: _mediaQuery.size.height,
+            color: Colors.white,
+            child: Column(children: <Widget>[
+              displayActivity(activity, timePicked),
+              const SizedBox(height: 30),
+              openAttendanceButton(context, activity.activityid, attendancekey,
+                  activity, timePicked),
+              const SizedBox(height: 15),
+              showParticipantButton(context, activity, timePicked),
+            ]),
+          )),
     );
   }
 }
@@ -262,7 +263,7 @@ Widget openAttendanceButton(
               )));
     },
     style: ElevatedButton.styleFrom(
-      primary: const Color(0xFF2E3B78),
+      foregroundColor: const Color(0xFF2E3B78),
       elevation: 0,
       fixedSize: const Size(355, 50),
       shape: RoundedRectangleBorder(
@@ -290,7 +291,7 @@ Widget showParticipantButton(
               )));
     },
     style: ElevatedButton.styleFrom(
-      primary: Colors.transparent,
+      foregroundColor: Colors.transparent,
       elevation: 0,
       fixedSize: const Size(355, 50),
       shape: RoundedRectangleBorder(

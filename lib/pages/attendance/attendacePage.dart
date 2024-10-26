@@ -14,15 +14,16 @@ class _attendancePageState extends State<attendancePage> {
     var _mediaQuery = MediaQuery.of(context);
 
     return Scaffold(
-      appBar: ScoutifyComponents().appBarWithBackButton('Attendances', context),
+        appBar:
+            ScoutifyComponents().appBarWithBackButton('Attendances', context),
         body: Container(
-      width: _mediaQuery.size.width,
-      height: _mediaQuery.size.height,
-      color: const Color.fromRGBO(237, 237, 237, 100),
-      child: Column(children: <Widget>[
-        _instruction(),
-      ]),
-    ));
+          width: _mediaQuery.size.width,
+          height: _mediaQuery.size.height,
+          color: const Color.fromRGBO(237, 237, 237, 100),
+          child: Column(children: <Widget>[
+            _instruction(),
+          ]),
+        ));
   }
 }
 
@@ -80,7 +81,7 @@ class _addParticpantButtonState extends State<addParticpantButton> {
             letterSpacing: .3,
           )),
       style: ElevatedButton.styleFrom(
-        primary: const Color.fromRGBO(44, 34, 91, 100),
+        foregroundColor: const Color.fromRGBO(44, 34, 91, 100),
         elevation: 0,
         fixedSize: const Size(330, 40),
       ),

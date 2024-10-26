@@ -525,7 +525,7 @@ class _DetailsActivityState extends State<DetailsActivity> {
                   )));
         },
         style: ElevatedButton.styleFrom(
-          primary: const Color(0xFF2E3B78),
+          foregroundColor: const Color(0xFF2E3B78),
         ),
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.end,
